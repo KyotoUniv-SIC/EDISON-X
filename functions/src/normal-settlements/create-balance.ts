@@ -65,7 +65,7 @@ export const normalSettlementOnCreate = async (snapshot: any, context: any) => {
       // eslint-disable-next-line no-throw-literal
       throw `Error sending transaction: ${payResult.result.meta.TransactionResult}`;
     }
-    client.disconnect();
+    await client.disconnect();
   } else {
     const sellerBalance = await balance.listLatest(data.ask_id);
     await balance.create(
@@ -115,6 +115,6 @@ export const normalSettlementOnCreate = async (snapshot: any, context: any) => {
       // eslint-disable-next-line no-throw-literal
       throw `Error sending transaction: ${payResult.result.meta.TransactionResult}`;
     }
-    client.disconnect();
+    await client.disconnect();
   }
 };

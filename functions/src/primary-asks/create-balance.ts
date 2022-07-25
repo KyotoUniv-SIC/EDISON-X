@@ -71,5 +71,5 @@ export const primaryAskOnCreate = async (snapshot: any, context: any) => {
     // eslint-disable-next-line no-throw-literal
     throw `${data.account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`;
   }
-  client.disconnect();
+  await client.disconnect();
 };

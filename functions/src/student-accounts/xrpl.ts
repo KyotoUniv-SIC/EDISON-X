@@ -68,7 +68,7 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
       // eslint-disable-next-line no-throw-literal
       throw `Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`;
     }
-    client.disconnect();
+    await client.disconnect();
     return wallet;
   }
   const wallet = await createWallet();
