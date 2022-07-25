@@ -185,5 +185,5 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
       throw `${data.student_account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`;
     }
   }
-  client.disconnect();
+  await client.disconnect();
 };

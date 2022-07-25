@@ -56,7 +56,7 @@ describe('XRPL Send Tx', () => {
     //     // eslint-disable-next-line no-throw-literal
     //     throw `Error sending transaction: ${payResult.result.meta.TransactionResult}`;
     //   }
-    //   client.disconnect();
+    //   await client.disconnect();
     // }
     // await sendTx();
 

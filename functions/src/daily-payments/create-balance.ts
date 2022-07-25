@@ -69,7 +69,7 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
       // eslint-disable-next-line no-throw-literal
       throw `${data.student_account_id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`;
     }
-    client.disconnect();
+    await client.disconnect();
   }
 
   if (data.amount_uspx != '0') {
@@ -96,6 +96,6 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
       // eslint-disable-next-line no-throw-literal
       throw `${data.student_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`;
     }
-    client.disconnect();
+    await await client.disconnect();
   }
 };
