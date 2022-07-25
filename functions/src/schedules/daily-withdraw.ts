@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
 import { balance } from '../balances';
+import { daily_payment_tx } from '../daily-payment-txs';
 import { daily_payment } from '../daily-payments';
 import { dailyPaymentOnCreate } from '../daily-payments/create-balance';
 import { daily_usage } from '../daily-usages';
 import { student_account } from '../student-accounts';
-import { DailyPayment } from '@local/common';
+import { DailyPayment, DailyPaymentTx } from '@local/common';
 import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
@@ -14,6 +15,7 @@ module.exports.dailyWithdraw = f.pubsub
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
     const dailyUsages = await daily_usage.listYesterday();
+    const txs = new DailyPaymentTx({ txs: [] });
 
     for (const dailyUsage of dailyUsages) {
       const usage = parseInt(dailyUsage.amount_kwh_str) * 1000000;
@@ -63,7 +65,9 @@ module.exports.dailyWithdraw = f.pubsub
 
           await daily_payment.create(dailyPayment);
           await dailyPaymentOnCreate({ data: () => dailyPayment }, null);
+          txs.txs.push({ student_account_id: student.id, amount_uupx: uupxPayment, amount_uspx: uspxPayment });
         }
       }
     }
+    await daily_payment_tx.create(txs);
   });
