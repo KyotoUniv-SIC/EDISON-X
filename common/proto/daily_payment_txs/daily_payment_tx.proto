@@ -1,0 +1,17 @@
+syntax = "proto3";
+package main;
+
+import "firebase_rules_options.proto";
+
+option (google.firebase.rules.firebase_rules).full_package_names = true;
+
+message DailyPaymentTx {
+  string id = 1;
+  repeated payment txs = 2;
+}
+
+message payment{
+  string student_account_id = 1;
+  string amount_uupx = 2;
+  string amount_uspx = 3;
+}
