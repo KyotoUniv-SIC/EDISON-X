@@ -50,6 +50,7 @@ const files = {
   chats: './chats',
   cost_settings: './cost-settings',
   daily_payment: './daily-payments',
+  daily_payment_tx: './daily-payment-txs',
   daily_usages: './daily-usages',
   delta_amounts: './delta-amounts',
   discount_prices: './discount-prices',
