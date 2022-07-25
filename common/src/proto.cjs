@@ -3136,6 +3136,445 @@
             return DailyPayment;
         })();
     
+        main.DailyPaymentTx = (function() {
+    
+            /**
+             * Properties of a DailyPaymentTx.
+             * @memberof main
+             * @interface IDailyPaymentTx
+             * @property {string|null} [id] DailyPaymentTx id
+             * @property {Array.<main.Ipayment>|null} [txs] DailyPaymentTx txs
+             */
+    
+            /**
+             * Constructs a new DailyPaymentTx.
+             * @memberof main
+             * @classdesc Represents a DailyPaymentTx.
+             * @implements IDailyPaymentTx
+             * @constructor
+             * @param {main.IDailyPaymentTx=} [properties] Properties to set
+             */
+            function DailyPaymentTx(properties) {
+                this.txs = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * DailyPaymentTx id.
+             * @member {string} id
+             * @memberof main.DailyPaymentTx
+             * @instance
+             */
+            DailyPaymentTx.prototype.id = "";
+    
+            /**
+             * DailyPaymentTx txs.
+             * @member {Array.<main.Ipayment>} txs
+             * @memberof main.DailyPaymentTx
+             * @instance
+             */
+            DailyPaymentTx.prototype.txs = $util.emptyArray;
+    
+            /**
+             * Encodes the specified DailyPaymentTx message. Does not implicitly {@link main.DailyPaymentTx.verify|verify} messages.
+             * @function encode
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {main.IDailyPaymentTx} message DailyPaymentTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DailyPaymentTx.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.txs != null && message.txs.length)
+                    for (var i = 0; i < message.txs.length; ++i)
+                        $root.main.payment.encode(message.txs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified DailyPaymentTx message, length delimited. Does not implicitly {@link main.DailyPaymentTx.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {main.IDailyPaymentTx} message DailyPaymentTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            DailyPaymentTx.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a DailyPaymentTx message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.DailyPaymentTx} DailyPaymentTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DailyPaymentTx.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.DailyPaymentTx();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.txs && message.txs.length))
+                            message.txs = [];
+                        message.txs.push($root.main.payment.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a DailyPaymentTx message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.DailyPaymentTx} DailyPaymentTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            DailyPaymentTx.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a DailyPaymentTx message.
+             * @function verify
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            DailyPaymentTx.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.txs != null && message.hasOwnProperty("txs")) {
+                    if (!Array.isArray(message.txs))
+                        return "txs: array expected";
+                    for (var i = 0; i < message.txs.length; ++i) {
+                        var error = $root.main.payment.verify(message.txs[i]);
+                        if (error)
+                            return "txs." + error;
+                    }
+                }
+                return null;
+            };
+    
+            /**
+             * Creates a DailyPaymentTx message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.DailyPaymentTx} DailyPaymentTx
+             */
+            DailyPaymentTx.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.DailyPaymentTx)
+                    return object;
+                var message = new $root.main.DailyPaymentTx();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.txs) {
+                    if (!Array.isArray(object.txs))
+                        throw TypeError(".main.DailyPaymentTx.txs: array expected");
+                    message.txs = [];
+                    for (var i = 0; i < object.txs.length; ++i) {
+                        if (typeof object.txs[i] !== "object")
+                            throw TypeError(".main.DailyPaymentTx.txs: object expected");
+                        message.txs[i] = $root.main.payment.fromObject(object.txs[i]);
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a DailyPaymentTx message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.DailyPaymentTx
+             * @static
+             * @param {main.DailyPaymentTx} message DailyPaymentTx
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            DailyPaymentTx.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.txs = [];
+                if (options.defaults)
+                    object.id = "";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.txs && message.txs.length) {
+                    object.txs = [];
+                    for (var j = 0; j < message.txs.length; ++j)
+                        object.txs[j] = $root.main.payment.toObject(message.txs[j], options);
+                }
+                return object;
+            };
+    
+            /**
+             * Converts this DailyPaymentTx to JSON.
+             * @function toJSON
+             * @memberof main.DailyPaymentTx
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            DailyPaymentTx.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return DailyPaymentTx;
+        })();
+    
+        main.payment = (function() {
+    
+            /**
+             * Properties of a payment.
+             * @memberof main
+             * @interface Ipayment
+             * @property {string|null} [student_account_id] payment student_account_id
+             * @property {string|null} [amount_uupx] payment amount_uupx
+             * @property {string|null} [amount_uspx] payment amount_uspx
+             */
+    
+            /**
+             * Constructs a new payment.
+             * @memberof main
+             * @classdesc Represents a payment.
+             * @implements Ipayment
+             * @constructor
+             * @param {main.Ipayment=} [properties] Properties to set
+             */
+            function payment(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * payment student_account_id.
+             * @member {string} student_account_id
+             * @memberof main.payment
+             * @instance
+             */
+            payment.prototype.student_account_id = "";
+    
+            /**
+             * payment amount_uupx.
+             * @member {string} amount_uupx
+             * @memberof main.payment
+             * @instance
+             */
+            payment.prototype.amount_uupx = "";
+    
+            /**
+             * payment amount_uspx.
+             * @member {string} amount_uspx
+             * @memberof main.payment
+             * @instance
+             */
+            payment.prototype.amount_uspx = "";
+    
+            /**
+             * Encodes the specified payment message. Does not implicitly {@link main.payment.verify|verify} messages.
+             * @function encode
+             * @memberof main.payment
+             * @static
+             * @param {main.Ipayment} message payment message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            payment.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.student_account_id != null && Object.hasOwnProperty.call(message, "student_account_id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.student_account_id);
+                if (message.amount_uupx != null && Object.hasOwnProperty.call(message, "amount_uupx"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.amount_uupx);
+                if (message.amount_uspx != null && Object.hasOwnProperty.call(message, "amount_uspx"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.amount_uspx);
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified payment message, length delimited. Does not implicitly {@link main.payment.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.payment
+             * @static
+             * @param {main.Ipayment} message payment message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            payment.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a payment message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.payment
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.payment} payment
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            payment.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.payment();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.student_account_id = reader.string();
+                        break;
+                    case 2:
+                        message.amount_uupx = reader.string();
+                        break;
+                    case 3:
+                        message.amount_uspx = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a payment message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.payment
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.payment} payment
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            payment.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a payment message.
+             * @function verify
+             * @memberof main.payment
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            payment.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.student_account_id != null && message.hasOwnProperty("student_account_id"))
+                    if (!$util.isString(message.student_account_id))
+                        return "student_account_id: string expected";
+                if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                    if (!$util.isString(message.amount_uupx))
+                        return "amount_uupx: string expected";
+                if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                    if (!$util.isString(message.amount_uspx))
+                        return "amount_uspx: string expected";
+                return null;
+            };
+    
+            /**
+             * Creates a payment message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.payment
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.payment} payment
+             */
+            payment.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.payment)
+                    return object;
+                var message = new $root.main.payment();
+                if (object.student_account_id != null)
+                    message.student_account_id = String(object.student_account_id);
+                if (object.amount_uupx != null)
+                    message.amount_uupx = String(object.amount_uupx);
+                if (object.amount_uspx != null)
+                    message.amount_uspx = String(object.amount_uspx);
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a payment message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.payment
+             * @static
+             * @param {main.payment} message payment
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            payment.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.student_account_id = "";
+                    object.amount_uupx = "";
+                    object.amount_uspx = "";
+                }
+                if (message.student_account_id != null && message.hasOwnProperty("student_account_id"))
+                    object.student_account_id = message.student_account_id;
+                if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                    object.amount_uupx = message.amount_uupx;
+                if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                    object.amount_uspx = message.amount_uspx;
+                return object;
+            };
+    
+            /**
+             * Converts this payment to JSON.
+             * @function toJSON
+             * @memberof main.payment
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            payment.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return payment;
+        })();
+    
         main.DailyUsage = (function() {
     
             /**

@@ -1258,6 +1258,190 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a DailyPaymentTx. */
+    interface IDailyPaymentTx {
+
+        /** DailyPaymentTx id */
+        id?: (string|null);
+
+        /** DailyPaymentTx txs */
+        txs?: (main.Ipayment[]|null);
+    }
+
+    /** Represents a DailyPaymentTx. */
+    class DailyPaymentTx implements IDailyPaymentTx {
+
+        /**
+         * Constructs a new DailyPaymentTx.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IDailyPaymentTx);
+
+        /** DailyPaymentTx id. */
+        public id: string;
+
+        /** DailyPaymentTx txs. */
+        public txs: main.Ipayment[];
+
+        /**
+         * Encodes the specified DailyPaymentTx message. Does not implicitly {@link main.DailyPaymentTx.verify|verify} messages.
+         * @param message DailyPaymentTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IDailyPaymentTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DailyPaymentTx message, length delimited. Does not implicitly {@link main.DailyPaymentTx.verify|verify} messages.
+         * @param message DailyPaymentTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IDailyPaymentTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DailyPaymentTx message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DailyPaymentTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.DailyPaymentTx;
+
+        /**
+         * Decodes a DailyPaymentTx message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DailyPaymentTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.DailyPaymentTx;
+
+        /**
+         * Verifies a DailyPaymentTx message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DailyPaymentTx message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DailyPaymentTx
+         */
+        public static fromObject(object: { [k: string]: any }): main.DailyPaymentTx;
+
+        /**
+         * Creates a plain object from a DailyPaymentTx message. Also converts values to other types if specified.
+         * @param message DailyPaymentTx
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.DailyPaymentTx, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DailyPaymentTx to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a payment. */
+    interface Ipayment {
+
+        /** payment student_account_id */
+        student_account_id?: (string|null);
+
+        /** payment amount_uupx */
+        amount_uupx?: (string|null);
+
+        /** payment amount_uspx */
+        amount_uspx?: (string|null);
+    }
+
+    /** Represents a payment. */
+    class payment implements Ipayment {
+
+        /**
+         * Constructs a new payment.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.Ipayment);
+
+        /** payment student_account_id. */
+        public student_account_id: string;
+
+        /** payment amount_uupx. */
+        public amount_uupx: string;
+
+        /** payment amount_uspx. */
+        public amount_uspx: string;
+
+        /**
+         * Encodes the specified payment message. Does not implicitly {@link main.payment.verify|verify} messages.
+         * @param message payment message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.Ipayment, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified payment message, length delimited. Does not implicitly {@link main.payment.verify|verify} messages.
+         * @param message payment message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.Ipayment, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a payment message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns payment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.payment;
+
+        /**
+         * Decodes a payment message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns payment
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.payment;
+
+        /**
+         * Verifies a payment message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a payment message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns payment
+         */
+        public static fromObject(object: { [k: string]: any }): main.payment;
+
+        /**
+         * Creates a plain object from a payment message. Also converts values to other types if specified.
+         * @param message payment
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.payment, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this payment to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a DailyUsage. */
     interface IDailyUsage {
 
