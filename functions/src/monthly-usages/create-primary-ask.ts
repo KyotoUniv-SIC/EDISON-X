@@ -103,7 +103,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySigned.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `Error sending transaction: ${payResult.result.meta.TransactionResult}`;
+      console.log(`Error sending transaction: ${payResult.result.meta.TransactionResult}`);
     }
   }
 
@@ -128,7 +128,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
   //     console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySigned.hash}`);
   //   } else {
   //     // eslint-disable-next-line no-throw-literal
-  //     throw `Error sending transaction: ${payResult.result.meta.TransactionResult}`;
+  //     console.log(`Error sending transaction: ${payResult.result.meta.TransactionResult}`);
   //   }
   // }
 
@@ -160,7 +160,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySigned.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `${data.student_account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`;
+      console.log(`${data.student_account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`);
     }
   } else if (askAmount < balanceAmount) {
     const vli = await client.getLedgerIndex();
@@ -182,7 +182,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySigned.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `${data.student_account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`;
+      console.log(`${data.student_account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`);
     }
   }
   await client.disconnect();

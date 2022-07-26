@@ -67,7 +67,7 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedUPX.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `${data.student_account_id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`;
+      console.log(`${data.student_account_id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`);
     }
     await client.disconnect();
   }
@@ -94,7 +94,7 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedSPX.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `${data.student_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`;
+      console.log(`${data.student_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
     }
     await await client.disconnect();
   }
