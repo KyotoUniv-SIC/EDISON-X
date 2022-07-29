@@ -3,6 +3,7 @@ import './accounts/create-student-account';
 import './balance-snapshots/calc-monthly-usage';
 import './balances/update-available-balance';
 import './chat-deletes/delete-chat';
+import './cost-settings/calc-monthly-payment';
 import './daily-payments/create-balance';
 import './message-deletes/delete-message';
 import './message-reads/update-message';
@@ -59,6 +60,7 @@ const files = {
   message_reads: './message-reads',
   messages: './messages',
   monthly_payments: './monthly-payments',
+  monthly_settlements: './monthly-settlements',
   monthly_usages: './monthly-usages',
   normal_ask_deletes: './normal-ask-deletes',
   normal_ask_histories: './normal-ask-histories',
