@@ -96,6 +96,6 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
       // eslint-disable-next-line no-throw-literal
       console.log(`${data.student_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
     }
-    await await client.disconnect();
+    await client.disconnect();
   }
 };
