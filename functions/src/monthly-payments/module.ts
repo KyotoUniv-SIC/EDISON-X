@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /* eslint-disable require-jsdoc */
-import { MonthlyPayment, MonthlyPaymentFirestore } from '@local/common';
 import * as admin from 'firebase-admin';
+import { MonthlyPayment, MonthlyPaymentFirestore } from '@local/common';
 
-export * from './controller';
+export * from './controller'
 
 export function collection(studentAccountID: string) {
   return admin
@@ -33,20 +33,15 @@ export async function get(studentAccountID: string, id: string) {
     .then((snapshot) => snapshot.data() as MonthlyPayment);
 }
 
-export async function listLatest(studentAccountID: string) {
-  return await collection(studentAccountID)
-    .orderBy('created_at', 'desc')
-    .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as MonthlyPayment));
-}
-
 export async function list(studentAccountID: string) {
   return await collection(studentAccountID)
     .get()
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as MonthlyPayment));
 }
 
-export async function create(data: MonthlyPayment) {
+export async function create(
+  data: MonthlyPayment
+) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
@@ -57,7 +52,9 @@ export async function create(data: MonthlyPayment) {
   await doc.set(data);
 }
 
-export async function update(data: MonthlyPayment) {
+export async function update(
+  data: MonthlyPayment
+) {
   const now = admin.firestore.Timestamp.now();
   data.updated_at = now;
 
