@@ -39,7 +39,7 @@ module.exports.operationRenewable = f.pubsub
 ${student.name}様は、EDISONでの本日の注文をまだ行っておりません。
 明日の午前9時までの注文をお願いいたします。
 
-以下のページ Orderにて注文状況をご確認いただけます。
+以下のページのOrderにて注文状況をご確認いただけます。
 
 https://edison-dev-1c1b5.web.app/txs
 

@@ -14,38 +14,22 @@ export class SinglePriceRenewableSettlementApplicationService {
     return this.singlePriceRenewableSettlement.list$().pipe(
       map(
         (params) =>
-          params.sort(function (first, second) {
-            if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
-              return 1;
-            } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
-              return -1;
-            } else {
-              return 0;
-            }
-          })[0],
+          params
+            .sort(function (first, second) {
+              if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+                return 1;
+              } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+                return -1;
+              } else {
+                return 0;
+              }
+            })
+            .find((params) => params.amount_uspx != '0')!,
       ),
     );
-  }
-  list$() {
-    return this.singlePriceRenewableSettlement.list$();
   }
 
-  listLatestMonth$() {
-    return this.list$().pipe(
-      map((params) =>
-        params
-          .sort(function (first, second) {
-            if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
-              return 1;
-            } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
-              return -1;
-            } else {
-              return 0;
-            }
-          })
-          .slice(0, 30)
-          .reverse(),
-      ),
-    );
+  list$() {
+    return this.singlePriceRenewableSettlement.list$();
   }
 }

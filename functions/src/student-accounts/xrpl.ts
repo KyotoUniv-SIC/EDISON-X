@@ -45,7 +45,7 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${tsSignedNormal.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `Error sending transaction: ${tsResultNormal.result.meta.TransactionResult}`;
+      console.log(`Error sending transaction: ${tsResultNormal.result.meta.TransactionResult}`);
     }
 
     const trustSetTxRenewable = {
@@ -66,9 +66,9 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${tsSignedRenewable.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`;
+      console.log(`Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`);
     }
-    client.disconnect();
+    await client.disconnect();
     return wallet;
   }
   const wallet = await createWallet();

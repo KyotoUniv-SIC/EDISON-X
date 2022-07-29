@@ -69,7 +69,7 @@ export const primaryAskOnCreate = async (snapshot: any, context: any) => {
     console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySigned.hash}`);
   } else {
     // eslint-disable-next-line no-throw-literal
-    throw `${data.account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`;
+    console.log(`${data.account_id} UPX Error sending transaction: ${payResult.result.meta.TransactionResult}`);
   }
-  client.disconnect();
+  await client.disconnect();
 };

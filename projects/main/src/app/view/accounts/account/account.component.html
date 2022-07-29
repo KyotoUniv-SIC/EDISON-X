@@ -139,6 +139,9 @@
             <mat-list-item class="flex flex-wrap" routerLink="/accounts/payments/{{ monthlyPayment.id }}">
               <span class="break-all">{{ monthlyPayment.year }}/{{ monthlyPayment.month }}:</span>
               <span class="flex-auto break-all"></span>
+              <mat-chip-list *ngIf="!monthlyPayment.amount_adjust_ujpy">
+                <mat-chip color="warn" selected>Unsettled</mat-chip>
+              </mat-chip-list>
               <span class="break-all">{{ monthlyPayment.amount_ujpy | microString }} JPY</span>
             </mat-list-item>
           </ng-container>
