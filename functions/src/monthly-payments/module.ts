@@ -57,7 +57,8 @@ export async function create(data: MonthlyPayment) {
   await doc.set(data);
 }
 
-export async function update(data: MonthlyPayment) {
+// eslint-disable-next-line camelcase
+export async function update(data: Partial<MonthlyPayment> & { id: string } & { student_account_id: string }) {
   const now = admin.firestore.Timestamp.now();
   data.updated_at = now;
 

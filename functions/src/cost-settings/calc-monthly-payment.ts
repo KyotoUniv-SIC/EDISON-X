@@ -47,13 +47,16 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
       const discount = parseInt(discountPrice.price_ujpy);
       let adjustPayment: number;
       if (tokens >= 0) {
-        adjustPayment = -(primaryPrice - discount * tokens) / 1000000;
+        adjustPayment = -((primaryPrice - discount) * tokens) / 1000000;
       } else {
-        adjustPayment = -(primaryPrice + discount * tokens) / 1000000;
+        adjustPayment = -((primaryPrice + discount) * tokens) / 1000000;
       }
-      monthlyPayment.amount_adjust_ujpy = adjustPayment.toString();
-      monthlyPayment.amount_ujpy = (parseInt(monthlyPayment.amount_ujpy) + adjustPayment).toString();
-      await monthly_payment.update(monthlyPayment);
+      await monthly_payment.update({
+        id: monthlyPayment.id,
+        student_account_id: monthlyPayment.student_account_id,
+        amount_adjust_ujpy: adjustPayment.toString(),
+        amount_ujpy: (parseInt(monthlyPayment.amount_ujpy) + adjustPayment).toString(),
+      });
     }
   }
 });
