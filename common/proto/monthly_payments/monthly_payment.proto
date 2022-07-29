@@ -15,5 +15,4 @@ message MonthlyPayment {
   string amount_adjust_ujpy = 7;
   string amount_market_ujpy = 8;
   string amount_reward_ujpy = 9;
-  string amount_utoken = 10;
 }
