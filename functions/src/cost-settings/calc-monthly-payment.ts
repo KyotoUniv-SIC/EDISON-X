@@ -52,6 +52,7 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
         adjustPayment = -(primaryPrice + discount * tokens) / 1000000;
       }
       monthlyPayment.amount_adjust_ujpy = adjustPayment.toString();
+      monthlyPayment.amount_ujpy = (parseInt(monthlyPayment.amount_ujpy) + adjustPayment).toString();
       await monthly_payment.update(monthlyPayment);
     }
   }
