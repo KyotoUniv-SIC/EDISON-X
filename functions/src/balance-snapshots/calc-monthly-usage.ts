@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 // import { balance_snapshot } from '.';
 import { balance } from '../balances';
-import { discount_price } from '../discount-prices';
+// import { discount_price } from '../discount-prices';
 import { insufficient_balance } from '../insufficient-balances';
 import { monthly_payment } from '../monthly-payments';
 import { monthly_usage } from '../monthly-usages';
@@ -32,13 +32,13 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   const normalAsks = await normal_ask_history.listLastMonth(data.student_account_id);
   const renewableBids = await renewable_bid_history.listLastMonth(data.student_account_id);
   const renewableAsks = await renewable_ask_history.listLastMonth(data.student_account_id);
-  const discounts = await discount_price.listLatest();
+  // const discounts = await discount_price.listLatest();
   const uspxRanking = await renewable_ranking.getLatest();
   const rewardSetting = await renewable_reward_setting.getLatest();
 
   let usage: number;
   let primaryPayment: number;
-  let adjustPayment: number;
+  // let adjustPayment: number;
 
   // primaryPayment, adjustPaymentの算出
   if (primaryAsks.length) {
@@ -47,19 +47,19 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
       (previous, current) => previous + (parseInt(current.price_ujpy) * parseInt(current.amount_uupx)) / 1000000,
       0,
     );
-    if (tokens >= 0) {
-      adjustPayment = -((parseInt(primaryAsks[0].price_ujpy) - parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
-    } else {
-      adjustPayment = -((parseInt(primaryAsks[0].price_ujpy) + parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
-    }
+    // if (tokens >= 0) {
+    //   adjustPayment = -((parseInt(primaryAsks[0].price_ujpy) - parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
+    // } else {
+    //   adjustPayment = -((parseInt(primaryAsks[0].price_ujpy) + parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
+    // }
   } else {
     usage = -tokens;
     primaryPayment = 0;
-    if (tokens >= 0) {
-      adjustPayment = -((27 * 1000000 - parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
-    } else {
-      adjustPayment = -((27 * 1000000 + parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
-    }
+    // if (tokens >= 0) {
+    //   adjustPayment = -((27 * 1000000 - parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
+    // } else {
+    //   adjustPayment = -((27 * 1000000 + parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
+    // }
   }
 
   // rewardPaymentの算出
@@ -119,11 +119,12 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
       student_account_id: data.student_account_id,
       year: date.getFullYear().toString(),
       month: date.getMonth().toString(),
-      amount_ujpy: (primaryPayment + adjustPayment + marketPayment + rewardPayment).toString(),
+      amount_ujpy: (primaryPayment + marketPayment + rewardPayment).toString(),
       amount_primary_ujpy: primaryPayment.toString(),
-      amount_adjust_ujpy: adjustPayment.toString(),
+      // amount_adjust_ujpy: adjustPayment.toString(),
       amount_market_ujpy: marketPayment.toString(),
       amount_reward_ujpy: rewardPayment.toString(),
+      amount_utoken: tokens.toString(),
     }),
   );
   const monthlyUsage = new MonthlyUsage({
