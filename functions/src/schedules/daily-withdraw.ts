@@ -14,12 +14,25 @@ module.exports.dailyWithdraw = f.pubsub
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
     const dailyUsages = await daily_usage.listYesterday();
+    const now = new Date();
 
     for (const dailyUsage of dailyUsages) {
       const usage = parseInt(dailyUsage.amount_kwh_str) * 1000000;
       const students = await student_account.getByRoomID(dailyUsage.room_id);
       if (usage <= 0) {
-        // console.log(dailyUsage.room_id, '0 or minus usage detected');
+        for (const student of students) {
+          const dailyPayment = new DailyPayment({
+            student_account_id: student.id,
+            year: now.getFullYear().toString(),
+            month: (now.getMonth() + 1).toString(),
+            date: now.getDate().toString(),
+            amount_mwh: usage.toString(),
+            amount_uupx: '0',
+            amount_uspx: '0',
+            amount_insufficiency: '0',
+          });
+          await daily_payment.create(dailyPayment);
+        }
       } else if (!students.length) {
         // console.log(dailyUsage.room_id, 'no student');
       } else {
@@ -49,7 +62,6 @@ module.exports.dailyWithdraw = f.pubsub
             insufficiency = (usage - totalBalance).toString();
           }
 
-          const now = new Date();
           const dailyPayment = new DailyPayment({
             student_account_id: student.id,
             year: now.getFullYear().toString(),
