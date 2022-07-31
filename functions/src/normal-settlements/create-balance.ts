@@ -91,7 +91,7 @@ export const normalSettlementOnCreate = async (snapshot: any, context: any) => {
     await client.disconnect();
   } else {
     const seller = await student_account.get(data.ask_id);
-    const sellerPrivate = await account_private.list(data.ask_id);
+    const sellerPrivate = await account_private.listLatest(data.ask_id);
     if (!seller.xrp_address) {
       console.log(data.ask_id, 'no XRP address');
       return;

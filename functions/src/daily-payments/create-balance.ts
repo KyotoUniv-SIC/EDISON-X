@@ -27,7 +27,7 @@ export const dailyPaymentOnCreate = async (snapshot: any, context: any) => {
     );
   }
 
-  const accountPrivate = await account_private.list(data.student_account_id);
+  const accountPrivate = await account_private.listLatest(data.student_account_id);
   if (!accountPrivate.length) {
     console.log(data.student_account_id, 'no XRP address');
     return;
