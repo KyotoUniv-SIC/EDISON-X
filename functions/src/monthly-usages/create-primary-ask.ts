@@ -58,7 +58,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
   // forループで直列に処理する
 
   // XRPL tx
-  const accountPrivate = await account_private.list(data.student_account_id);
+  const accountPrivate = await account_private.listLatest(data.student_account_id);
   if (!accountPrivate.length) {
     console.log(data.student_account_id, 'no XRP address');
     return;
