@@ -24,8 +24,9 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
   let price: number;
   if (purchase + sale) {
     price =
-      (systemCost + electricityCost + reward - income + ((purchase - sale) * parseInt(primaryAsks[0].price_ujpy)) / 1000000) /
-      (((purchase + sale) * primaryPrice) / 1000000);
+      ((systemCost + electricityCost + reward - income + ((purchase - sale) * parseInt(primaryAsks[0].price_ujpy)) / 1000000) /
+        (((purchase + sale) * primaryPrice) / 1000000)) *
+      1000000;
   } else {
     price = 0;
   }
