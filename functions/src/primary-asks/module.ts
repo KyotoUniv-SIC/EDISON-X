@@ -37,6 +37,7 @@ export async function listLastMonth() {
   const now = new Date();
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
+  lastMonth.setHours(0, 0, 0, 0);
 
   return await collection()
     .orderBy('created_at', 'desc')
@@ -50,6 +51,7 @@ export async function listLastMonthByID(accountID: string) {
   const now = new Date();
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
+  lastMonth.setHours(0, 0, 0, 0);
 
   return await collection()
     .orderBy('created_at', 'desc')

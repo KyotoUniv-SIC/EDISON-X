@@ -1,4 +1,5 @@
 import { Ranking } from '../../../page/dashboard/dashboard.component';
+import { Select } from '../../accounts/room/room.component';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
@@ -21,10 +22,15 @@ import {
   usageColors,
 } from 'projects/shared/src/lib/services/charts/chart-monthly-usages/chart-monthly-usage.service';
 
-export interface historyOption {
+export interface HistoryOption {
   onlyContracted: boolean;
   start: Date;
   end: Date;
+}
+
+export interface MonthlyOption {
+  year: number;
+  month: number;
 }
 
 export interface DateRange {
@@ -80,13 +86,15 @@ export class DashboardComponent implements OnInit {
   @Output()
   appDownloadMonthlyUsages: EventEmitter<ChartDataSets[]>;
   @Output()
-  appDownloadNormalBids: EventEmitter<historyOption>;
+  appDownloadMonthlyPayments: EventEmitter<MonthlyOption>;
   @Output()
-  appDownloadNormalAsks: EventEmitter<historyOption>;
+  appDownloadNormalBids: EventEmitter<HistoryOption>;
   @Output()
-  appDownloadRenewableBids: EventEmitter<historyOption>;
+  appDownloadNormalAsks: EventEmitter<HistoryOption>;
   @Output()
-  appDownloadRenewableAsks: EventEmitter<historyOption>;
+  appDownloadRenewableBids: EventEmitter<HistoryOption>;
+  @Output()
+  appDownloadRenewableAsks: EventEmitter<HistoryOption>;
   @Output()
   appDownloadUsages: EventEmitter<DateRange>;
   @Output()
@@ -119,11 +127,33 @@ export class DashboardComponent implements OnInit {
 
   checked: boolean = false;
 
+  years: Select[] = [
+    { value: '0', viewValue: 'All' },
+    { value: '2022', viewValue: '2022' },
+    { value: '2023', viewValue: '2023' },
+  ];
+  months: Select[] = [
+    { value: '0', viewValue: 'All' },
+    { value: '1', viewValue: 'Jan' },
+    { value: '2', viewValue: 'Feb' },
+    { value: '3', viewValue: 'Mar' },
+    { value: '4', viewValue: 'Apr' },
+    { value: '5', viewValue: 'May' },
+    { value: '6', viewValue: 'Jun' },
+    { value: '7', viewValue: 'Jul' },
+    { value: '8', viewValue: 'Aug' },
+    { value: '9', viewValue: 'Sep' },
+    { value: '10', viewValue: 'Oct' },
+    { value: '11', viewValue: 'Nov' },
+    { value: '12', viewValue: 'Dec' },
+  ];
+
   constructor() {
     this.appDownloadBalances = new EventEmitter();
     this.appDownloadOrders = new EventEmitter();
     this.appDownloadUserUsages = new EventEmitter();
     this.appDownloadMonthlyUsages = new EventEmitter();
+    this.appDownloadMonthlyPayments = new EventEmitter();
     this.appDownloadNormalBids = new EventEmitter();
     this.appDownloadNormalAsks = new EventEmitter();
     this.appDownloadRenewableBids = new EventEmitter();
@@ -167,6 +197,16 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.appDownloadMonthlyUsages.emit(this.totalUsageData);
+  }
+
+  onDownloadMonthlyPayments(year: string, month: string) {
+    const yearNum = parseInt(year);
+    const monthNum = parseInt(month);
+    if ((!yearNum && yearNum != 0) || (!monthNum && monthNum != 0)) {
+      alert('条件を正しく設定してください');
+      return;
+    }
+    this.appDownloadMonthlyPayments.emit({ year: yearNum, month: monthNum });
   }
 
   onDownloadNormalBidHistories() {

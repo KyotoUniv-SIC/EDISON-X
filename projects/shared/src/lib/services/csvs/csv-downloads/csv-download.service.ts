@@ -1,10 +1,11 @@
 import { BalanceApplicationService } from '../../student-accounts/balances/balance.application.service';
 import { InsufficientBalanceApplicationService } from '../../student-accounts/insufficient-balances/insufficient-balance.application.service';
+import { MonthlyPaymentApplicationService } from '../../student-accounts/monthly-payments/monthly-payment.application.service';
 import { StudentAccountApplicationService } from '../../student-accounts/student-account.application.service';
 import { CSVCommonService } from '../csv-common.service';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
-import { Balance, NormalAsk, NormalBid, RenewableAsk, RenewableBid, StudentAccount } from '@local/common';
+import { Balance, MonthlyPayment, NormalAsk, NormalBid, RenewableAsk, RenewableBid, StudentAccount } from '@local/common';
 import { ChartDataSets } from 'chart.js';
 import { Ranking } from 'projects/main/src/app/page/dashboard/dashboard.component';
 
@@ -17,6 +18,7 @@ export class CsvDownloadService {
     private readonly studentsApp: StudentAccountApplicationService,
     private readonly balanceApp: BalanceApplicationService,
     private readonly insufficientBalanceApp: InsufficientBalanceApplicationService,
+    private readonly monthlyPaymentApp: MonthlyPaymentApplicationService,
   ) {}
 
   async downloadBalances() {
@@ -187,5 +189,57 @@ export class CsvDownloadService {
     ];
     const csv = this.csvCommon.jsonToCsv(usages, ',');
     this.csvCommon.downloadCsv(csv, 'monthly_usages');
+  }
+
+  async downloadMonthlyPayments(year: number, month: number) {
+    const students = await this.studentsApp.list();
+    let monthlyPayments: MonthlyPayment[] = [];
+    for (let student of students) {
+      let payments = await this.monthlyPaymentApp.list(student.id);
+      if (year) {
+        payments = payments.filter((payment) => payment.year == year.toString());
+      }
+      if (month) {
+        payments = payments.filter((payment) => payment.month == month.toString());
+      }
+      monthlyPayments = monthlyPayments.concat(payments);
+    }
+    if (!monthlyPayments.length) {
+      alert('データが存在しません');
+      return;
+    }
+    // 昇順に並び替え
+    monthlyPayments.sort((first, second) => {
+      if (!first.created_at) {
+        return -1;
+      } else if (!second.created_at) {
+        return 1;
+      } else {
+        if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          return -1;
+        } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    });
+    const paymentsData = monthlyPayments.map((payment) => {
+      return {
+        account_id: payment.student_account_id,
+        account_name: students.find((student) => student.id == payment.student_account_id)?.name,
+        total_payment: parseInt(payment.amount_ujpy) / 1000000,
+        primary_payment: parseInt(payment.amount_primary_ujpy) / 1000000,
+        adjust_payment: parseInt(payment.amount_adjust_ujpy) / 1000000,
+        market_payment: parseInt(payment.amount_market_ujpy) / 1000000,
+        reward_payment: parseInt(payment.amount_reward_ujpy) / 1000000,
+        last_token: parseInt(payment.amount_utoken) / 1000000,
+        year: payment.year,
+        month: payment.month,
+        timestamp: (payment.created_at as Timestamp).toDate().toLocaleString(),
+      };
+    });
+    const csv = this.csvCommon.jsonToCsv(paymentsData, ',');
+    this.csvCommon.downloadCsv(csv, 'monthly_payments');
   }
 }

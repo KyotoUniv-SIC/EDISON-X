@@ -1,4 +1,4 @@
-import { DateRange, historyOption, OrderData } from '../../../view/admin/dashboard/dashboard.component';
+import { DateRange, HistoryOption, MonthlyOption, OrderData } from '../../../view/admin/dashboard/dashboard.component';
 import { Ranking } from '../../dashboard/dashboard.component';
 import { Component, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
@@ -147,19 +147,23 @@ export class DashboardComponent implements OnInit {
     this.csvDownload.downloadMonthlyUsages($event);
   }
 
-  async onDownloadNormalBids($event: historyOption) {
+  async onDownloadMonthlyPayments($event: MonthlyOption) {
+    this.csvDownload.downloadMonthlyPayments($event.year, $event.month);
+  }
+
+  async onDownloadNormalBids($event: HistoryOption) {
     this.csvHistories.downloadNormalBids($event);
   }
 
-  async onDownloadNormalAsks($event: historyOption) {
+  async onDownloadNormalAsks($event: HistoryOption) {
     await this.csvHistories.downloadNormalAsks($event);
   }
 
-  async onDownloadRenewableBids($event: historyOption) {
+  async onDownloadRenewableBids($event: HistoryOption) {
     this.csvHistories.downloadRenewableBids($event);
   }
 
-  async onDownloadRenewableAsks($event: historyOption) {
+  async onDownloadRenewableAsks($event: HistoryOption) {
     await this.csvHistories.downloadRenewableAsks($event);
   }
 
