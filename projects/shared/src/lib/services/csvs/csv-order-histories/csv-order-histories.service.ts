@@ -8,7 +8,7 @@ import { CSVCommonService } from '../csv-common.service';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { NormalAskHistory, NormalBidHistory, RenewableAskHistory, RenewableBidHistory } from '@local/common';
-import { historyOption } from 'projects/main/src/app/view/admin/dashboard/dashboard.component';
+import { HistoryOption } from 'projects/main/src/app/view/admin/dashboard/dashboard.component';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class CsvOrderHistoriesService {
     private readonly renewableAskHistoryApp: RenewableAskHistoryApplicationService,
   ) {}
 
-  async downloadNormalBids(option: historyOption) {
+  async downloadNormalBids(option: HistoryOption) {
     const bids = await this.normalBidHistoryApp.listAll();
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
@@ -52,7 +52,7 @@ export class CsvOrderHistoriesService {
     this.csvCommon.downloadCsv(csv, 'upx_bid_history');
   }
 
-  async downloadNormalAsks(option: historyOption) {
+  async downloadNormalAsks(option: HistoryOption) {
     const asks = await this.normalAskHistoryApp.listAll();
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks
@@ -80,7 +80,7 @@ export class CsvOrderHistoriesService {
     this.csvCommon.downloadCsv(csv, 'upx_ask_history');
   }
 
-  async downloadRenewableBids(option: historyOption) {
+  async downloadRenewableBids(option: HistoryOption) {
     const bids = await this.renewableBidHistoryApp.listAll();
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
@@ -108,7 +108,7 @@ export class CsvOrderHistoriesService {
     this.csvCommon.downloadCsv(csv, 'spx_bid_history');
   }
 
-  async downloadRenewableAsks(option: historyOption) {
+  async downloadRenewableAsks(option: HistoryOption) {
     const asks = await this.renewableAskHistoryApp.listAll();
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks

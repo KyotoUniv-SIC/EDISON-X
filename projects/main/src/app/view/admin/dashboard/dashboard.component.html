@@ -232,11 +232,40 @@
       >
       </canvas>
       <div class="mt-10">
-        <button mat-flat-button class="w-full" color="accent" (click)="onDownloadMonthlyUsages()">Downoad CSV</button>
+        <button mat-flat-button class="w-full" color="accent" (click)="onDownloadMonthlyUsages()">Download CSV</button>
       </div>
     </ng-template>
   </mat-card>
 
+  <mat-card class="mb-20">
+    <mat-card-title>Monthly Payments Download</mat-card-title>
+    <mat-card-content>
+      <p>EDISON stores data on each user's payment.</p>
+      <p>
+        If adjust_payment is NaN, the settlement of the tokens at the end of the month has not been completed and the final amount may be
+        different.
+      </p>
+    </mat-card-content>
+    <form #formRef="ngForm" (submit)="onDownloadMonthlyPayments(yearRef.value, monthRef.value)">
+      <mat-form-field class="w-1/2">
+        <mat-label>Select Year</mat-label>
+        <mat-select #yearRef required>
+          <mat-option *ngFor="let year of years" [value]="year.value">
+            {{ year.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-1/2">
+        <mat-label>Select Month</mat-label>
+        <mat-select #monthRef required>
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-flat-button class="w-full" color="primary" type="submit" [disabled]="formRef.invalid">Download Users Payment</button>
+    </form>
+  </mat-card>
   <mat-card class="mb-20">
     <mat-card-title>Daily Electricity Usages</mat-card-title>
     <mat-card-content>
