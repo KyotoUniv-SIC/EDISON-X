@@ -78,25 +78,25 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   let marketPayment = 0;
   for (const normalBid of normalBids) {
     if (normalBid.is_accepted == true) {
-      usage += parseInt(normalBid.amount_uupx);
+      usage -= parseInt(normalBid.amount_uupx);
       marketPayment += (parseInt(normalBid.contract_price_ujpy) * parseInt(normalBid.amount_uupx)) / 1000000;
     }
   }
   for (const normalAsk of normalAsks) {
     if (normalAsk.is_accepted == true) {
-      usage -= parseInt(normalAsk.amount_uupx);
+      usage += parseInt(normalAsk.amount_uupx);
       marketPayment -= (parseInt(normalAsk.contract_price_ujpy) * parseInt(normalAsk.amount_uupx)) / 1000000;
     }
   }
   for (const renewableBid of renewableBids) {
     if (renewableBid.is_accepted == true) {
-      usage += parseInt(renewableBid.amount_uspx);
+      usage -= parseInt(renewableBid.amount_uspx);
       marketPayment += (parseInt(renewableBid.contract_price_ujpy) * parseInt(renewableBid.amount_uspx)) / 1000000;
     }
   }
   for (const renewableAsk of renewableAsks) {
     if (renewableAsk.is_accepted == true) {
-      usage -= parseInt(renewableAsk.amount_uspx);
+      usage += parseInt(renewableAsk.amount_uspx);
       marketPayment -= (parseInt(renewableAsk.contract_price_ujpy) * parseInt(renewableAsk.amount_uspx)) / 1000000;
     }
   }
