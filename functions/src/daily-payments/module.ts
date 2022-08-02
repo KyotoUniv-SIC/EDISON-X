@@ -52,18 +52,14 @@ export async function listToday(studentAccountID: string) {
 }
 
 export async function listLastMonth(studentAccountID: string) {
-  const first = new Date();
-  first.setMonth(first.getMonth() - 1);
-  first.setDate(1);
-  first.setHours(0, 0, 0, 0);
-  const end = new Date();
-  end.setDate(1);
-  end.setHours(0, 0, 0, 0);
+  const now = new Date();
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
 
   return await collection(studentAccountID)
     .orderBy('created_at', 'desc')
-    .where('created_at', '>', first)
-    .where('created_at', '<', end)
+    .where('created_at', '<', now)
+    .where('created_at', '>', lastMonth)
     .get()
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyPayment));
 }
