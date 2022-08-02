@@ -38,6 +38,12 @@ export async function list(studentAccountID: string) {
     .get()
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as MonthlyUsage));
 }
+export async function listLatest(studentAccountID: string) {
+  return await collection(studentAccountID)
+    .orderBy('created_at', 'desc')
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as MonthlyUsage));
+}
 
 export async function getLastYear(studentAccountID: string, date: Date) {
   const lastYear1dayAgo = date.setFullYear(date.getFullYear() - 1, date.getMonth() + 1, date.getDate() - 1);
@@ -61,7 +67,7 @@ export async function create(data: MonthlyUsage) {
 }
 
 // eslint-disable-next-line camelcase
-export async function update(data: Partial<MonthlyUsage>& { id: string } & { student_account_id: string }) {
+export async function update(data: Partial<MonthlyUsage> & { id: string } & { student_account_id: string }) {
   const now = admin.firestore.Timestamp.now();
   data.updated_at = now;
 
