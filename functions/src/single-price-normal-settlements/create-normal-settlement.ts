@@ -1,12 +1,14 @@
 /* eslint-disable camelcase */
 // import { single_price_normal_settlement } from '.';
+import { admin_account } from '../admin-accounts';
 import { normal_ask_history } from '../normal-ask-histories';
 import { normal_ask } from '../normal-asks';
 import { normal_bid_history } from '../normal-bid-histories';
 import { normal_bid } from '../normal-bids';
 import { normal_settlement } from '../normal-settlements';
 import { normalSettlementOnCreate } from '../normal-settlements/create-balance';
-import { NormalAskHistory, NormalBidHistory, NormalSettlement, proto, SinglePriceNormalSettlement } from '@local/common';
+import { xrpl_tx } from '../xrpl-txs';
+import { NormalAskHistory, NormalBidHistory, NormalSettlement, proto, SinglePriceNormalSettlement, XrplTx } from '@local/common';
 
 // single_price_normal_settlement.onCreateHandler.push()
 export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context: any) => {
@@ -15,6 +17,9 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
     console.log('no normal contract');
     return;
   }
+
+  const xrplTxs = new XrplTx({ txs: [] });
+  const adminAccount = await admin_account.getByName('admin');
 
   const normalBids = await normal_bid.listValid();
   // 降順
@@ -69,20 +74,24 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
     }
 
     if (parseInt(sortNormalBids[i].amount_uupx) < parseInt(sortNormalAsks[j].amount_uupx)) {
+      const bidAccountId = sortNormalBids[i].account_id;
+      const askAccountId = sortNormalAsks[j].account_id;
+      const contractAmount = sortNormalBids[i].amount_uupx;
+
       const normalSettlement = new NormalSettlement({
-        bid_id: sortNormalBids[i].account_id,
-        ask_id: sortNormalAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uupx: sortNormalBids[i].amount_uupx,
+        amount_uupx: contractAmount,
       });
       await normal_settlement.create(normalSettlement);
 
       await normal_bid_history.create(
         new NormalBidHistory(
           {
-            account_id: sortNormalBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortNormalBids[i].price_ujpy,
-            amount_uupx: sortNormalBids[i].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -95,18 +104,23 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
         new NormalAskHistory(
           {
             type: sortNormalAsks[j].type as unknown as proto.main.NormalAskHistoryType,
-            account_id: sortNormalAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortNormalAsks[j].price_ujpy,
-            amount_uupx: sortNormalBids[i].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
           sortNormalAsks[j].created_at,
         ),
       );
-      await normal_ask.delete_(sortNormalAsks[j].id);
+      // await normal_ask.delete_(sortNormalAsks[j].id);
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
+      xrplTxs.txs.push({
+        from_account_id: askAccountId == adminAccount[0].id ? 'admin' : askAccountId,
+        dist_account_id: bidAccountId == adminAccount[0].id ? 'admin' : bidAccountId,
+        amount_uupx: contractAmount,
+      });
 
       sortNormalAsks[j].amount_uupx = (parseInt(sortNormalAsks[j].amount_uupx) - parseInt(sortNormalBids[i].amount_uupx)).toString();
       i++;
@@ -131,35 +145,39 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
         break;
       }
     } else if (parseInt(sortNormalBids[i].amount_uupx) > parseInt(sortNormalAsks[j].amount_uupx)) {
+      const bidAccountId = sortNormalBids[i].account_id;
+      const askAccountId = sortNormalAsks[j].account_id;
+      const contractAmount = sortNormalAsks[j].amount_uupx;
+
       const normalSettlement = new NormalSettlement({
-        bid_id: sortNormalBids[i].account_id,
-        ask_id: sortNormalAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uupx: sortNormalAsks[j].amount_uupx,
+        amount_uupx: contractAmount,
       });
       await normal_settlement.create(normalSettlement);
 
       await normal_bid_history.create(
         new NormalBidHistory(
           {
-            account_id: sortNormalBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortNormalBids[i].price_ujpy,
-            amount_uupx: sortNormalAsks[j].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
           sortNormalBids[i].created_at,
         ),
       );
-      await normal_bid.delete_(sortNormalBids[i].id);
+      // await normal_bid.delete_(sortNormalBids[i].id);
 
       await normal_ask_history.create(
         new NormalAskHistory(
           {
             type: sortNormalAsks[j].type as unknown as proto.main.NormalAskHistoryType,
-            account_id: sortNormalAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortNormalAsks[j].price_ujpy,
-            amount_uupx: sortNormalAsks[j].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -169,6 +187,11 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
       await normal_ask.delete_(sortNormalAsks[j].id);
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
+      xrplTxs.txs.push({
+        from_account_id: askAccountId == adminAccount[0].id ? 'admin' : askAccountId,
+        dist_account_id: bidAccountId == adminAccount[0].id ? 'admin' : bidAccountId,
+        amount_uupx: contractAmount,
+      });
 
       sortNormalBids[i].amount_uupx = (parseInt(sortNormalBids[i].amount_uupx) - parseInt(sortNormalAsks[j].amount_uupx)).toString();
       j++;
@@ -192,20 +215,24 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
         break;
       }
     } else {
+      const bidAccountId = sortNormalBids[i].account_id;
+      const askAccountId = sortNormalAsks[j].account_id;
+      const contractAmount = sortNormalBids[i].amount_uupx;
+
       const normalSettlement = new NormalSettlement({
-        bid_id: sortNormalBids[i].account_id,
-        ask_id: sortNormalAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uupx: sortNormalBids[i].amount_uupx,
+        amount_uupx: contractAmount,
       });
       await normal_settlement.create(normalSettlement);
 
       await normal_bid_history.create(
         new NormalBidHistory(
           {
-            account_id: sortNormalBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortNormalBids[i].price_ujpy,
-            amount_uupx: sortNormalBids[i].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -219,9 +246,9 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
         new NormalAskHistory(
           {
             type: sortNormalAsks[j].type as unknown as proto.main.NormalAskHistoryType,
-            account_id: sortNormalAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortNormalAsks[j].price_ujpy,
-            amount_uupx: sortNormalBids[i].amount_uupx,
+            amount_uupx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -231,6 +258,11 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
       await normal_ask.delete_(sortNormalAsks[j].id);
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
+      xrplTxs.txs.push({
+        from_account_id: askAccountId == adminAccount[0].id ? 'admin' : askAccountId,
+        dist_account_id: bidAccountId == adminAccount[0].id ? 'admin' : bidAccountId,
+        amount_uupx: contractAmount,
+      });
 
       i++;
       j++;
@@ -272,5 +304,6 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
       }
     }
   }
+  await xrpl_tx.create(xrplTxs);
   console.log('complete Normal settlement');
 };
