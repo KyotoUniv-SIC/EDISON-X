@@ -107,9 +107,11 @@ xrpl_tx.onCreateHandler.push(async (snapshot, context) => {
   }
 
   const slicedTxs = txs.slice(1);
-  await xrpl_tx.create(
-    new XrplTx({
-      txs: slicedTxs,
-    }),
-  );
+  if (slicedTxs.length) {
+    await xrpl_tx.create(
+      new XrplTx({
+        txs: slicedTxs,
+      }),
+    );
+  }
 });
