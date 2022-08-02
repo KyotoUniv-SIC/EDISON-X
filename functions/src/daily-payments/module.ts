@@ -78,6 +78,20 @@ export async function listThisMonth(studentAccountID: string) {
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyPayment));
 }
 
+export async function listLastMonthFix(studentAccountID: string) {
+  const now = new Date();
+  now.setDate(now.getDate() - 1);
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+  return await collection(studentAccountID)
+    .orderBy('created_at', 'desc')
+    .where('created_at', '<', now)
+    .where('created_at', '>', lastMonth)
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyPayment));
+}
+
 export async function create(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
