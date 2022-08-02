@@ -12361,6 +12361,467 @@ export const main = $root.main = (() => {
         return User;
     })();
 
+    main.XrplTx = (function() {
+
+        /**
+         * Properties of a XrplTx.
+         * @memberof main
+         * @interface IXrplTx
+         * @property {string|null} [id] XrplTx id
+         * @property {Array.<main.ITx>|null} [txs] XrplTx txs
+         */
+
+        /**
+         * Constructs a new XrplTx.
+         * @memberof main
+         * @classdesc Represents a XrplTx.
+         * @implements IXrplTx
+         * @constructor
+         * @param {main.IXrplTx=} [properties] Properties to set
+         */
+        function XrplTx(properties) {
+            this.txs = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * XrplTx id.
+         * @member {string} id
+         * @memberof main.XrplTx
+         * @instance
+         */
+        XrplTx.prototype.id = "";
+
+        /**
+         * XrplTx txs.
+         * @member {Array.<main.ITx>} txs
+         * @memberof main.XrplTx
+         * @instance
+         */
+        XrplTx.prototype.txs = $util.emptyArray;
+
+        /**
+         * Encodes the specified XrplTx message. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+         * @function encode
+         * @memberof main.XrplTx
+         * @static
+         * @param {main.IXrplTx} message XrplTx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        XrplTx.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.txs != null && message.txs.length)
+                for (let i = 0; i < message.txs.length; ++i)
+                    $root.main.Tx.encode(message.txs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified XrplTx message, length delimited. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof main.XrplTx
+         * @static
+         * @param {main.IXrplTx} message XrplTx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        XrplTx.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a XrplTx message from the specified reader or buffer.
+         * @function decode
+         * @memberof main.XrplTx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {main.XrplTx} XrplTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        XrplTx.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.XrplTx();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    if (!(message.txs && message.txs.length))
+                        message.txs = [];
+                    message.txs.push($root.main.Tx.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a XrplTx message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof main.XrplTx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {main.XrplTx} XrplTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        XrplTx.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a XrplTx message.
+         * @function verify
+         * @memberof main.XrplTx
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        XrplTx.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.txs != null && message.hasOwnProperty("txs")) {
+                if (!Array.isArray(message.txs))
+                    return "txs: array expected";
+                for (let i = 0; i < message.txs.length; ++i) {
+                    let error = $root.main.Tx.verify(message.txs[i]);
+                    if (error)
+                        return "txs." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a XrplTx message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof main.XrplTx
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {main.XrplTx} XrplTx
+         */
+        XrplTx.fromObject = function fromObject(object) {
+            if (object instanceof $root.main.XrplTx)
+                return object;
+            let message = new $root.main.XrplTx();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.txs) {
+                if (!Array.isArray(object.txs))
+                    throw TypeError(".main.XrplTx.txs: array expected");
+                message.txs = [];
+                for (let i = 0; i < object.txs.length; ++i) {
+                    if (typeof object.txs[i] !== "object")
+                        throw TypeError(".main.XrplTx.txs: object expected");
+                    message.txs[i] = $root.main.Tx.fromObject(object.txs[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a XrplTx message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof main.XrplTx
+         * @static
+         * @param {main.XrplTx} message XrplTx
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        XrplTx.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.txs = [];
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.txs && message.txs.length) {
+                object.txs = [];
+                for (let j = 0; j < message.txs.length; ++j)
+                    object.txs[j] = $root.main.Tx.toObject(message.txs[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this XrplTx to JSON.
+         * @function toJSON
+         * @memberof main.XrplTx
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        XrplTx.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return XrplTx;
+    })();
+
+    main.Tx = (function() {
+
+        /**
+         * Properties of a Tx.
+         * @memberof main
+         * @interface ITx
+         * @property {string|null} [from_account_id] Tx from_account_id
+         * @property {string|null} [dist_account_id] Tx dist_account_id
+         * @property {string|null} [amount_uupx] Tx amount_uupx
+         * @property {string|null} [amount_uspx] Tx amount_uspx
+         */
+
+        /**
+         * Constructs a new Tx.
+         * @memberof main
+         * @classdesc Represents a Tx.
+         * @implements ITx
+         * @constructor
+         * @param {main.ITx=} [properties] Properties to set
+         */
+        function Tx(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Tx from_account_id.
+         * @member {string} from_account_id
+         * @memberof main.Tx
+         * @instance
+         */
+        Tx.prototype.from_account_id = "";
+
+        /**
+         * Tx dist_account_id.
+         * @member {string} dist_account_id
+         * @memberof main.Tx
+         * @instance
+         */
+        Tx.prototype.dist_account_id = "";
+
+        /**
+         * Tx amount_uupx.
+         * @member {string} amount_uupx
+         * @memberof main.Tx
+         * @instance
+         */
+        Tx.prototype.amount_uupx = "";
+
+        /**
+         * Tx amount_uspx.
+         * @member {string} amount_uspx
+         * @memberof main.Tx
+         * @instance
+         */
+        Tx.prototype.amount_uspx = "";
+
+        /**
+         * Encodes the specified Tx message. Does not implicitly {@link main.Tx.verify|verify} messages.
+         * @function encode
+         * @memberof main.Tx
+         * @static
+         * @param {main.ITx} message Tx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Tx.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.from_account_id != null && Object.hasOwnProperty.call(message, "from_account_id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.from_account_id);
+            if (message.dist_account_id != null && Object.hasOwnProperty.call(message, "dist_account_id"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.dist_account_id);
+            if (message.amount_uupx != null && Object.hasOwnProperty.call(message, "amount_uupx"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.amount_uupx);
+            if (message.amount_uspx != null && Object.hasOwnProperty.call(message, "amount_uspx"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.amount_uspx);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Tx message, length delimited. Does not implicitly {@link main.Tx.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof main.Tx
+         * @static
+         * @param {main.ITx} message Tx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Tx.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Tx message from the specified reader or buffer.
+         * @function decode
+         * @memberof main.Tx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {main.Tx} Tx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Tx.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.Tx();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.from_account_id = reader.string();
+                    break;
+                case 2:
+                    message.dist_account_id = reader.string();
+                    break;
+                case 3:
+                    message.amount_uupx = reader.string();
+                    break;
+                case 4:
+                    message.amount_uspx = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Tx message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof main.Tx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {main.Tx} Tx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Tx.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Tx message.
+         * @function verify
+         * @memberof main.Tx
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Tx.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.from_account_id != null && message.hasOwnProperty("from_account_id"))
+                if (!$util.isString(message.from_account_id))
+                    return "from_account_id: string expected";
+            if (message.dist_account_id != null && message.hasOwnProperty("dist_account_id"))
+                if (!$util.isString(message.dist_account_id))
+                    return "dist_account_id: string expected";
+            if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                if (!$util.isString(message.amount_uupx))
+                    return "amount_uupx: string expected";
+            if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                if (!$util.isString(message.amount_uspx))
+                    return "amount_uspx: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a Tx message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof main.Tx
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {main.Tx} Tx
+         */
+        Tx.fromObject = function fromObject(object) {
+            if (object instanceof $root.main.Tx)
+                return object;
+            let message = new $root.main.Tx();
+            if (object.from_account_id != null)
+                message.from_account_id = String(object.from_account_id);
+            if (object.dist_account_id != null)
+                message.dist_account_id = String(object.dist_account_id);
+            if (object.amount_uupx != null)
+                message.amount_uupx = String(object.amount_uupx);
+            if (object.amount_uspx != null)
+                message.amount_uspx = String(object.amount_uspx);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Tx message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof main.Tx
+         * @static
+         * @param {main.Tx} message Tx
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Tx.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.from_account_id = "";
+                object.dist_account_id = "";
+                object.amount_uupx = "";
+                object.amount_uspx = "";
+            }
+            if (message.from_account_id != null && message.hasOwnProperty("from_account_id"))
+                object.from_account_id = message.from_account_id;
+            if (message.dist_account_id != null && message.hasOwnProperty("dist_account_id"))
+                object.dist_account_id = message.dist_account_id;
+            if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                object.amount_uupx = message.amount_uupx;
+            if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                object.amount_uspx = message.amount_uspx;
+            return object;
+        };
+
+        /**
+         * Converts this Tx to JSON.
+         * @function toJSON
+         * @memberof main.Tx
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Tx.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Tx;
+    })();
+
     return main;
 })();
 
