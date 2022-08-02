@@ -121,7 +121,7 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
       amount_utoken: tokens.toString(),
     }),
   );
-  const dailyPayments = await daily_payment.listLastMonthFix(data.student_account_id);
+  const dailyPayments = await daily_payment.listLastMonth(data.student_account_id);
   const usage = dailyPayments.reduce((prev, current) => prev + parseInt(current.amount_mwh), 0);
   const monthlyUsage = new MonthlyUsage({
     student_account_id: data.student_account_id,
