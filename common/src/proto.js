@@ -12361,6 +12361,225 @@ export const main = $root.main = (() => {
         return User;
     })();
 
+    main.XrplMonthlyTx = (function() {
+
+        /**
+         * Properties of a XrplMonthlyTx.
+         * @memberof main
+         * @interface IXrplMonthlyTx
+         * @property {string|null} [id] XrplMonthlyTx id
+         * @property {Array.<main.ITx>|null} [txs] XrplMonthlyTx txs
+         */
+
+        /**
+         * Constructs a new XrplMonthlyTx.
+         * @memberof main
+         * @classdesc Represents a XrplMonthlyTx.
+         * @implements IXrplMonthlyTx
+         * @constructor
+         * @param {main.IXrplMonthlyTx=} [properties] Properties to set
+         */
+        function XrplMonthlyTx(properties) {
+            this.txs = [];
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * XrplMonthlyTx id.
+         * @member {string} id
+         * @memberof main.XrplMonthlyTx
+         * @instance
+         */
+        XrplMonthlyTx.prototype.id = "";
+
+        /**
+         * XrplMonthlyTx txs.
+         * @member {Array.<main.ITx>} txs
+         * @memberof main.XrplMonthlyTx
+         * @instance
+         */
+        XrplMonthlyTx.prototype.txs = $util.emptyArray;
+
+        /**
+         * Encodes the specified XrplMonthlyTx message. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+         * @function encode
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {main.IXrplMonthlyTx} message XrplMonthlyTx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        XrplMonthlyTx.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            if (message.txs != null && message.txs.length)
+                for (let i = 0; i < message.txs.length; ++i)
+                    $root.main.Tx.encode(message.txs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified XrplMonthlyTx message, length delimited. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {main.IXrplMonthlyTx} message XrplMonthlyTx message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        XrplMonthlyTx.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a XrplMonthlyTx message from the specified reader or buffer.
+         * @function decode
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        XrplMonthlyTx.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.XrplMonthlyTx();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                case 2:
+                    if (!(message.txs && message.txs.length))
+                        message.txs = [];
+                    message.txs.push($root.main.Tx.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a XrplMonthlyTx message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        XrplMonthlyTx.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a XrplMonthlyTx message.
+         * @function verify
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        XrplMonthlyTx.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            if (message.txs != null && message.hasOwnProperty("txs")) {
+                if (!Array.isArray(message.txs))
+                    return "txs: array expected";
+                for (let i = 0; i < message.txs.length; ++i) {
+                    let error = $root.main.Tx.verify(message.txs[i]);
+                    if (error)
+                        return "txs." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a XrplMonthlyTx message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+         */
+        XrplMonthlyTx.fromObject = function fromObject(object) {
+            if (object instanceof $root.main.XrplMonthlyTx)
+                return object;
+            let message = new $root.main.XrplMonthlyTx();
+            if (object.id != null)
+                message.id = String(object.id);
+            if (object.txs) {
+                if (!Array.isArray(object.txs))
+                    throw TypeError(".main.XrplMonthlyTx.txs: array expected");
+                message.txs = [];
+                for (let i = 0; i < object.txs.length; ++i) {
+                    if (typeof object.txs[i] !== "object")
+                        throw TypeError(".main.XrplMonthlyTx.txs: object expected");
+                    message.txs[i] = $root.main.Tx.fromObject(object.txs[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a XrplMonthlyTx message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof main.XrplMonthlyTx
+         * @static
+         * @param {main.XrplMonthlyTx} message XrplMonthlyTx
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        XrplMonthlyTx.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.arrays || options.defaults)
+                object.txs = [];
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.txs && message.txs.length) {
+                object.txs = [];
+                for (let j = 0; j < message.txs.length; ++j)
+                    object.txs[j] = $root.main.Tx.toObject(message.txs[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this XrplMonthlyTx to JSON.
+         * @function toJSON
+         * @memberof main.XrplMonthlyTx
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        XrplMonthlyTx.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return XrplMonthlyTx;
+    })();
+
     main.XrplTx = (function() {
 
         /**
