@@ -23,6 +23,7 @@ import './single-price-normal-settlements/create-normal-settlement';
 import './single-price-renewable-settlements/create-renewable-settlement';
 import './student-accounts/create-balance';
 import './student-accounts/xrpl';
+import './xrpl-monthly-txs/send-txs';
 import './xrpl-txs/send-txs';
 import * as admin from 'firebase-admin';
 
@@ -86,6 +87,7 @@ const files = {
   normals: './single-price-normal-settlements',
   renewables: './single-price-renewable-settlements',
   student_accounts: './student-accounts',
+  xrpl_monthly_txs: './xrpl-monthly-txs',
   xrpl_txs: './xrpl-txs',
   // scheduled functions
   contract_normal: './schedules/contract-normal',
