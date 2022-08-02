@@ -4,7 +4,8 @@ import { daily_payment } from '../daily-payments';
 import { dailyPaymentOnCreate } from '../daily-payments/create-balance';
 import { daily_usage } from '../daily-usages';
 import { student_account } from '../student-accounts';
-import { DailyPayment } from '@local/common';
+import { xrpl_tx } from '../xrpl-txs';
+import { DailyPayment, XrplTx } from '@local/common';
 import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
@@ -15,6 +16,7 @@ module.exports.dailyWithdraw = f.pubsub
   .onRun(async () => {
     const dailyUsages = await daily_usage.listYesterday();
     const now = new Date();
+    const xrplTxs = new XrplTx({ txs: [] });
 
     for (const dailyUsage of dailyUsages) {
       const usage = parseInt(dailyUsage.amount_kwh_str) * 1000000;
@@ -75,7 +77,9 @@ module.exports.dailyWithdraw = f.pubsub
 
           await daily_payment.create(dailyPayment);
           await dailyPaymentOnCreate({ data: () => dailyPayment }, null);
+          xrplTxs.txs.push({ from_account_id: student.id, dist_account_id: 'admin', amount_uupx: uupxPayment, amount_uspx: uspxPayment });
         }
       }
     }
+    await xrpl_tx.create(xrplTxs);
   });
