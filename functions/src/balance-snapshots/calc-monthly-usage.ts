@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 // import { balance_snapshot } from '.';
 import { balance } from '../balances';
+import { daily_payment } from '../daily-payments';
 // import { discount_price } from '../discount-prices';
 import { insufficient_balance } from '../insufficient-balances';
 import { monthly_payment } from '../monthly-payments';
@@ -36,13 +37,11 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   const uspxRanking = await renewable_ranking.getLatest();
   const rewardSetting = await renewable_reward_setting.getLatest();
 
-  let usage: number;
   let primaryPayment: number;
   // let adjustPayment: number;
 
   // primaryPayment, adjustPaymentの算出
   if (primaryAsks.length) {
-    usage = primaryAsks.reduce((previous, current) => previous + parseInt(current.amount_uupx), 0) - tokens;
     primaryPayment = primaryAsks.reduce(
       (previous, current) => previous + (parseInt(current.price_ujpy) * parseInt(current.amount_uupx)) / 1000000,
       0,
@@ -53,7 +52,6 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
     //   adjustPayment = -((parseInt(primaryAsks[0].price_ujpy) + parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
     // }
   } else {
-    usage = -tokens;
     primaryPayment = 0;
     // if (tokens >= 0) {
     //   adjustPayment = -((27 * 1000000 - parseInt(discounts[0].price_ujpy)) * tokens) / 1000000;
@@ -78,25 +76,21 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   let marketPayment = 0;
   for (const normalBid of normalBids) {
     if (normalBid.is_accepted == true) {
-      usage += parseInt(normalBid.amount_uupx);
       marketPayment += (parseInt(normalBid.contract_price_ujpy) * parseInt(normalBid.amount_uupx)) / 1000000;
     }
   }
   for (const normalAsk of normalAsks) {
     if (normalAsk.is_accepted == true) {
-      usage -= parseInt(normalAsk.amount_uupx);
       marketPayment -= (parseInt(normalAsk.contract_price_ujpy) * parseInt(normalAsk.amount_uupx)) / 1000000;
     }
   }
   for (const renewableBid of renewableBids) {
     if (renewableBid.is_accepted == true) {
-      usage += parseInt(renewableBid.amount_uspx);
       marketPayment += (parseInt(renewableBid.contract_price_ujpy) * parseInt(renewableBid.amount_uspx)) / 1000000;
     }
   }
   for (const renewableAsk of renewableAsks) {
     if (renewableAsk.is_accepted == true) {
-      usage -= parseInt(renewableAsk.amount_uspx);
       marketPayment -= (parseInt(renewableAsk.contract_price_ujpy) * parseInt(renewableAsk.amount_uspx)) / 1000000;
     }
   }
@@ -127,6 +121,8 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
       amount_utoken: tokens.toString(),
     }),
   );
+  const dailyPayments = await daily_payment.listLastMonth(data.student_account_id);
+  const usage = dailyPayments.reduce((prev, current) => prev + parseInt(current.amount_mwh), 0);
   const monthlyUsage = new MonthlyUsage({
     student_account_id: data.student_account_id,
     year: date.getFullYear().toString(),
