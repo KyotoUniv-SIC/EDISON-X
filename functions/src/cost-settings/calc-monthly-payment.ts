@@ -21,16 +21,16 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
   const primaryPrice = primaryAsks.length ? parseInt(primaryAsks[0].price_ujpy) : 27;
 
   // 0で割るのを避ける
-  let price: number;
+  let discountRate: number;
   if (purchase + sale) {
-    price =
-      ((systemCost + electricityCost + reward - income + ((purchase - sale) * parseInt(primaryAsks[0].price_ujpy)) / 1000000) /
-        (((purchase + sale) * primaryPrice) / 1000000)) *
-      1000000;
+    discountRate =
+      (systemCost + electricityCost + reward - income + ((purchase - sale) * parseInt(primaryAsks[0].price_ujpy)) / 1000000) /
+      (((purchase + sale) * primaryPrice) / 1000000);
   } else {
-    price = 0;
+    discountRate = 0;
   }
-  console.log('Discount price', price);
+  console.log('Discount rate', discountRate);
+  const price = parseInt(primaryAsks[0].price_ujpy) * discountRate;
 
   const discountPrice = new DiscountPrice({
     price_ujpy: Math.floor(price).toString(),
