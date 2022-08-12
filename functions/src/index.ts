@@ -92,7 +92,7 @@ const files = {
   operation_normal: './schedules/operation-normal',
   operation_renewable: './schedules/operation-renewable',
   send_mails: './schedules/send-mails',
-  fix_user_daily_payment: './schedules/fix-daily-payment',
+  fix_daily_payment: './schedules/fix-daily-payment',
 };
 
 const loadFunctions = (filesObj: any) => {

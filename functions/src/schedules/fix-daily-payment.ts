@@ -10,7 +10,7 @@ import { Timestamp } from 'firebase/firestore';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
 module.exports.fixDailyPayments = f.pubsub
-  .schedule('30 19 12 * *')
+  .schedule('0 20 12 * *')
   // .schedule('20,40,50 * * * *')
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
