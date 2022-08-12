@@ -5,7 +5,6 @@
 /* eslint-disable require-jsdoc */
 import { DailyPayment, DailyPaymentFirestore } from '@local/common';
 import * as admin from 'firebase-admin';
-import { Timestamp } from 'firebase/firestore';
 
 export * from './controller';
 
@@ -109,7 +108,7 @@ export async function create3rd(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
-  const now = Timestamp.fromDate(new Date('2022-07-03T09:30:00'));
+  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-03T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 
@@ -120,7 +119,7 @@ export async function create4th(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
-  const now = Timestamp.fromDate(new Date('2022-07-04T09:30:00'));
+  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-04T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 
@@ -131,7 +130,7 @@ export async function create5th(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
-  const now = Timestamp.fromDate(new Date('2022-07-05T09:30:00'));
+  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-05T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 
@@ -142,7 +141,7 @@ export async function create6th(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
-  const now = Timestamp.fromDate(new Date('2022-07-06T09:30:00'));
+  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-06T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 
@@ -153,7 +152,7 @@ export async function create7th(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
-  const now = Timestamp.fromDate(new Date('2022-07-07T09:30:00'));
+  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-07T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 
