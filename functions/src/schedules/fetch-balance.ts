@@ -11,7 +11,7 @@ import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
 module.exports.fetchBalance = f.pubsub
-  .schedule('30 17 15 * *')
+  .schedule('25 21 15 * *')
   // .schedule('20,40,50 * * * *')
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
@@ -80,39 +80,38 @@ module.exports.fetchBalance = f.pubsub
             console.log(`${student.id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`);
           }
           await client.disconnect();
+        } else {
+          await client.connect();
+          const vli = await client.getLedgerIndex();
+          const sendUPXTx = {
+            TransactionType: 'Payment',
+            Account: adminAccount[0].xrp_address_hot,
+            Amount: {
+              currency: 'UPX',
+              value: ((uupxEdisonBalance - uupxXrplBalance) / 1000000).toString(),
+              issuer: adminAccount[0].xrp_address_cold,
+            },
+            Destination: student.xrp_address,
+            LastLedgerSequence: vli + 540,
+          };
+          const payPreparedUPX = await client.autofill(sendUPXTx);
+          const paySignedUPX = adminWallet.sign(payPreparedUPX);
+          const payResultUPX = await client.submitAndWait(paySignedUPX.tx_blob);
+          if (payResultUPX.result.meta.TransactionResult == 'tesSUCCESS') {
+            console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedUPX.hash}`);
+          } else {
+            // eslint-disable-next-line no-throw-literal
+            console.log(`${student.id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`);
+          }
+          await client.disconnect();
         }
-        // else {
-        //   await client.connect();
-        //   const vli = await client.getLedgerIndex();
-        //   const sendUPXTx = {
-        //     TransactionType: 'Payment',
-        //     Account: adminAccount[0].xrp_address_hot,
-        //     Amount: {
-        //       currency: 'UPX',
-        //       value: ((uupxEdisonBalance - uupxEdisonBalance) / 1000000).toString(),
-        //       issuer: adminAccount[0].xrp_address_cold,
-        //     },
-        //     Destination: student.xrp_address,
-        //     LastLedgerSequence: vli + 540,
-        //   };
-        //   const payPreparedUPX = await client.autofill(sendUPXTx);
-        //   const paySignedUPX = adminWallet.sign(payPreparedUPX);
-        //   const payResultUPX = await client.submitAndWait(paySignedUPX.tx_blob);
-        //   if (payResultUPX.result.meta.TransactionResult == 'tesSUCCESS') {
-        //     console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedUPX.hash}`);
-        //   } else {
-        //     // eslint-disable-next-line no-throw-literal
-        //     console.log(`${student.id} UPX Error sending transaction: ${payResultUPX.result.meta.TransactionResult}`);
-        //   }
-        //   await client.disconnect();
-        // }
       } else {
         console.log(student.name, 'correct UPX balance');
       }
 
       if (uspxEdisonBalance != uspxXrplBalance) {
         console.log(student.name, 'different SPX balance', 'edison', uspxEdisonBalance, 'xrpl', uspxXrplBalance);
-        if (uspxXrplBalance > uupxEdisonBalance) {
+        if (uspxXrplBalance > uspxEdisonBalance) {
           await client.connect();
           const vli = await client.getLedgerIndex();
           const sendSPXTx = {
@@ -136,32 +135,32 @@ module.exports.fetchBalance = f.pubsub
             console.log(`${student.id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
           }
           await client.disconnect();
+        } else {
+          console.log(((uspxEdisonBalance - uspxXrplBalance) / 1000000).toString());
+          await client.connect();
+          const vli = await client.getLedgerIndex();
+          const sendSPXTx = {
+            TransactionType: 'Payment',
+            Account: adminAccount[0].xrp_address_hot,
+            Amount: {
+              currency: 'SPX',
+              value: ((uspxEdisonBalance - uspxXrplBalance) / 1000000).toString(),
+              issuer: adminAccount[0].xrp_address_cold,
+            },
+            Destination: student.xrp_address,
+            LastLedgerSequence: vli + 540,
+          };
+          const payPreparedSPX = await client.autofill(sendSPXTx);
+          const paySignedSPX = adminWallet.sign(payPreparedSPX);
+          const payResultSPX = await client.submitAndWait(paySignedSPX.tx_blob);
+          if (payResultSPX.result.meta.TransactionResult == 'tesSUCCESS') {
+            console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedSPX.hash}`);
+          } else {
+            // eslint-disable-next-line no-throw-literal
+            console.log(`${student.id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
+          }
+          await client.disconnect();
         }
-        // else {
-        //   await client.connect();
-        //   const vli = await client.getLedgerIndex();
-        //   const sendSPXTx = {
-        //     TransactionType: 'Payment',
-        //     Account: adminAccount[0].xrp_address_hot,
-        //     Amount: {
-        //       currency: 'SPX',
-        //       value: ((uspxEdisonBalance - uspxXrplBalance) / 1000000).toString(),
-        //       issuer: adminAccount[0].xrp_address_cold,
-        //     },
-        //     Destination: student.xrp_address,
-        //     LastLedgerSequence: vli + 540,
-        //   };
-        //   const payPreparedSPX = await client.autofill(sendSPXTx);
-        //   const paySignedSPX = adminWallet.sign(payPreparedSPX);
-        //   const payResultSPX = await client.submitAndWait(paySignedSPX.tx_blob);
-        //   if (payResultSPX.result.meta.TransactionResult == 'tesSUCCESS') {
-        //     console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedSPX.hash}`);
-        //   } else {
-        //     // eslint-disable-next-line no-throw-literal
-        //     console.log(`${student.id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
-        //   }
-        //   await client.disconnect();
-        // }
       } else {
         console.log(student.name, 'correct SPX balance');
       }
