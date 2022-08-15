@@ -78,81 +78,11 @@ export async function listThisMonth(studentAccountID: string) {
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyPayment));
 }
 
-export async function listLastMonthFix(studentAccountID: string) {
-  const now = new Date();
-  now.setDate(1);
-  const lastMonth = new Date();
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-  lastMonth.setDate(1);
-
-  return await collection(studentAccountID)
-    .orderBy('created_at', 'desc')
-    .where('created_at', '<', now)
-    .where('created_at', '>', lastMonth)
-    .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyPayment));
-}
-
 export async function create(data: DailyPayment) {
   const doc = document(data.student_account_id);
   data.id = doc.id;
 
   const now = admin.firestore.Timestamp.now();
-  data.created_at = now;
-  data.updated_at = now;
-
-  await doc.set(data);
-}
-
-export async function create3rd(data: DailyPayment) {
-  const doc = document(data.student_account_id);
-  data.id = doc.id;
-
-  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-03T09:30:00'));
-  data.created_at = now;
-  data.updated_at = now;
-
-  await doc.set(data);
-}
-
-export async function create4th(data: DailyPayment) {
-  const doc = document(data.student_account_id);
-  data.id = doc.id;
-
-  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-04T09:30:00'));
-  data.created_at = now;
-  data.updated_at = now;
-
-  await doc.set(data);
-}
-
-export async function create5th(data: DailyPayment) {
-  const doc = document(data.student_account_id);
-  data.id = doc.id;
-
-  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-05T09:30:00'));
-  data.created_at = now;
-  data.updated_at = now;
-
-  await doc.set(data);
-}
-
-export async function create6th(data: DailyPayment) {
-  const doc = document(data.student_account_id);
-  data.id = doc.id;
-
-  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-06T09:30:00'));
-  data.created_at = now;
-  data.updated_at = now;
-
-  await doc.set(data);
-}
-
-export async function create7th(data: DailyPayment) {
-  const doc = document(data.student_account_id);
-  data.id = doc.id;
-
-  const now = admin.firestore.Timestamp.fromDate(new Date('2022-07-07T09:30:00'));
   data.created_at = now;
   data.updated_at = now;
 

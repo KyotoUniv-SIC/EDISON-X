@@ -68,22 +68,6 @@ export async function listLastMonth(roomID: string) {
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyUsage));
 }
 
-export async function listLastMonthFix(roomID: string) {
-  const now = new Date();
-  now.setDate(1);
-  const lastMonth = new Date();
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-  lastMonth.setDate(1);
-
-  return await collection()
-    .orderBy('created_at', 'desc')
-    .where('created_at', '<', now)
-    .where('created_at', '>', lastMonth)
-    .where('room_id', '==', roomID)
-    .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as DailyUsage));
-}
-
 export async function listThisMonth(roomID: string) {
   const now = new Date();
   const first = new Date();
