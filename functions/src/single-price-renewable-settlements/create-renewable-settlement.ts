@@ -7,6 +7,7 @@ import { renewable_bid_history } from '../renewable-bid-histories';
 import { renewable_bid } from '../renewable-bids';
 import { renewable_settlement } from '../renewable-settlements';
 import { renewableSettlementOnCreate } from '../renewable-settlements/create-balance';
+import { xrpl_tx } from '../xrpl-txs';
 import { proto, RenewableAskHistory, RenewableBidHistory, RenewableSettlement, XrplTx } from '@local/common';
 
 // single_price_renewable_settlement.onCreateHandler.push()
@@ -184,6 +185,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
+
       xrplTxs.txs.push({
         from_account_id: askAccountId,
         dist_account_id: bidAccountId,
@@ -301,5 +303,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
       }
     }
   }
+  await xrpl_tx.create(xrplTxs);
   console.log('complete Renewable settlement');
 };
