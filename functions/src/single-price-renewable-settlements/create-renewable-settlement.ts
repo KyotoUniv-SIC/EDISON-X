@@ -75,10 +75,10 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
       const contractAmount = sortRenewableBids[i].amount_uspx;
 
       const renewableSettlement = new RenewableSettlement({
-        bid_id: sortRenewableBids[i].account_id,
-        ask_id: sortRenewableAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uspx: sortRenewableBids[i].amount_uspx,
+        amount_uspx: contractAmount,
       });
       await renewable_settlement.create(renewableSettlement);
 
