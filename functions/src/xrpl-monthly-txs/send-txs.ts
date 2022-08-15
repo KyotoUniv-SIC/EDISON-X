@@ -28,7 +28,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
 
   let operatorAddress: string;
   let operator;
-  if (tx.from_account_id == 'admin') {
+  if (tx.from_account_id == 'admin' || tx.from_account_id == adminAccount[0].id) {
     const adminPrivate = await admin_private.list(adminAccount[0].id);
     const encryptedSeed = adminPrivate[0].xrp_seed_hot;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
@@ -44,7 +44,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
   }
   let targetAddress: string;
   let target;
-  if (tx.dist_account_id == 'admin') {
+  if (tx.dist_account_id == 'admin' || tx.dist_account_id == adminAccount[0].id) {
     const adminPrivate = await admin_private.list(adminAccount[0].id);
     const encryptedSeed = adminPrivate[0].xrp_seed_hot;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
