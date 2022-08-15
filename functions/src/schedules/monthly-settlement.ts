@@ -15,7 +15,8 @@ import { renewable_ask_history } from '../renewable-ask-histories';
 import { renewable_ranking } from '../renewable-rankings';
 import { renewable_reward_setting } from '../renewable-reward-settings';
 import { student_account } from '../student-accounts';
-import { BalanceSnapshot, MonthlySettlement, RenewableRanking } from '@local/common';
+import { xrpl_monthly_tx } from '../xrpl-monthly-txs';
+import { BalanceSnapshot, MonthlySettlement, RenewableRanking, XrplMonthlyTx } from '@local/common';
 import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
@@ -139,13 +140,16 @@ module.exports.monthlySettlement = f.pubsub
     );
 
     // BalanceSnapshotが計算のトリガーなので分割している
+    const xrplTxs = new XrplMonthlyTx({ txs: [] });
     for (const student of students) {
       const studentID = student.id;
       console.log(studentID, 'payment start');
       const lastMonthBalance = await balance.listLatest(studentID);
       await balance_snapshot.create(new BalanceSnapshot(lastMonthBalance[0]));
-      await balanceSnapshotOnCreate({ data: () => lastMonthBalance[0] }, null);
+      const primaryAsk = await balanceSnapshotOnCreate({ data: () => lastMonthBalance[0] }, null);
+      xrplTxs.txs.push(primaryAsk);
     }
+    await xrpl_monthly_tx.create(xrplTxs);
     // await Promise.all(
     //   students.map(async (student) => {
     //     const studentID = student.id;
