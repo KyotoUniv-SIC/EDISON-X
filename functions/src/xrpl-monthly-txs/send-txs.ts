@@ -36,7 +36,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
     operator = xrpl.Wallet.fromSeed(decryptedSeed);
   } else {
     const operatorStudent = await student_account.get(tx.from_account_id || '');
-    const accountPrivate = await account_private.list(tx.from_account_id || '');
+    const accountPrivate = await account_private.listLatest(tx.from_account_id || '');
     const encryptedSeed = accountPrivate[0].xrp_seed;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
     operatorAddress = operatorStudent.xrp_address;
@@ -52,7 +52,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
     target = xrpl.Wallet.fromSeed(decryptedSeed);
   } else {
     const targetStudent = await student_account.get(tx.dist_account_id || '');
-    const accountPrivate = await account_private.list(tx.dist_account_id || '');
+    const accountPrivate = await account_private.listLatest(tx.dist_account_id || '');
     const encryptedSeed = accountPrivate[0].xrp_seed;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
     targetAddress = targetStudent.xrp_address;

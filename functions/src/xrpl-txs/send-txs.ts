@@ -36,7 +36,7 @@ xrpl_tx.onCreateHandler.push(async (snapshot, context) => {
     sender = xrpl.Wallet.fromSeed(decryptedSeed);
   } else {
     const fromStudent = await student_account.get(tx.from_account_id || '');
-    const accountPrivate = await account_private.list(tx.from_account_id || '');
+    const accountPrivate = await account_private.listLatest(tx.from_account_id || '');
 
     const encryptedSeed = accountPrivate[0].xrp_seed;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
