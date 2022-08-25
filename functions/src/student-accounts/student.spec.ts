@@ -1,8 +1,8 @@
-import { initializeApp } from '@firebase/app';
-import { getFirestore, getDocs, collection } from '@firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, getDocs, collection } from 'firebase/firestore';
 
-describe('xrpl', () => {
-  it('private key', async () => {
+describe('student_accounts_test', () => {
+  it('get student_accounts', async () => {
     const firebaseConfig = {
       apiKey: 'AIzaSyD7h7z5SNhVz_L9uJS5i4WLe7VACgaNoR8',
       authDomain: 'edison-test-f6ac3.firebaseapp.com',
