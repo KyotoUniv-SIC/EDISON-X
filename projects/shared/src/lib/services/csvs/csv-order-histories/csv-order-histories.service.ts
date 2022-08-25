@@ -29,7 +29,23 @@ export class CsvOrderHistoriesService {
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
       .filter((bid) => (bid.bid_created_at as Timestamp).toDate() > option.start)
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end);
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end)
+      // 昇順に並び替え
+      .sort((first, second) => {
+        if (!first.bid_created_at) {
+          return -1;
+        } else if (!second.bid_created_at) {
+          return 1;
+        } else {
+          if ((first.bid_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+            return -1;
+          } else if ((first.bid_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
     if (!filteredBids || !filteredBids.length) {
       alert('データが存在しません');
       return;
@@ -57,7 +73,23 @@ export class CsvOrderHistoriesService {
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks
       .filter((ask) => (ask.ask_created_at as Timestamp).toDate() > option.start)
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end);
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end)
+      // 昇順に並び替え
+      .sort((first, second) => {
+        if (!first.ask_created_at) {
+          return -1;
+        } else if (!second.ask_created_at) {
+          return 1;
+        } else {
+          if ((first.ask_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+            return -1;
+          } else if ((first.ask_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
     if (!filteredAsks || !filteredAsks.length) {
       alert('データが存在しません');
       return;
@@ -85,7 +117,23 @@ export class CsvOrderHistoriesService {
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
       .filter((bid) => (bid.bid_created_at as Timestamp).toDate() > option.start)
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end);
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end)
+      // 昇順に並び替え
+      .sort((first, second) => {
+        if (!first.bid_created_at) {
+          return -1;
+        } else if (!second.bid_created_at) {
+          return 1;
+        } else {
+          if ((first.bid_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+            return -1;
+          } else if ((first.bid_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
     if (!filteredBids || !filteredBids.length) {
       alert('データが存在しません');
       return;
@@ -113,7 +161,23 @@ export class CsvOrderHistoriesService {
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks
       .filter((ask) => (ask.ask_created_at as Timestamp).toDate() > option.start)
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end);
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end)
+      // 昇順に並び替え
+      .sort((first, second) => {
+        if (!first.ask_created_at) {
+          return -1;
+        } else if (!second.ask_created_at) {
+          return 1;
+        } else {
+          if ((first.ask_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+            return -1;
+          } else if ((first.ask_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      });
     if (!filteredAsks || !filteredAsks.length) {
       alert('データが存在しません');
       return;
