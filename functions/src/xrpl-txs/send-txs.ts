@@ -101,7 +101,7 @@ xrpl_tx.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedSPX.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      console.log(`${tx.from_account_id} UPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
+      console.log(`${tx.from_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
     }
     await client.disconnect();
   }
