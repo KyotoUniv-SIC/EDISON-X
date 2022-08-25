@@ -6,113 +6,29 @@ import { daily_payment } from '../daily-payments';
 import { monthly_payment } from '../monthly-payments';
 import { monthly_usage } from '../monthly-usages';
 import { monthlyUsageOnCreate } from '../monthly-usages/create-primary-ask';
-import {
-  Balance,
-  BalanceSnapshot,
-  MonthlyPayment,
-  MonthlyUsage,
-  NormalAskHistory,
-  NormalBidHistory,
-  PrimaryAsk,
-  RenewableAskHistory,
-  RenewableBidHistory,
-  RenewableRanking,
-  RenewableRewardSetting,
-} from '@local/common';
-import * as functions from 'firebase-functions-test';
+import { getLatest, list, listLatest } from './firestore.service';
+import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage, RenewableRanking, RenewableRewardSetting } from '@local/common';
 import 'jest';
 
-const testConfig = functions(
-  {
-    storageBucket: 'edison-test-f6ac3.appspot.com', // firebase管理画面から取得
-    projectId: 'edison-test-f6ac3', // firebase管理画面から取得
-  },
-  './test-server.json',
-);
-
-describe('servers', () => {
+describe('test', () => {
   it('Calculate monthly usage', async () => {
-    const data = new BalanceSnapshot({});
+    const data = new BalanceSnapshot{(
+
+    )};
     console.log(data.student_account_id, 'adjustment start.');
+
     const studentID = data.student_account_id;
     const insufficiencies = 10;
     const tokens = parseInt(data.amount_uupx) + parseInt(data.amount_uspx) - insufficiencies;
-    const primaryAsks = [
-      new PrimaryAsk({
-        account_id: studentID,
-        price_ujpy: '27000000',
-        amount_uupx: data.amount_uupx,
-      }),
-      new PrimaryAsk({
-        account_id: studentID,
-        price_ujpy: '28000000',
-        amount_uupx: data.amount_uupx,
-      }),
-    ];
-    const normalBids = [
-      new NormalBidHistory({
-        account_id: studentID,
-        price_ujpy: '27000000',
-        amount_uupx: data.amount_uupx,
-        is_accepted: true,
-      }),
-      new NormalBidHistory({
-        account_id: studentID,
-        price_ujpy: '28000000',
-        amount_uupx: data.amount_uupx,
-        is_accepted: true,
-      }),
-    ];
-    const normalAsks = [
-      new NormalAskHistory({
-        account_id: studentID,
-        price_ujpy: '26000000',
-        amount_uupx: data.amount_uupx,
-      }),
-      new NormalAskHistory({
-        account_id: studentID,
-        price_ujpy: '26000000',
-        amount_uupx: data.amount_uupx,
-      }),
-    ];
-    const renewableBids = [
-      new RenewableBidHistory({
-        account_id: studentID,
-        price_ujpy: '27500000',
-        amount_uspx: data.amount_uspx,
-      }),
-      new RenewableBidHistory({
-        account_id: studentID,
-        price_ujpy: '28000000',
-        amount_uspx: data.amount_uspx,
-      }),
-    ];
-    const renewableAsks = [
-      new RenewableAskHistory({
-        account_id: studentID,
-        price_ujpy: '27000000',
-        amount_uspx: data.amount_uspx,
-      }),
-      new RenewableAskHistory({
-        account_id: studentID,
-        price_ujpy: '27200000',
-        amount_uspx: data.amount_uspx,
-      }),
-    ];
-    // const discounts = [
-    //   new DiscountPrice({
-    //     price_ujpy: '26000000',
-    //     amount_purchase_utoken: '0',
-    //     amount_sale_utoken: '10',
-    //   }),
-    //   new DiscountPrice({
-    //     price_ujpy: '26500000',
-    //     amount_purchase_utoken: '0',
-    //     amount_sale_utoken: '10',
-    //   }),
-    // ];
-    const uspxRanking = new RenewableRanking({});
-    const rewardSetting = new RenewableRewardSetting({});
+
+    const primaryAsks = await list('primary_ask');
+    const normalBids = await list('normal_bids');
+    const normalAsks = await list('normal_asks');
+    const renewableBids = await list('renewable_bid');
+    const renewableAsks = await list('renewable_ask');
+    // const discounts = await discount_price.listLatest();
+    const uspxRanking = await getLatest('renewable_rankings');
+    const rewardSetting = await getLatest('renewable_reward_settings');
 
     let primaryPayment: number;
     // let adjustPayment: number;
@@ -174,23 +90,7 @@ describe('servers', () => {
 
     const date = new Date();
 
-    const latestBalance = [
-      new Balance({
-        student_account_id: studentID,
-        amount_uspx: '10',
-        amount_uupx: '15',
-      }),
-      new Balance({
-        student_account_id: studentID,
-        amount_uspx: '12',
-        amount_uupx: '10',
-      }),
-      new Balance({
-        student_account_id: studentID,
-        amount_uspx: '18',
-        amount_uupx: '20',
-      }),
-    ];
+    const latestBalance = await listLatest(studentID);
     await balance.create(
       new Balance({
         student_account_id: latestBalance[0].student_account_id,
