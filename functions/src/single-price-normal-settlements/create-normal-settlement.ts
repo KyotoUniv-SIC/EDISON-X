@@ -112,7 +112,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalAsks[j].created_at,
         ),
       );
-      // await normal_ask.delete_(sortNormalAsks[j].id);
+      await normal_ask.delete_(sortNormalAsks[j].id);
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
       xrplTxs.txs.push({
@@ -168,7 +168,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalBids[i].created_at,
         ),
       );
-      // await normal_bid.delete_(sortNormalBids[i].id);
+      await normal_bid.delete_(sortNormalBids[i].id);
 
       await normal_ask_history.create(
         new NormalAskHistory(

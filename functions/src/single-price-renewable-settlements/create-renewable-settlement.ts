@@ -109,7 +109,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      // await renewable_ask.delete_(sortRenewableAsks[j].id);
+      await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
 
@@ -167,7 +167,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableBids[i].created_at,
         ),
       );
-      // await renewable_bid.delete_(sortRenewableBids[i].id);
+      await renewable_bid.delete_(sortRenewableBids[i].id);
 
       await renewable_ask_history.create(
         new RenewableAskHistory(
