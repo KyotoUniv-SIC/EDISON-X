@@ -64,6 +64,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             sortRenewableAsks[j].created_at,
           ),
         );
+        console.log('hoge01', sortRenewableAsks[j].id);
         await renewable_ask.delete_(sortRenewableAsks[j].id);
       }
       break;
@@ -109,6 +110,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge02', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -138,6 +140,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
+          console.log('hoge03', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
@@ -182,6 +185,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge04', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -254,6 +258,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge05', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -297,6 +302,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
+          console.log('hoge06', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
