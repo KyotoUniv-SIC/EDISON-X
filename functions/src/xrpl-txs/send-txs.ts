@@ -36,7 +36,7 @@ xrpl_tx.onCreateHandler.push(async (snapshot, context) => {
     sender = xrpl.Wallet.fromSeed(decryptedSeed);
   } else {
     const fromStudent = await student_account.get(tx.from_account_id || '');
-    const accountPrivate = await account_private.list(tx.from_account_id || '');
+    const accountPrivate = await account_private.listLatest(tx.from_account_id || '');
 
     const encryptedSeed = accountPrivate[0].xrp_seed;
     const decryptedSeed = crypto.AES.decrypt(encryptedSeed, privKey).toString(crypto.enc.Utf8);
@@ -101,7 +101,7 @@ xrpl_tx.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${paySignedSPX.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      console.log(`${tx.from_account_id} UPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
+      console.log(`${tx.from_account_id} SPX Error sending transaction: ${payResultSPX.result.meta.TransactionResult}`);
     }
     await client.disconnect();
   }

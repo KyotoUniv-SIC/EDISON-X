@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import '';
 import './accounts/create-student-account';
 import './balance-snapshots/calc-monthly-usage';
 import './balances/update-available-balance';
