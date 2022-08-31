@@ -12,13 +12,20 @@ export const contractChartLegend = true;
 export class ChartContractService {
   constructor() {}
   createContractChartDataSets(settlements: SinglePriceNormalSettlement[] | SinglePriceRenewableSettlement[]) {
+    if (!settlements.length) {
+      console.log('No settlement data.');
+      return [];
+    }
     const prices = this.getPrices(settlements);
     const amounts = this.getAmounts(settlements);
     if (prices.length != amounts.length) {
-      console.log('It must be same length ');
+      console.log('It must be same length.');
       return [];
     }
-    const referencePrices = Array(prices.length).fill(21.5 as number);
+    const referencePrices =
+      settlements[0] instanceof SinglePriceNormalSettlement
+        ? Array(prices.length).fill(21.5 as number)
+        : Array(prices.length).fill(22.0 as number);
     const dataSets = [
       {
         data: referencePrices,
