@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 import { balance } from '../balances';
 import { daily_usage } from '../daily-usages';
+import { primary_ask_setting } from '../primary-ask-settings';
 import { primary_ask } from '../primary-asks';
 import { primary_bid } from '../primary-bids';
 import { student_account } from '../student-accounts';
@@ -22,20 +23,23 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
   const student = await student_account.get(studentID);
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
+  const primaryAskSetting = await primary_ask_setting.getLatest();
+  const price = primaryAskSetting.price_ujpy ?? '21500000';
+  const ratio = parseInt(primaryAskSetting.ratio_percentage) / 100 ?? 1;
 
   let primaryAsk: PrimaryAsk;
   if ((student.created_at as Timestamp).toDate() > lastMonth) {
     // 一ヶ月以内に作成されたアカウントの場合
     const usages = await daily_usage.listLastMonth(student.room_id);
-    const uupxAmount = usages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * 1000000;
+    const uupxAmount = usages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * ratio * 1000000;
     if (!uupxAmount) {
       console.log(student.room_id, 'have no usage data');
     }
-    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '21500000', amount_uupx: uupxAmount.toString() });
+    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: price, amount_uupx: uupxAmount.toString() });
   } else {
     // 一ヶ月以内に作成されたアカウントでない場合
-    const issueAmount = data.amount_mwh;
-    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '21500000', amount_uupx: issueAmount });
+    const issueAmount = parseInt(data.amount_mwh) * ratio;
+    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: price, amount_uupx: issueAmount.toString() });
   }
 
   await primary_ask.create(primaryAsk);
