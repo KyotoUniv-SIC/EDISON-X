@@ -73,6 +73,7 @@ const files = {
   normal_bids: './normal-bids',
   normal_settlements: './normal-settlements',
   primary_asks: './primary-asks',
+  primary_ask_settings: './primary-ask-settings',
   primary_bids: './primary-bids',
   renewable_ask_deletes: './renewable-ask-deletes',
   renewable_ask_histories: './renewable-ask-histories',
