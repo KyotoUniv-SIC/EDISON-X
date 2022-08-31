@@ -99,7 +99,7 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
   if (!uupxAmount) {
     console.log(student.room_id, 'have no usage data');
   }
-  const primaryAsk = new PrimaryAsk({ account_id: data.id, price_ujpy: '27000000', amount_uupx: uupxAmount.toString() });
+  const primaryAsk = new PrimaryAsk({ account_id: data.id, price_ujpy: '21500000', amount_uupx: uupxAmount.toString() });
   await primary_ask.create(primaryAsk);
   await primaryAskOnCreate({ data: () => primaryAsk }, null);
 });

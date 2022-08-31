@@ -31,11 +31,11 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
     if (!uupxAmount) {
       console.log(student.room_id, 'have no usage data');
     }
-    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '27000000', amount_uupx: uupxAmount.toString() });
+    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '21500000', amount_uupx: uupxAmount.toString() });
   } else {
     // 一ヶ月以内に作成されたアカウントでない場合
     const issueAmount = data.amount_mwh;
-    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '27000000', amount_uupx: issueAmount });
+    primaryAsk = new PrimaryAsk({ account_id: studentID, price_ujpy: '21500000', amount_uupx: issueAmount });
   }
 
   await primary_ask.create(primaryAsk);
