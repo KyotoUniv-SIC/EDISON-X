@@ -51,7 +51,7 @@ export class BuyComponent implements OnInit {
     private readonly singlePriceRenewableApp: SinglePriceRenewableSettlementApplicationService,
     private readonly ordersChartApp: ChartOrderService,
   ) {
-    this.price = 27;
+    this.price = 21.5;
     this.amount = 1;
     let firstDay = new Date();
     firstDay.setUTCDate(1);
