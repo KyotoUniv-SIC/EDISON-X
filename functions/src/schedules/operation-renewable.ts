@@ -18,7 +18,7 @@ module.exports.operationRenewable = f.pubsub
     const setting = await renewable_ask_setting.getLatest();
     const type = proto.main.RenewableAskType.PRIMARY;
     const adminAccount = await admin_account.getByName('admin');
-    const price = !setting.price_ujpy || now.getDate() == 1 ? '27500000' : setting.price_ujpy;
+    const price = !setting.price_ujpy || now.getDate() == 1 ? '22000000' : setting.price_ujpy;
 
     const dailyUsages = await daily_usage.listYesterday();
     const dailyUsageAmount = dailyUsages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * 1000000;
@@ -51,8 +51,8 @@ module.exports.operationRenewable = f.pubsub
 
     await renewable_ask_setting.create(
       new RenewableAskSetting({
-        price_ujpy: (parseInt(price) + 100000).toString(),
-        amount_uspx: !setting.amount_uspx ? amount : setting.amount_uspx,
+        price_ujpy: price,
+        amount_uspx: !setting.amount_uspx ? '25000000' : setting.amount_uspx,
       }),
     );
   });
