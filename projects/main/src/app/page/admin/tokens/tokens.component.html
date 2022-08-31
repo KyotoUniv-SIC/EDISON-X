@@ -1,8 +1,10 @@
 <view-tokens
+  [primarySetting]="primarySetting$ | async"
   [normalSetting]="normalSetting$ | async"
   [renewableSetting]="renewableSetting$ | async"
   [costSetting]="costSetting$ | async"
   [renewableRewardSetting]="renewableRewardSetting$ | async"
+  (appSubmitPrimary)="onSubmitPrimary($event)"
   (appSubmitNormal)="onSubmitNormal($event)"
   (appSubmitRenewable)="onSubmitRenewable($event)"
   (appSubmitCost)="onSubmitCost($event)"
