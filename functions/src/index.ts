@@ -14,6 +14,7 @@ import './normal-bid-deletes/delete-normal-bid';
 import './normal-settlements/create-balance';
 import './primary-asks/create-balance';
 import './renewable-ask-deletes/delete-renewable-ask';
+import './renewable-ask-settings/update-price';
 import './renewable-asks/update-available-balance';
 import './renewable-bid-deletes/delete-renewable-bid';
 import './renewable-settlements/create-balance';
