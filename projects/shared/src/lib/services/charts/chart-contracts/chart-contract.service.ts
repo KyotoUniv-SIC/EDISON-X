@@ -18,7 +18,7 @@ export class ChartContractService {
       console.log('It must be same length ');
       return [];
     }
-    const referencePrices = Array(prices.length).fill(27 as number);
+    const referencePrices = Array(prices.length).fill(21.5 as number);
     const dataSets = [
       {
         data: referencePrices,
