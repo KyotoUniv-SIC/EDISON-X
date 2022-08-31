@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 /* eslint-disable require-jsdoc */
-import { RenewableAskSetting, RenewableAskSettingFirestore } from '@local/common';
+import { PrimaryAskSetting, PrimaryAskSettingFirestore } from '@local/common';
 import * as admin from 'firebase-admin';
 
 export * from './controller';
@@ -11,15 +11,15 @@ export * from './controller';
 export function collection() {
   return admin
     .firestore()
-    .collection(RenewableAskSettingFirestore.collectionPath())
-    .withConverter(RenewableAskSettingFirestore.converter as any);
+    .collection(PrimaryAskSettingFirestore.collectionPath())
+    .withConverter(PrimaryAskSettingFirestore.converter as any);
 }
 
 export function collectionGroup() {
   return admin
     .firestore()
-    .collectionGroup(RenewableAskSettingFirestore.collectionID)
-    .withConverter(RenewableAskSettingFirestore.converter as any);
+    .collectionGroup(PrimaryAskSettingFirestore.collectionID)
+    .withConverter(PrimaryAskSettingFirestore.converter as any);
 }
 
 export function document(id?: string) {
@@ -30,31 +30,24 @@ export function document(id?: string) {
 export async function get(id: string) {
   return await document(id)
     .get()
-    .then((snapshot) => snapshot.data() as RenewableAskSetting);
+    .then((snapshot) => snapshot.data() as PrimaryAskSetting | undefined);
 }
 
 export async function getLatest() {
   return await collection()
     .orderBy('created_at', 'desc')
     .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as RenewableAskSetting)[0]);
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as PrimaryAskSetting)[0]);
 }
 
 export async function list() {
   return await collection()
     .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as RenewableAskSetting));
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as PrimaryAskSetting));
 }
 
-export async function listDesc() {
-  return await collection()
-    .orderBy('created_at', 'desc')
-    .get()
-    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as RenewableAskSetting));
-}
-
-export async function create(data: RenewableAskSetting) {
-  const doc = document();
+export async function create(data: PrimaryAskSetting) {
+  const doc = document(data.id);
   data.id = doc.id;
 
   const now = admin.firestore.Timestamp.now();
@@ -64,7 +57,7 @@ export async function create(data: RenewableAskSetting) {
   await doc.set(data);
 }
 
-export async function update(data: Partial<RenewableAskSetting> & { id: string }) {
+export async function update(data: Partial<PrimaryAskSetting> & { id: string }) {
   const now = admin.firestore.Timestamp.now();
   data.updated_at = now;
 

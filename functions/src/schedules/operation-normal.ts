@@ -21,12 +21,12 @@ module.exports.operationNormal = f.pubsub
     // 価格の決定
     const setting = await normal_ask_setting.getLatest();
     const now = new Date();
-    const price = !setting || now.getDate() == 1 ? 27000000 : parseInt(setting.price_ujpy);
+    const price = !setting || now.getDate() == 1 ? 21500000 : parseInt(setting.price_ujpy);
     const ratio = setting.ratio_percentage ? parseInt(setting.ratio_percentage) : 100;
     const enable = setting.enable ? setting.enable : false;
 
     await normal_ask_setting.create(
-      new NormalAskSetting({ price_ujpy: (price + 100000).toString(), ratio_percentage: ratio.toString(), enable: enable }),
+      new NormalAskSetting({ price_ujpy: price.toString(), ratio_percentage: ratio.toString(), enable: enable }),
     );
 
     const adminAccount = await admin_account.getByName('admin');
