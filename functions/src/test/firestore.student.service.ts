@@ -1,7 +1,8 @@
+/* eslint-disable camelcase */
 import { edisonTestConfig } from './config.model';
 import { StudentAccountFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
-import { getDocs, getFirestore, collection, Timestamp } from 'firebase/firestore';
+import { getDocs, getFirestore, collection, Timestamp, doc, serverTimestamp, FieldValue, setDoc } from 'firebase/firestore';
 
 export const listByStudentID = async (studentAccountID: string, collectionName: string) => {
   const config = edisonTestConfig;
@@ -53,7 +54,7 @@ export const listLatestByStudentID = async (studentAccountID: string, collection
       .sort((first, second) => {
         if (!first.created_at) {
           return 1;
-        } else if (!second.bid_created_at) {
+        } else if (!second.created_at) {
           return -1;
         } else {
           if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
@@ -68,22 +69,23 @@ export const listLatestByStudentID = async (studentAccountID: string, collection
   );
 };
 
-export function document(collectionName: string, id?: string) {
+export const document = (studentAccountID: string, collectionName: string, id?: string) => {
   const config = edisonTestConfig;
   const app = initializeApp(config);
   const db = getFirestore(app);
-  const ref = collection(db, collectionName);
+  const collectionPath = StudentAccountFirestore.documentPath(studentAccountID) + '/' + collectionName;
+  const ref = collection(db, collectionPath);
 
   return id ? doc(db, ref.path, id) : doc(db, ref.path, autoID());
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, camelcase
-export function create(
-  // eslint-disable-next-line camelcase
+export const createByStudentID = (
+  studentID: string,
   collectionName: string,
-  data?: { id?: string; created_at?: FieldValue | Timestamp | undefined; updated_at?: FieldValue | Timestamp | undefined },
-) {
-  const doc = document(collectionName);
+  data: { id?: string; created_at?: FieldValue | Timestamp | undefined; updated_at?: FieldValue | Timestamp | undefined },
+) => {
+  const doc = document(studentID, collectionName);
   data.id = doc.id;
 
   const now = serverTimestamp();
@@ -91,7 +93,42 @@ export function create(
   data.updated_at = now;
 
   return setDoc(doc, data);
-}
-function autoID(): string {
-  throw new Error('Function not implemented.');
-}
+};
+
+export const autoID = () => {
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  let autoID = '';
+
+  for (let i = 0; i < 20; i++) {
+    autoID += CHARS.charAt(Math.floor(Math.random() * CHARS.length));
+  }
+  return autoID;
+};
+
+export const listLastMonth = async (studentAccountID: string, collectionName: string) => {
+  const now = new Date();
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  const list = await listLatestByStudentID(studentAccountID, collectionName);
+
+  return list
+    .sort((first, second) => {
+      if (!first.created_at) {
+        return 1;
+      } else if (!second.created_at) {
+        return -1;
+      } else {
+        if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          return -1;
+        } else if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    })
+    .filter((ele) => ele.account_id == studentAccountID)
+    .filter((ele) => ele.created_at == now)
+    .filter((ele) => ele.created_at > lastMonth);
+};
