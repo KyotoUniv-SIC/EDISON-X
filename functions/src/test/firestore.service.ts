@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 import { edisonTestConfig } from './config.model';
+import { BalanceFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
 import { getDocs, collection, getFirestore, Timestamp } from 'firebase/firestore';
 
@@ -8,14 +9,6 @@ export const list = async (collectionName: string) => {
   const app = initializeApp(config);
   const db = getFirestore(app);
   const snapshots = await getDocs(collection(db, collectionName));
-  return snapshots.docs.map((doc) => doc.data());
-};
-
-export const get = async (id: string) => {
-  const config = edisonTestConfig;
-  const app = initializeApp(config);
-  const db = getFirestore(app);
-  const snapshots = await getDocs(collection(db, 'student_accounts'));
   return snapshots.docs.map((doc) => doc.data());
 };
 

@@ -7,14 +7,13 @@ import { monthly_payment } from '../monthly-payments';
 import { monthly_usage } from '../monthly-usages';
 import { monthlyUsageOnCreate } from '../monthly-usages/create-primary-ask';
 import { getLatest, list, listLatest } from './firestore.service';
+import { getLatestByStudentID } from './firestore.student.service';
 import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage, RenewableRanking, RenewableRewardSetting } from '@local/common';
 import 'jest';
 
 describe('test', () => {
   it('Calculate monthly usage', async () => {
-    const data = new BalanceSnapshot{(
-
-    )};
+    const data = (await getLatestByStudentID('3yBkwbYIpfJtArN4l64e', 'balances')) as BalanceSnapshot;
     console.log(data.student_account_id, 'adjustment start.');
 
     const studentID = data.student_account_id;
