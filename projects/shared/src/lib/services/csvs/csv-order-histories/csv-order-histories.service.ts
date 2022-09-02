@@ -37,9 +37,9 @@ export class CsvOrderHistoriesService {
         } else if (!second.bid_created_at) {
           return 1;
         } else {
-          if ((first.bid_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          if ((first.bid_created_at as Timestamp).toDate() < (second.bid_created_at as Timestamp).toDate()) {
             return -1;
-          } else if ((first.bid_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          } else if ((first.bid_created_at as Timestamp).toDate() > (second.bid_created_at as Timestamp).toDate()) {
             return 1;
           } else {
             return 0;
@@ -81,9 +81,9 @@ export class CsvOrderHistoriesService {
         } else if (!second.ask_created_at) {
           return 1;
         } else {
-          if ((first.ask_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          if ((first.ask_created_at as Timestamp).toDate() < (second.ask_created_at as Timestamp).toDate()) {
             return -1;
-          } else if ((first.ask_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          } else if ((first.ask_created_at as Timestamp).toDate() > (second.ask_created_at as Timestamp).toDate()) {
             return 1;
           } else {
             return 0;
@@ -125,9 +125,9 @@ export class CsvOrderHistoriesService {
         } else if (!second.bid_created_at) {
           return 1;
         } else {
-          if ((first.bid_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          if ((first.bid_created_at as Timestamp).toDate() < (second.bid_created_at as Timestamp).toDate()) {
             return -1;
-          } else if ((first.bid_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          } else if ((first.bid_created_at as Timestamp).toDate() > (second.bid_created_at as Timestamp).toDate()) {
             return 1;
           } else {
             return 0;
@@ -169,9 +169,9 @@ export class CsvOrderHistoriesService {
         } else if (!second.ask_created_at) {
           return 1;
         } else {
-          if ((first.ask_created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          if ((first.ask_created_at as Timestamp).toDate() < (second.ask_created_at as Timestamp).toDate()) {
             return -1;
-          } else if ((first.ask_created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          } else if ((first.ask_created_at as Timestamp).toDate() > (second.ask_created_at as Timestamp).toDate()) {
             return 1;
           } else {
             return 0;
