@@ -1,13 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 /* eslint-disable camelcase */
-import { balance } from '../balances';
-import { daily_payment } from '../daily-payments';
-import { monthly_payment } from '../monthly-payments';
-import { monthly_usage } from '../monthly-usages';
-import { monthlyUsageOnCreate } from '../monthly-usages/create-primary-ask';
-import { getLatest, list, listLatest } from './firestore.service';
-import { getLatestByStudentID } from './firestore.student.service';
+import { create, getLatest, list } from './firestore.service';
+import { getLatestByStudentID, listLatestByStudentID } from './firestore.student.service';
 import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage } from '@local/common';
 import 'jest';
 
@@ -17,6 +12,7 @@ describe('test', () => {
     console.log(data.student_account_id, 'adjustment start.');
 
     const studentID = data.student_account_id;
+    console.log(studentID);
     const insufficiencies = 10;
     const tokens = parseInt(data.amount_uupx) + parseInt(data.amount_uspx) - insufficiencies;
 
@@ -89,8 +85,9 @@ describe('test', () => {
 
     const date = new Date();
 
-    const latestBalance = await listLatest(studentID);
-    await balance.create(
+    const latestBalance = await listLatestByStudentID(studentID, 'balances');
+    await create(
+      'balances',
       new Balance({
         student_account_id: latestBalance[0].student_account_id,
         amount_uspx: '0',
