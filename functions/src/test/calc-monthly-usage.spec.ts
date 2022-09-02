@@ -8,7 +8,7 @@ import { monthly_usage } from '../monthly-usages';
 import { monthlyUsageOnCreate } from '../monthly-usages/create-primary-ask';
 import { getLatest, list, listLatest } from './firestore.service';
 import { getLatestByStudentID } from './firestore.student.service';
-import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage, RenewableRanking, RenewableRewardSetting } from '@local/common';
+import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage } from '@local/common';
 import 'jest';
 
 describe('test', () => {

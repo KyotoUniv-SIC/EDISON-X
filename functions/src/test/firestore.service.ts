@@ -1,6 +1,5 @@
 /* eslint-disable require-jsdoc */
 import { edisonTestConfig } from './config.model';
-import { BalanceFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
 import { getDocs, collection, getFirestore, Timestamp } from 'firebase/firestore';
 
