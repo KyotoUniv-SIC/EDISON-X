@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 /* eslint-disable camelcase */
-import { create, getLatest, list } from './firestore.service';
-import { getLatestByStudentID, listLatestByStudentID } from './firestore.student.service';
+import { getLatest, list } from './firestore.service';
+import { getLatestByStudentID, listLastMonth, listLatestByStudentID } from './firestore.student.service';
 import { Balance, BalanceSnapshot, MonthlyPayment, MonthlyUsage } from '@local/common';
 import 'jest';
 
@@ -86,8 +86,16 @@ describe('test', () => {
     const date = new Date();
 
     const latestBalance = await listLatestByStudentID(studentID, 'balances');
-    await create(
-      'balances',
+
+    const balance = new Balance({
+      student_account_id: latestBalance[0].student_account_id,
+      amount_uspx: '0',
+      amount_uupx: '0',
+    });
+    console.log(balance);
+    // await createByStudentID(studentID, 'balances', balance);
+
+    console.log(
       new Balance({
         student_account_id: latestBalance[0].student_account_id,
         amount_uspx: '0',
@@ -95,20 +103,22 @@ describe('test', () => {
       }),
     );
 
-    await monthly_payment.create(
-      new MonthlyPayment({
-        student_account_id: data.student_account_id,
-        year: date.getFullYear().toString(),
-        month: date.getMonth().toString(),
-        amount_ujpy: (primaryPayment + marketPayment + rewardPayment).toString(),
-        amount_primary_ujpy: primaryPayment.toString(),
-        // amount_adjust_ujpy: adjustPayment.toString(),
-        amount_market_ujpy: marketPayment.toString(),
-        amount_reward_ujpy: rewardPayment.toString(),
-        amount_utoken: tokens.toString(),
-      }),
-    );
-    const dailyPayments = await daily_payment.listLastMonth(data.student_account_id);
+    const monthlyPayment = new MonthlyPayment({
+      student_account_id: data.student_account_id,
+      year: date.getFullYear().toString(),
+      month: date.getMonth().toString(),
+      amount_ujpy: (primaryPayment + marketPayment + rewardPayment).toString(),
+      amount_primary_ujpy: primaryPayment.toString(),
+      // amount_adjust_ujpy: adjustPayment.toString(),
+      amount_market_ujpy: marketPayment.toString(),
+      amount_reward_ujpy: rewardPayment.toString(),
+      amount_utoken: tokens.toString(),
+    });
+    console.log(monthlyPayment);
+
+    // await createByStudentID(studentID, 'monthly_payments', monthlyPayment);
+
+    const dailyPayments = await listLastMonth(data.student_account_id, 'daily_payments');
     const usage = dailyPayments.reduce((prev, current) => prev + parseInt(current.amount_mwh), 0);
     const monthlyUsage = new MonthlyUsage({
       student_account_id: data.student_account_id,
@@ -116,7 +126,9 @@ describe('test', () => {
       month: date.getMonth().toString(),
       amount_mwh: usage.toString(),
     });
-    await monthly_usage.create(monthlyUsage);
-    await monthlyUsageOnCreate({ data: () => monthlyUsage }, null);
+    console.log(monthlyUsage);
+    // await createByStudentID(studentID, 'monthly_usage', monthlyUsage);
+    // await monthlyUsageOnCreate({ data: () => monthlyUsage }, null);
+    expect(true).toBeTruthy();
   });
 });

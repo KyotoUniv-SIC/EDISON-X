@@ -85,12 +85,15 @@ export const createByStudentID = (
   collectionName: string,
   data: { id?: string; created_at?: FieldValue | Timestamp | undefined; updated_at?: FieldValue | Timestamp | undefined },
 ) => {
+  console.log('hoge1');
+
   const doc = document(studentID, collectionName);
   data.id = doc.id;
 
   const now = serverTimestamp();
   data.created_at = now;
   data.updated_at = now;
+  console.log(data);
 
   return setDoc(doc, data);
 };
