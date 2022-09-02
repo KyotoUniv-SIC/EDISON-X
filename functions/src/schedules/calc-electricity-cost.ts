@@ -17,7 +17,6 @@ module.exports.calcElectricityCost = f.pubsub
     let amountDormKwh = 0;
     let countDorm = 0;
     let amountEastKwh = 0;
-    const countEast = 0;
     for (const student of students) {
       // String.prototype.indexOf() Not find return -1
       if (student.room_id.indexOf('koushi' || 'sentetsu') !== -1) {
@@ -35,12 +34,15 @@ module.exports.calcElectricityCost = f.pubsub
     }
     const priceDormAverage = 12.87 * 1000000 + (542 * 1000000 * countDorm) / amountDormKwh;
 
-    const alpha = 1;
     // sigma = (priceEastJuly - alpha * priceDormAverage)^2 + (priceDormJuly - alpha * priceDormAverage / rate)^2
     // 上記の式を最小化し，alphaを求める。
+
+    // alpha = (priceEastJuly + priceDormJuly / rate) / ((1 + 1 / rate ^ 2) * priceDormAverage)
+    const alpha = (priceEastJuly + priceDormJuly / rate) / (1 + 1 / rate / rate) / priceDormAverage;
 
     const priceEast = alpha * priceDormAverage;
     const priceDorm = (alpha * priceDormAverage) / rate;
     const cost = priceEast * amountEastKwh + priceDorm * amountDormKwh;
     console.log('electricity cost: ' + cost);
+    console.log('parseInt: ' + parseInt(cost));
   });
