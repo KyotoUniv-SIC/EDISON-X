@@ -1,5 +1,5 @@
 import { edisonTestConfig } from './config.model';
-import { BalanceFirestore, StudentAccountFirestore } from '@local/common';
+import { StudentAccountFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
 import { getDocs, getFirestore, collection, Timestamp } from 'firebase/firestore';
 
@@ -21,16 +21,16 @@ export const getLatestByStudentID = async (studentAccountID: string, collectionN
   return (
     snapshots.docs
       .map((doc) => doc.data())
-      // 昇順ソート
+      // 降順ソート
       .sort((first, second) => {
         if (!first.created_at) {
-          return -1;
-        } else if (!second.bid_created_at) {
           return 1;
+        } else if (!second.bid_created_at) {
+          return -1;
         } else {
-          if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
             return -1;
-          } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          } else if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
             return 1;
           } else {
             return 0;
