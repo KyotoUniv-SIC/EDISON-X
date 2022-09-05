@@ -11,6 +11,7 @@ import * as crypto from 'crypto-js';
 
 xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
   const data = snapshot.data()! as XrplMonthlyTx;
+  // txsはトランザクション情報の配列
   const txs = data.txs;
   const privKey = process.env.PRIV_KEY;
   if (!privKey) {
@@ -28,6 +29,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
 
   let operatorAddress: string;
   let operator;
+  // Adminの場合とそれ以外でseedの取得方法が異なる
   if (tx.from_account_id == 'admin' || tx.from_account_id == adminAccount[0].id) {
     const adminPrivate = await admin_private.list(adminAccount[0].id);
     const encryptedSeed = adminPrivate[0].xrp_seed_hot;
@@ -44,6 +46,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
   }
   let targetAddress: string;
   let target;
+  // Adminの場合とそれ以外でseedの取得方法が異なる
   if (tx.dist_account_id == 'admin' || tx.dist_account_id == adminAccount[0].id) {
     const adminPrivate = await admin_private.list(adminAccount[0].id);
     const encryptedSeed = adminPrivate[0].xrp_seed_hot;
@@ -63,6 +66,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
   const client = new xrpl.Client(TEST_NET);
 
   await client.connect();
+  // XRPL上のトークン残高 (TrustLine)を取得
   const trustLine = await client.request({
     command: 'account_lines',
     account: targetAddress,
@@ -80,6 +84,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
 
   // UPX Tx
   if (uupxIssue > uupxBalance) {
+    // UPX発行量>保有量のケース
     await client.connect();
     const vli = await client.getLedgerIndex();
     const sendUPXTx = {
@@ -104,6 +109,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
     }
     await client.disconnect();
   } else if (uupxBalance > uupxIssue) {
+    // UPX保有量>発行量のケース
     await client.connect();
     const vli = await client.getLedgerIndex();
     const sendUPXTx = {
@@ -130,7 +136,9 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
   }
 
   // SPX Tx
+  // 現状の仕様では月初のSPX付与はないため、SPX保有量>発行量のケースしかない
   if (uspxIssue > uspxBalance) {
+    // SPX保有量>発行量のケース
     await client.connect();
     const vli = await client.getLedgerIndex();
     const sendSPXTx = {
@@ -155,6 +163,7 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
     }
     await client.disconnect();
   } else if (uspxBalance > uspxIssue) {
+    // SPX保有量>発行量のケース
     await client.connect();
     const vli = await client.getLedgerIndex();
     const sendSPXTx = {
@@ -180,8 +189,10 @@ xrpl_monthly_tx.onCreateHandler.push(async (snapshot, context) => {
     await client.disconnect();
   }
 
+  // 配列の1つ目（処理したTx）以外を新しい配列にする
   const slicedTxs = txs.slice(1);
   if (slicedTxs.length) {
+    // 新しい配列を新しいxrpl_monthly_txのドキュメントに作成。このOnCreateが再度実行される
     await xrpl_monthly_tx.create(
       new XrplMonthlyTx({
         txs: slicedTxs,
