@@ -2071,6 +2071,9 @@ export namespace main {
 
         /** MonthlyPayment amount_reward_ujpy */
         amount_reward_ujpy?: (string|null);
+
+        /** MonthlyPayment amount_utoken */
+        amount_utoken?: (string|null);
     }
 
     /** Represents a MonthlyPayment. */
@@ -2108,6 +2111,9 @@ export namespace main {
 
         /** MonthlyPayment amount_reward_ujpy. */
         public amount_reward_ujpy: string;
+
+        /** MonthlyPayment amount_utoken. */
+        public amount_utoken: string;
 
         /**
          * Encodes the specified MonthlyPayment message. Does not implicitly {@link main.MonthlyPayment.verify|verify} messages.
@@ -2168,6 +2174,125 @@ export namespace main {
 
         /**
          * Converts this MonthlyPayment to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a MonthlySettlement. */
+    interface IMonthlySettlement {
+
+        /** MonthlySettlement id */
+        id?: (string|null);
+
+        /** MonthlySettlement year */
+        year?: (string|null);
+
+        /** MonthlySettlement month */
+        month?: (string|null);
+
+        /** MonthlySettlement reward_ujpy */
+        reward_ujpy?: (string|null);
+
+        /** MonthlySettlement system_income_ujpy */
+        system_income_ujpy?: (string|null);
+
+        /** MonthlySettlement purchase_utoken */
+        purchase_utoken?: (string|null);
+
+        /** MonthlySettlement sale_utoken */
+        sale_utoken?: (string|null);
+    }
+
+    /** Represents a MonthlySettlement. */
+    class MonthlySettlement implements IMonthlySettlement {
+
+        /**
+         * Constructs a new MonthlySettlement.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IMonthlySettlement);
+
+        /** MonthlySettlement id. */
+        public id: string;
+
+        /** MonthlySettlement year. */
+        public year: string;
+
+        /** MonthlySettlement month. */
+        public month: string;
+
+        /** MonthlySettlement reward_ujpy. */
+        public reward_ujpy: string;
+
+        /** MonthlySettlement system_income_ujpy. */
+        public system_income_ujpy: string;
+
+        /** MonthlySettlement purchase_utoken. */
+        public purchase_utoken: string;
+
+        /** MonthlySettlement sale_utoken. */
+        public sale_utoken: string;
+
+        /**
+         * Encodes the specified MonthlySettlement message. Does not implicitly {@link main.MonthlySettlement.verify|verify} messages.
+         * @param message MonthlySettlement message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IMonthlySettlement, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified MonthlySettlement message, length delimited. Does not implicitly {@link main.MonthlySettlement.verify|verify} messages.
+         * @param message MonthlySettlement message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IMonthlySettlement, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a MonthlySettlement message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns MonthlySettlement
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.MonthlySettlement;
+
+        /**
+         * Decodes a MonthlySettlement message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns MonthlySettlement
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.MonthlySettlement;
+
+        /**
+         * Verifies a MonthlySettlement message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a MonthlySettlement message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns MonthlySettlement
+         */
+        public static fromObject(object: { [k: string]: any }): main.MonthlySettlement;
+
+        /**
+         * Creates a plain object from a MonthlySettlement message. Also converts values to other types if specified.
+         * @param message MonthlySettlement
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.MonthlySettlement, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this MonthlySettlement to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3234,6 +3359,101 @@ export namespace main {
 
         /**
          * Converts this PrimaryAsk to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a PrimaryAskSetting. */
+    interface IPrimaryAskSetting {
+
+        /** PrimaryAskSetting id */
+        id?: (string|null);
+
+        /** PrimaryAskSetting price_ujpy */
+        price_ujpy?: (string|null);
+
+        /** PrimaryAskSetting ratio_percentage */
+        ratio_percentage?: (string|null);
+    }
+
+    /** Represents a PrimaryAskSetting. */
+    class PrimaryAskSetting implements IPrimaryAskSetting {
+
+        /**
+         * Constructs a new PrimaryAskSetting.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IPrimaryAskSetting);
+
+        /** PrimaryAskSetting id. */
+        public id: string;
+
+        /** PrimaryAskSetting price_ujpy. */
+        public price_ujpy: string;
+
+        /** PrimaryAskSetting ratio_percentage. */
+        public ratio_percentage: string;
+
+        /**
+         * Encodes the specified PrimaryAskSetting message. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+         * @param message PrimaryAskSetting message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified PrimaryAskSetting message, length delimited. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+         * @param message PrimaryAskSetting message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a PrimaryAskSetting message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns PrimaryAskSetting
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.PrimaryAskSetting;
+
+        /**
+         * Decodes a PrimaryAskSetting message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns PrimaryAskSetting
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.PrimaryAskSetting;
+
+        /**
+         * Verifies a PrimaryAskSetting message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a PrimaryAskSetting message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns PrimaryAskSetting
+         */
+        public static fromObject(object: { [k: string]: any }): main.PrimaryAskSetting;
+
+        /**
+         * Creates a plain object from a PrimaryAskSetting message. Also converts values to other types if specified.
+         * @param message PrimaryAskSetting
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.PrimaryAskSetting, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this PrimaryAskSetting to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -4888,6 +5108,285 @@ export namespace main {
 
         /**
          * Converts this User to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a XrplMonthlyTx. */
+    interface IXrplMonthlyTx {
+
+        /** XrplMonthlyTx id */
+        id?: (string|null);
+
+        /** XrplMonthlyTx txs */
+        txs?: (main.ITx[]|null);
+    }
+
+    /** Represents a XrplMonthlyTx. */
+    class XrplMonthlyTx implements IXrplMonthlyTx {
+
+        /**
+         * Constructs a new XrplMonthlyTx.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IXrplMonthlyTx);
+
+        /** XrplMonthlyTx id. */
+        public id: string;
+
+        /** XrplMonthlyTx txs. */
+        public txs: main.ITx[];
+
+        /**
+         * Encodes the specified XrplMonthlyTx message. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+         * @param message XrplMonthlyTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IXrplMonthlyTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified XrplMonthlyTx message, length delimited. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+         * @param message XrplMonthlyTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IXrplMonthlyTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a XrplMonthlyTx message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns XrplMonthlyTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.XrplMonthlyTx;
+
+        /**
+         * Decodes a XrplMonthlyTx message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns XrplMonthlyTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.XrplMonthlyTx;
+
+        /**
+         * Verifies a XrplMonthlyTx message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a XrplMonthlyTx message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns XrplMonthlyTx
+         */
+        public static fromObject(object: { [k: string]: any }): main.XrplMonthlyTx;
+
+        /**
+         * Creates a plain object from a XrplMonthlyTx message. Also converts values to other types if specified.
+         * @param message XrplMonthlyTx
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.XrplMonthlyTx, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this XrplMonthlyTx to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a XrplTx. */
+    interface IXrplTx {
+
+        /** XrplTx id */
+        id?: (string|null);
+
+        /** XrplTx txs */
+        txs?: (main.ITx[]|null);
+    }
+
+    /** Represents a XrplTx. */
+    class XrplTx implements IXrplTx {
+
+        /**
+         * Constructs a new XrplTx.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IXrplTx);
+
+        /** XrplTx id. */
+        public id: string;
+
+        /** XrplTx txs. */
+        public txs: main.ITx[];
+
+        /**
+         * Encodes the specified XrplTx message. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+         * @param message XrplTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IXrplTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified XrplTx message, length delimited. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+         * @param message XrplTx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IXrplTx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a XrplTx message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns XrplTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.XrplTx;
+
+        /**
+         * Decodes a XrplTx message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns XrplTx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.XrplTx;
+
+        /**
+         * Verifies a XrplTx message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a XrplTx message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns XrplTx
+         */
+        public static fromObject(object: { [k: string]: any }): main.XrplTx;
+
+        /**
+         * Creates a plain object from a XrplTx message. Also converts values to other types if specified.
+         * @param message XrplTx
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.XrplTx, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this XrplTx to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Tx. */
+    interface ITx {
+
+        /** Tx from_account_id */
+        from_account_id?: (string|null);
+
+        /** Tx dist_account_id */
+        dist_account_id?: (string|null);
+
+        /** Tx amount_uupx */
+        amount_uupx?: (string|null);
+
+        /** Tx amount_uspx */
+        amount_uspx?: (string|null);
+    }
+
+    /** Represents a Tx. */
+    class Tx implements ITx {
+
+        /**
+         * Constructs a new Tx.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.ITx);
+
+        /** Tx from_account_id. */
+        public from_account_id: string;
+
+        /** Tx dist_account_id. */
+        public dist_account_id: string;
+
+        /** Tx amount_uupx. */
+        public amount_uupx: string;
+
+        /** Tx amount_uspx. */
+        public amount_uspx: string;
+
+        /**
+         * Encodes the specified Tx message. Does not implicitly {@link main.Tx.verify|verify} messages.
+         * @param message Tx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.ITx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Tx message, length delimited. Does not implicitly {@link main.Tx.verify|verify} messages.
+         * @param message Tx message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.ITx, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Tx message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Tx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.Tx;
+
+        /**
+         * Decodes a Tx message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Tx
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.Tx;
+
+        /**
+         * Verifies a Tx message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Tx message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Tx
+         */
+        public static fromObject(object: { [k: string]: any }): main.Tx;
+
+        /**
+         * Creates a plain object from a Tx message. Also converts values to other types if specified.
+         * @param message Tx
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.Tx, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Tx to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };

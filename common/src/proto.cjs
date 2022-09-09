@@ -4999,6 +4999,7 @@
              * @property {string|null} [amount_adjust_ujpy] MonthlyPayment amount_adjust_ujpy
              * @property {string|null} [amount_market_ujpy] MonthlyPayment amount_market_ujpy
              * @property {string|null} [amount_reward_ujpy] MonthlyPayment amount_reward_ujpy
+             * @property {string|null} [amount_utoken] MonthlyPayment amount_utoken
              */
     
             /**
@@ -5089,6 +5090,14 @@
             MonthlyPayment.prototype.amount_reward_ujpy = "";
     
             /**
+             * MonthlyPayment amount_utoken.
+             * @member {string} amount_utoken
+             * @memberof main.MonthlyPayment
+             * @instance
+             */
+            MonthlyPayment.prototype.amount_utoken = "";
+    
+            /**
              * Encodes the specified MonthlyPayment message. Does not implicitly {@link main.MonthlyPayment.verify|verify} messages.
              * @function encode
              * @memberof main.MonthlyPayment
@@ -5118,6 +5127,8 @@
                     writer.uint32(/* id 8, wireType 2 =*/66).string(message.amount_market_ujpy);
                 if (message.amount_reward_ujpy != null && Object.hasOwnProperty.call(message, "amount_reward_ujpy"))
                     writer.uint32(/* id 9, wireType 2 =*/74).string(message.amount_reward_ujpy);
+                if (message.amount_utoken != null && Object.hasOwnProperty.call(message, "amount_utoken"))
+                    writer.uint32(/* id 10, wireType 2 =*/82).string(message.amount_utoken);
                 return writer;
             };
     
@@ -5178,6 +5189,9 @@
                         break;
                     case 9:
                         message.amount_reward_ujpy = reader.string();
+                        break;
+                    case 10:
+                        message.amount_utoken = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -5241,6 +5255,9 @@
                 if (message.amount_reward_ujpy != null && message.hasOwnProperty("amount_reward_ujpy"))
                     if (!$util.isString(message.amount_reward_ujpy))
                         return "amount_reward_ujpy: string expected";
+                if (message.amount_utoken != null && message.hasOwnProperty("amount_utoken"))
+                    if (!$util.isString(message.amount_utoken))
+                        return "amount_utoken: string expected";
                 return null;
             };
     
@@ -5274,6 +5291,8 @@
                     message.amount_market_ujpy = String(object.amount_market_ujpy);
                 if (object.amount_reward_ujpy != null)
                     message.amount_reward_ujpy = String(object.amount_reward_ujpy);
+                if (object.amount_utoken != null)
+                    message.amount_utoken = String(object.amount_utoken);
                 return message;
             };
     
@@ -5300,6 +5319,7 @@
                     object.amount_adjust_ujpy = "";
                     object.amount_market_ujpy = "";
                     object.amount_reward_ujpy = "";
+                    object.amount_utoken = "";
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -5319,6 +5339,8 @@
                     object.amount_market_ujpy = message.amount_market_ujpy;
                 if (message.amount_reward_ujpy != null && message.hasOwnProperty("amount_reward_ujpy"))
                     object.amount_reward_ujpy = message.amount_reward_ujpy;
+                if (message.amount_utoken != null && message.hasOwnProperty("amount_utoken"))
+                    object.amount_utoken = message.amount_utoken;
                 return object;
             };
     
@@ -5334,6 +5356,314 @@
             };
     
             return MonthlyPayment;
+        })();
+    
+        main.MonthlySettlement = (function() {
+    
+            /**
+             * Properties of a MonthlySettlement.
+             * @memberof main
+             * @interface IMonthlySettlement
+             * @property {string|null} [id] MonthlySettlement id
+             * @property {string|null} [year] MonthlySettlement year
+             * @property {string|null} [month] MonthlySettlement month
+             * @property {string|null} [reward_ujpy] MonthlySettlement reward_ujpy
+             * @property {string|null} [system_income_ujpy] MonthlySettlement system_income_ujpy
+             * @property {string|null} [purchase_utoken] MonthlySettlement purchase_utoken
+             * @property {string|null} [sale_utoken] MonthlySettlement sale_utoken
+             */
+    
+            /**
+             * Constructs a new MonthlySettlement.
+             * @memberof main
+             * @classdesc Represents a MonthlySettlement.
+             * @implements IMonthlySettlement
+             * @constructor
+             * @param {main.IMonthlySettlement=} [properties] Properties to set
+             */
+            function MonthlySettlement(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * MonthlySettlement id.
+             * @member {string} id
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.id = "";
+    
+            /**
+             * MonthlySettlement year.
+             * @member {string} year
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.year = "";
+    
+            /**
+             * MonthlySettlement month.
+             * @member {string} month
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.month = "";
+    
+            /**
+             * MonthlySettlement reward_ujpy.
+             * @member {string} reward_ujpy
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.reward_ujpy = "";
+    
+            /**
+             * MonthlySettlement system_income_ujpy.
+             * @member {string} system_income_ujpy
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.system_income_ujpy = "";
+    
+            /**
+             * MonthlySettlement purchase_utoken.
+             * @member {string} purchase_utoken
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.purchase_utoken = "";
+    
+            /**
+             * MonthlySettlement sale_utoken.
+             * @member {string} sale_utoken
+             * @memberof main.MonthlySettlement
+             * @instance
+             */
+            MonthlySettlement.prototype.sale_utoken = "";
+    
+            /**
+             * Encodes the specified MonthlySettlement message. Does not implicitly {@link main.MonthlySettlement.verify|verify} messages.
+             * @function encode
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {main.IMonthlySettlement} message MonthlySettlement message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            MonthlySettlement.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.year != null && Object.hasOwnProperty.call(message, "year"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.year);
+                if (message.month != null && Object.hasOwnProperty.call(message, "month"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.month);
+                if (message.reward_ujpy != null && Object.hasOwnProperty.call(message, "reward_ujpy"))
+                    writer.uint32(/* id 4, wireType 2 =*/34).string(message.reward_ujpy);
+                if (message.system_income_ujpy != null && Object.hasOwnProperty.call(message, "system_income_ujpy"))
+                    writer.uint32(/* id 5, wireType 2 =*/42).string(message.system_income_ujpy);
+                if (message.purchase_utoken != null && Object.hasOwnProperty.call(message, "purchase_utoken"))
+                    writer.uint32(/* id 6, wireType 2 =*/50).string(message.purchase_utoken);
+                if (message.sale_utoken != null && Object.hasOwnProperty.call(message, "sale_utoken"))
+                    writer.uint32(/* id 7, wireType 2 =*/58).string(message.sale_utoken);
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified MonthlySettlement message, length delimited. Does not implicitly {@link main.MonthlySettlement.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {main.IMonthlySettlement} message MonthlySettlement message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            MonthlySettlement.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a MonthlySettlement message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.MonthlySettlement} MonthlySettlement
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            MonthlySettlement.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.MonthlySettlement();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        message.year = reader.string();
+                        break;
+                    case 3:
+                        message.month = reader.string();
+                        break;
+                    case 4:
+                        message.reward_ujpy = reader.string();
+                        break;
+                    case 5:
+                        message.system_income_ujpy = reader.string();
+                        break;
+                    case 6:
+                        message.purchase_utoken = reader.string();
+                        break;
+                    case 7:
+                        message.sale_utoken = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a MonthlySettlement message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.MonthlySettlement} MonthlySettlement
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            MonthlySettlement.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a MonthlySettlement message.
+             * @function verify
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            MonthlySettlement.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.year != null && message.hasOwnProperty("year"))
+                    if (!$util.isString(message.year))
+                        return "year: string expected";
+                if (message.month != null && message.hasOwnProperty("month"))
+                    if (!$util.isString(message.month))
+                        return "month: string expected";
+                if (message.reward_ujpy != null && message.hasOwnProperty("reward_ujpy"))
+                    if (!$util.isString(message.reward_ujpy))
+                        return "reward_ujpy: string expected";
+                if (message.system_income_ujpy != null && message.hasOwnProperty("system_income_ujpy"))
+                    if (!$util.isString(message.system_income_ujpy))
+                        return "system_income_ujpy: string expected";
+                if (message.purchase_utoken != null && message.hasOwnProperty("purchase_utoken"))
+                    if (!$util.isString(message.purchase_utoken))
+                        return "purchase_utoken: string expected";
+                if (message.sale_utoken != null && message.hasOwnProperty("sale_utoken"))
+                    if (!$util.isString(message.sale_utoken))
+                        return "sale_utoken: string expected";
+                return null;
+            };
+    
+            /**
+             * Creates a MonthlySettlement message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.MonthlySettlement} MonthlySettlement
+             */
+            MonthlySettlement.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.MonthlySettlement)
+                    return object;
+                var message = new $root.main.MonthlySettlement();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.year != null)
+                    message.year = String(object.year);
+                if (object.month != null)
+                    message.month = String(object.month);
+                if (object.reward_ujpy != null)
+                    message.reward_ujpy = String(object.reward_ujpy);
+                if (object.system_income_ujpy != null)
+                    message.system_income_ujpy = String(object.system_income_ujpy);
+                if (object.purchase_utoken != null)
+                    message.purchase_utoken = String(object.purchase_utoken);
+                if (object.sale_utoken != null)
+                    message.sale_utoken = String(object.sale_utoken);
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a MonthlySettlement message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.MonthlySettlement
+             * @static
+             * @param {main.MonthlySettlement} message MonthlySettlement
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            MonthlySettlement.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.id = "";
+                    object.year = "";
+                    object.month = "";
+                    object.reward_ujpy = "";
+                    object.system_income_ujpy = "";
+                    object.purchase_utoken = "";
+                    object.sale_utoken = "";
+                }
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.year != null && message.hasOwnProperty("year"))
+                    object.year = message.year;
+                if (message.month != null && message.hasOwnProperty("month"))
+                    object.month = message.month;
+                if (message.reward_ujpy != null && message.hasOwnProperty("reward_ujpy"))
+                    object.reward_ujpy = message.reward_ujpy;
+                if (message.system_income_ujpy != null && message.hasOwnProperty("system_income_ujpy"))
+                    object.system_income_ujpy = message.system_income_ujpy;
+                if (message.purchase_utoken != null && message.hasOwnProperty("purchase_utoken"))
+                    object.purchase_utoken = message.purchase_utoken;
+                if (message.sale_utoken != null && message.hasOwnProperty("sale_utoken"))
+                    object.sale_utoken = message.sale_utoken;
+                return object;
+            };
+    
+            /**
+             * Converts this MonthlySettlement to JSON.
+             * @function toJSON
+             * @memberof main.MonthlySettlement
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            MonthlySettlement.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return MonthlySettlement;
         })();
     
         main.MonthlyUsage = (function() {
@@ -7976,6 +8306,226 @@
             };
     
             return PrimaryAsk;
+        })();
+    
+        main.PrimaryAskSetting = (function() {
+    
+            /**
+             * Properties of a PrimaryAskSetting.
+             * @memberof main
+             * @interface IPrimaryAskSetting
+             * @property {string|null} [id] PrimaryAskSetting id
+             * @property {string|null} [price_ujpy] PrimaryAskSetting price_ujpy
+             * @property {string|null} [ratio_percentage] PrimaryAskSetting ratio_percentage
+             */
+    
+            /**
+             * Constructs a new PrimaryAskSetting.
+             * @memberof main
+             * @classdesc Represents a PrimaryAskSetting.
+             * @implements IPrimaryAskSetting
+             * @constructor
+             * @param {main.IPrimaryAskSetting=} [properties] Properties to set
+             */
+            function PrimaryAskSetting(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * PrimaryAskSetting id.
+             * @member {string} id
+             * @memberof main.PrimaryAskSetting
+             * @instance
+             */
+            PrimaryAskSetting.prototype.id = "";
+    
+            /**
+             * PrimaryAskSetting price_ujpy.
+             * @member {string} price_ujpy
+             * @memberof main.PrimaryAskSetting
+             * @instance
+             */
+            PrimaryAskSetting.prototype.price_ujpy = "";
+    
+            /**
+             * PrimaryAskSetting ratio_percentage.
+             * @member {string} ratio_percentage
+             * @memberof main.PrimaryAskSetting
+             * @instance
+             */
+            PrimaryAskSetting.prototype.ratio_percentage = "";
+    
+            /**
+             * Encodes the specified PrimaryAskSetting message. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+             * @function encode
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {main.IPrimaryAskSetting} message PrimaryAskSetting message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            PrimaryAskSetting.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.price_ujpy != null && Object.hasOwnProperty.call(message, "price_ujpy"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.price_ujpy);
+                if (message.ratio_percentage != null && Object.hasOwnProperty.call(message, "ratio_percentage"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.ratio_percentage);
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified PrimaryAskSetting message, length delimited. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {main.IPrimaryAskSetting} message PrimaryAskSetting message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            PrimaryAskSetting.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a PrimaryAskSetting message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.PrimaryAskSetting} PrimaryAskSetting
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            PrimaryAskSetting.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.PrimaryAskSetting();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        message.price_ujpy = reader.string();
+                        break;
+                    case 3:
+                        message.ratio_percentage = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a PrimaryAskSetting message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.PrimaryAskSetting} PrimaryAskSetting
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            PrimaryAskSetting.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a PrimaryAskSetting message.
+             * @function verify
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            PrimaryAskSetting.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.price_ujpy != null && message.hasOwnProperty("price_ujpy"))
+                    if (!$util.isString(message.price_ujpy))
+                        return "price_ujpy: string expected";
+                if (message.ratio_percentage != null && message.hasOwnProperty("ratio_percentage"))
+                    if (!$util.isString(message.ratio_percentage))
+                        return "ratio_percentage: string expected";
+                return null;
+            };
+    
+            /**
+             * Creates a PrimaryAskSetting message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.PrimaryAskSetting} PrimaryAskSetting
+             */
+            PrimaryAskSetting.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.PrimaryAskSetting)
+                    return object;
+                var message = new $root.main.PrimaryAskSetting();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.price_ujpy != null)
+                    message.price_ujpy = String(object.price_ujpy);
+                if (object.ratio_percentage != null)
+                    message.ratio_percentage = String(object.ratio_percentage);
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a PrimaryAskSetting message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.PrimaryAskSetting
+             * @static
+             * @param {main.PrimaryAskSetting} message PrimaryAskSetting
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            PrimaryAskSetting.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.id = "";
+                    object.price_ujpy = "";
+                    object.ratio_percentage = "";
+                }
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.price_ujpy != null && message.hasOwnProperty("price_ujpy"))
+                    object.price_ujpy = message.price_ujpy;
+                if (message.ratio_percentage != null && message.hasOwnProperty("ratio_percentage"))
+                    object.ratio_percentage = message.ratio_percentage;
+                return object;
+            };
+    
+            /**
+             * Converts this PrimaryAskSetting to JSON.
+             * @function toJSON
+             * @memberof main.PrimaryAskSetting
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            PrimaryAskSetting.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return PrimaryAskSetting;
         })();
     
         main.PrimaryBid = (function() {
@@ -12038,6 +12588,686 @@
             };
     
             return User;
+        })();
+    
+        main.XrplMonthlyTx = (function() {
+    
+            /**
+             * Properties of a XrplMonthlyTx.
+             * @memberof main
+             * @interface IXrplMonthlyTx
+             * @property {string|null} [id] XrplMonthlyTx id
+             * @property {Array.<main.ITx>|null} [txs] XrplMonthlyTx txs
+             */
+    
+            /**
+             * Constructs a new XrplMonthlyTx.
+             * @memberof main
+             * @classdesc Represents a XrplMonthlyTx.
+             * @implements IXrplMonthlyTx
+             * @constructor
+             * @param {main.IXrplMonthlyTx=} [properties] Properties to set
+             */
+            function XrplMonthlyTx(properties) {
+                this.txs = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * XrplMonthlyTx id.
+             * @member {string} id
+             * @memberof main.XrplMonthlyTx
+             * @instance
+             */
+            XrplMonthlyTx.prototype.id = "";
+    
+            /**
+             * XrplMonthlyTx txs.
+             * @member {Array.<main.ITx>} txs
+             * @memberof main.XrplMonthlyTx
+             * @instance
+             */
+            XrplMonthlyTx.prototype.txs = $util.emptyArray;
+    
+            /**
+             * Encodes the specified XrplMonthlyTx message. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+             * @function encode
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {main.IXrplMonthlyTx} message XrplMonthlyTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            XrplMonthlyTx.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.txs != null && message.txs.length)
+                    for (var i = 0; i < message.txs.length; ++i)
+                        $root.main.Tx.encode(message.txs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified XrplMonthlyTx message, length delimited. Does not implicitly {@link main.XrplMonthlyTx.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {main.IXrplMonthlyTx} message XrplMonthlyTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            XrplMonthlyTx.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a XrplMonthlyTx message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            XrplMonthlyTx.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.XrplMonthlyTx();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.txs && message.txs.length))
+                            message.txs = [];
+                        message.txs.push($root.main.Tx.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a XrplMonthlyTx message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            XrplMonthlyTx.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a XrplMonthlyTx message.
+             * @function verify
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            XrplMonthlyTx.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.txs != null && message.hasOwnProperty("txs")) {
+                    if (!Array.isArray(message.txs))
+                        return "txs: array expected";
+                    for (var i = 0; i < message.txs.length; ++i) {
+                        var error = $root.main.Tx.verify(message.txs[i]);
+                        if (error)
+                            return "txs." + error;
+                    }
+                }
+                return null;
+            };
+    
+            /**
+             * Creates a XrplMonthlyTx message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.XrplMonthlyTx} XrplMonthlyTx
+             */
+            XrplMonthlyTx.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.XrplMonthlyTx)
+                    return object;
+                var message = new $root.main.XrplMonthlyTx();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.txs) {
+                    if (!Array.isArray(object.txs))
+                        throw TypeError(".main.XrplMonthlyTx.txs: array expected");
+                    message.txs = [];
+                    for (var i = 0; i < object.txs.length; ++i) {
+                        if (typeof object.txs[i] !== "object")
+                            throw TypeError(".main.XrplMonthlyTx.txs: object expected");
+                        message.txs[i] = $root.main.Tx.fromObject(object.txs[i]);
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a XrplMonthlyTx message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.XrplMonthlyTx
+             * @static
+             * @param {main.XrplMonthlyTx} message XrplMonthlyTx
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            XrplMonthlyTx.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.txs = [];
+                if (options.defaults)
+                    object.id = "";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.txs && message.txs.length) {
+                    object.txs = [];
+                    for (var j = 0; j < message.txs.length; ++j)
+                        object.txs[j] = $root.main.Tx.toObject(message.txs[j], options);
+                }
+                return object;
+            };
+    
+            /**
+             * Converts this XrplMonthlyTx to JSON.
+             * @function toJSON
+             * @memberof main.XrplMonthlyTx
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            XrplMonthlyTx.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return XrplMonthlyTx;
+        })();
+    
+        main.XrplTx = (function() {
+    
+            /**
+             * Properties of a XrplTx.
+             * @memberof main
+             * @interface IXrplTx
+             * @property {string|null} [id] XrplTx id
+             * @property {Array.<main.ITx>|null} [txs] XrplTx txs
+             */
+    
+            /**
+             * Constructs a new XrplTx.
+             * @memberof main
+             * @classdesc Represents a XrplTx.
+             * @implements IXrplTx
+             * @constructor
+             * @param {main.IXrplTx=} [properties] Properties to set
+             */
+            function XrplTx(properties) {
+                this.txs = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * XrplTx id.
+             * @member {string} id
+             * @memberof main.XrplTx
+             * @instance
+             */
+            XrplTx.prototype.id = "";
+    
+            /**
+             * XrplTx txs.
+             * @member {Array.<main.ITx>} txs
+             * @memberof main.XrplTx
+             * @instance
+             */
+            XrplTx.prototype.txs = $util.emptyArray;
+    
+            /**
+             * Encodes the specified XrplTx message. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+             * @function encode
+             * @memberof main.XrplTx
+             * @static
+             * @param {main.IXrplTx} message XrplTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            XrplTx.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.txs != null && message.txs.length)
+                    for (var i = 0; i < message.txs.length; ++i)
+                        $root.main.Tx.encode(message.txs[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified XrplTx message, length delimited. Does not implicitly {@link main.XrplTx.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.XrplTx
+             * @static
+             * @param {main.IXrplTx} message XrplTx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            XrplTx.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a XrplTx message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.XrplTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.XrplTx} XrplTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            XrplTx.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.XrplTx();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.txs && message.txs.length))
+                            message.txs = [];
+                        message.txs.push($root.main.Tx.decode(reader, reader.uint32()));
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a XrplTx message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.XrplTx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.XrplTx} XrplTx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            XrplTx.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a XrplTx message.
+             * @function verify
+             * @memberof main.XrplTx
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            XrplTx.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.txs != null && message.hasOwnProperty("txs")) {
+                    if (!Array.isArray(message.txs))
+                        return "txs: array expected";
+                    for (var i = 0; i < message.txs.length; ++i) {
+                        var error = $root.main.Tx.verify(message.txs[i]);
+                        if (error)
+                            return "txs." + error;
+                    }
+                }
+                return null;
+            };
+    
+            /**
+             * Creates a XrplTx message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.XrplTx
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.XrplTx} XrplTx
+             */
+            XrplTx.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.XrplTx)
+                    return object;
+                var message = new $root.main.XrplTx();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.txs) {
+                    if (!Array.isArray(object.txs))
+                        throw TypeError(".main.XrplTx.txs: array expected");
+                    message.txs = [];
+                    for (var i = 0; i < object.txs.length; ++i) {
+                        if (typeof object.txs[i] !== "object")
+                            throw TypeError(".main.XrplTx.txs: object expected");
+                        message.txs[i] = $root.main.Tx.fromObject(object.txs[i]);
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a XrplTx message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.XrplTx
+             * @static
+             * @param {main.XrplTx} message XrplTx
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            XrplTx.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.txs = [];
+                if (options.defaults)
+                    object.id = "";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.txs && message.txs.length) {
+                    object.txs = [];
+                    for (var j = 0; j < message.txs.length; ++j)
+                        object.txs[j] = $root.main.Tx.toObject(message.txs[j], options);
+                }
+                return object;
+            };
+    
+            /**
+             * Converts this XrplTx to JSON.
+             * @function toJSON
+             * @memberof main.XrplTx
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            XrplTx.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return XrplTx;
+        })();
+    
+        main.Tx = (function() {
+    
+            /**
+             * Properties of a Tx.
+             * @memberof main
+             * @interface ITx
+             * @property {string|null} [from_account_id] Tx from_account_id
+             * @property {string|null} [dist_account_id] Tx dist_account_id
+             * @property {string|null} [amount_uupx] Tx amount_uupx
+             * @property {string|null} [amount_uspx] Tx amount_uspx
+             */
+    
+            /**
+             * Constructs a new Tx.
+             * @memberof main
+             * @classdesc Represents a Tx.
+             * @implements ITx
+             * @constructor
+             * @param {main.ITx=} [properties] Properties to set
+             */
+            function Tx(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * Tx from_account_id.
+             * @member {string} from_account_id
+             * @memberof main.Tx
+             * @instance
+             */
+            Tx.prototype.from_account_id = "";
+    
+            /**
+             * Tx dist_account_id.
+             * @member {string} dist_account_id
+             * @memberof main.Tx
+             * @instance
+             */
+            Tx.prototype.dist_account_id = "";
+    
+            /**
+             * Tx amount_uupx.
+             * @member {string} amount_uupx
+             * @memberof main.Tx
+             * @instance
+             */
+            Tx.prototype.amount_uupx = "";
+    
+            /**
+             * Tx amount_uspx.
+             * @member {string} amount_uspx
+             * @memberof main.Tx
+             * @instance
+             */
+            Tx.prototype.amount_uspx = "";
+    
+            /**
+             * Encodes the specified Tx message. Does not implicitly {@link main.Tx.verify|verify} messages.
+             * @function encode
+             * @memberof main.Tx
+             * @static
+             * @param {main.ITx} message Tx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Tx.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.from_account_id != null && Object.hasOwnProperty.call(message, "from_account_id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.from_account_id);
+                if (message.dist_account_id != null && Object.hasOwnProperty.call(message, "dist_account_id"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.dist_account_id);
+                if (message.amount_uupx != null && Object.hasOwnProperty.call(message, "amount_uupx"))
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.amount_uupx);
+                if (message.amount_uspx != null && Object.hasOwnProperty.call(message, "amount_uspx"))
+                    writer.uint32(/* id 4, wireType 2 =*/34).string(message.amount_uspx);
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified Tx message, length delimited. Does not implicitly {@link main.Tx.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.Tx
+             * @static
+             * @param {main.ITx} message Tx message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Tx.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes a Tx message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.Tx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.Tx} Tx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Tx.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.Tx();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.from_account_id = reader.string();
+                        break;
+                    case 2:
+                        message.dist_account_id = reader.string();
+                        break;
+                    case 3:
+                        message.amount_uupx = reader.string();
+                        break;
+                    case 4:
+                        message.amount_uspx = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes a Tx message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.Tx
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.Tx} Tx
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Tx.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies a Tx message.
+             * @function verify
+             * @memberof main.Tx
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Tx.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.from_account_id != null && message.hasOwnProperty("from_account_id"))
+                    if (!$util.isString(message.from_account_id))
+                        return "from_account_id: string expected";
+                if (message.dist_account_id != null && message.hasOwnProperty("dist_account_id"))
+                    if (!$util.isString(message.dist_account_id))
+                        return "dist_account_id: string expected";
+                if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                    if (!$util.isString(message.amount_uupx))
+                        return "amount_uupx: string expected";
+                if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                    if (!$util.isString(message.amount_uspx))
+                        return "amount_uspx: string expected";
+                return null;
+            };
+    
+            /**
+             * Creates a Tx message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.Tx
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.Tx} Tx
+             */
+            Tx.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.Tx)
+                    return object;
+                var message = new $root.main.Tx();
+                if (object.from_account_id != null)
+                    message.from_account_id = String(object.from_account_id);
+                if (object.dist_account_id != null)
+                    message.dist_account_id = String(object.dist_account_id);
+                if (object.amount_uupx != null)
+                    message.amount_uupx = String(object.amount_uupx);
+                if (object.amount_uspx != null)
+                    message.amount_uspx = String(object.amount_uspx);
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from a Tx message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.Tx
+             * @static
+             * @param {main.Tx} message Tx
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Tx.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.from_account_id = "";
+                    object.dist_account_id = "";
+                    object.amount_uupx = "";
+                    object.amount_uspx = "";
+                }
+                if (message.from_account_id != null && message.hasOwnProperty("from_account_id"))
+                    object.from_account_id = message.from_account_id;
+                if (message.dist_account_id != null && message.hasOwnProperty("dist_account_id"))
+                    object.dist_account_id = message.dist_account_id;
+                if (message.amount_uupx != null && message.hasOwnProperty("amount_uupx"))
+                    object.amount_uupx = message.amount_uupx;
+                if (message.amount_uspx != null && message.hasOwnProperty("amount_uspx"))
+                    object.amount_uspx = message.amount_uspx;
+                return object;
+            };
+    
+            /**
+             * Converts this Tx to JSON.
+             * @function toJSON
+             * @memberof main.Tx
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Tx.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return Tx;
         })();
     
         return main;
