@@ -1,5 +1,31 @@
-<div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10">
+<div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10" fxLayout="row">
   <h2>Buy Tokens</h2>
+  <mat-card class="mb-10">
+    <mat-list class="my-5">
+      <p class="text-gray-400">Token Select</p>
+      <mat-button-toggle-group class="w-full" #group="matButtonToggleGroup">
+        <mat-button-toggle value="UPX" class="w-1/2" style="text-align: center">
+          <mat-icon>UPX</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="SPX" class="w-1/2">
+          <mat-icon>SPX</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-list>
+    <mat-divider [inset]="true"></mat-divider>
+
+    <mat-list class="my-5">
+      <div class="flex">
+        <p class="text-gray-400">1{{ group.value }} =</p>
+        <mat-form-field class="break-all w-28 m-auto">
+          <mat-label>Input Amount</mat-label>
+          <input class="h-7 text-right m-auto" #amountRef matInput type="number" step="0.1" [(ngModel)]="amount" name="amount" required />
+        </mat-form-field>
+        <p>JPY</p>
+      </div>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-list>
+  </mat-card>
   <mat-card class="mb-10">
     <mat-card-title>Available Balance</mat-card-title>
     <details>
