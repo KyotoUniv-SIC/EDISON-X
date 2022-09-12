@@ -25,9 +25,108 @@
           <div class="mt-5 text-2xl">JPY</div>
         </div>
       </div>
-      <mat-divider [inset]="true"></mat-divider>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="text-center"> Latest Information </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>Latest Contract Price</div>
+          <div class="ml-16 mb-3">
+            <p></p>
+            <div>UPX</div>
+            <div>Latest UPX Price: &nbsp;&nbsp;{{ singlePriceNormal?.price_ujpy | microString }} JPY</div>
+            <div>Contract Amount:&nbsp;&nbsp;&nbsp; {{ singlePriceNormal?.amount_uupx | microString }} UPX</div>
+            <div>Market Date:&nbsp;&nbsp; {{ singlePriceNormalDate | date: 'yy/MM/dd' }}</div>
+            <p></p>
+            <div>SPX</div>
+            <div>Latest SPX Price:&nbsp;&nbsp; {{ singlePriceRenewable?.price_ujpy | microString }} JPY</div>
+            <div>Contract Amount:&nbsp;&nbsp;&nbsp;&nbsp; {{ singlePriceRenewable?.amount_uspx | microString }} SPX</div>
+            <div>Market Date:&nbsp;&nbsp; {{ singlePriceRenewableDate | date: 'yy/MM/dd' }}</div>
+          </div>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <ng-container *ngIf="normalGraphAmounts == null || normalGraphPrices == null; then loading; else loadedNormal"></ng-container>
+          <ng-template #loading>
+            <mat-progress-spinner [diameter]="60" [mode]="'indeterminate'"></mat-progress-spinner>
+          </ng-template>
+          <ng-template #loadedNormal>
+            <div class="mt-4">Yesterday's Order</div>
+            <mat-list>
+              <mat-list-item>
+                <span>UPX</span>
+              </mat-list-item>
+              <ng-container *ngIf="isNormalContractToday; then existNormalContract; else noContract"></ng-container>
+              <ng-template #existNormalContract>
+                <mat-list-item>
+                  <mat-list-item class="flex flex-wrap">
+                    <span class="break-all" style="font-size: medium">Contract Price:</span>
+                    <span class="flex-auto break-all"></span>
+                    <span class="break-all">{{ singlePriceNormal?.price_ujpy | microString }}</span>
+                    <span class="break-all" style="margin-left: 10px">JPY</span>
+                  </mat-list-item>
+                </mat-list-item>
+              </ng-template>
+              <ng-template #noContract>
+                <mat-list-item>
+                  <span class="break-all" style="color: #ff0000">No Contract</span>
+                </mat-list-item>
+              </ng-template>
+            </mat-list>
+            <canvas
+              baseChart
+              [datasets]="normalGraphAmounts!"
+              [labels]="normalGraphPrices!"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              [colors]="barColors"
+            >
+            </canvas>
+          </ng-template>
+          <ng-container
+            *ngIf="renewableGraphAmounts == null || renewableGraphPrices == null; then loading; else loadedRenewable"
+          ></ng-container>
+          <ng-template #loadedRenewable>
+            <mat-list>
+              <mat-list-item>
+                <span>SPX</span>
+              </mat-list-item>
+              <ng-container *ngIf="isRenewableContractToday; then existRenewableContract; else noContract"></ng-container>
+              <ng-template #existRenewableContract>
+                <mat-list-item>
+                  <mat-list-item class="flex flex-wrap">
+                    <span class="break-all">Contract Price:</span>
+                    <span class="flex-auto break-all"></span>
+                    <span class="break-all">{{ singlePriceRenewable?.price_ujpy | microString }}</span>
+                    <span class="break-all" style="margin-left: 10px">JPY</span>
+                  </mat-list-item>
+                </mat-list-item>
+              </ng-template>
+              <ng-template #noContract>
+                <mat-list-item>
+                  <span class="break-all" style="color: #ff0000">No Contract</span>
+                </mat-list-item>
+              </ng-template>
+            </mat-list>
+            <canvas
+              baseChart
+              [datasets]="renewableGraphAmounts!"
+              [labels]="renewableGraphPrices!"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              [colors]="barColors"
+            >
+            </canvas>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-list>
+    <mat-divider [inset]="true"></mat-divider>
   </mat-card>
+
   <mat-card class="mb-10">
     <mat-card-title>Available Balance</mat-card-title>
     <details>

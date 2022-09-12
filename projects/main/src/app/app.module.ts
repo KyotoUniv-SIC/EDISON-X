@@ -15,6 +15,7 @@ import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angul
 import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
@@ -38,6 +39,7 @@ const initApp = () => initializeApp(environment.firebase);
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
+    MatExpansionModule,
     SharedModule,
     provideFirebaseApp(() => initApp()),
     provideFirestore(() => {

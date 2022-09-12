@@ -89,7 +89,7 @@ export class BuyComponent implements OnInit {
       backgroundColor: '#6c8fb6',
     },
   ];
-
+  panelOpenState = false;
   constructor() {
     this.appSubmit = new EventEmitter();
   }
