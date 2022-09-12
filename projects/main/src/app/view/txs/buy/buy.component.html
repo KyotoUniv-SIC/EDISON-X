@@ -14,14 +14,16 @@
     </mat-list>
     <mat-divider [inset]="true"></mat-divider>
 
-    <mat-list class="my-5">
-      <div class="flex">
-        <p class="text-gray-400">1{{ group.value }} =</p>
-        <mat-form-field class="break-all w-28 m-auto">
-          <mat-label>Input Amount</mat-label>
-          <input class="h-7 text-right m-auto" #amountRef matInput type="number" step="0.1" [(ngModel)]="amount" name="amount" required />
-        </mat-form-field>
-        <p>JPY</p>
+    <mat-list class="mb-5">
+      <div class="text-gray-400 mb-3">1{{ group.value }} =</div>
+      <div class="flex place-content-center">
+        <div class="text-center w-auto flex flex-nowrap">
+          <mat-form-field class="break-all w-1/2 m-auto">
+            <mat-label>Input Amount</mat-label>
+            <input class="h-7" #amountRef matInput type="number" step="0.1" [(ngModel)]="amount" name="amount" required />
+          </mat-form-field>
+          <div class="mt-5 text-2xl">JPY</div>
+        </div>
       </div>
       <mat-divider [inset]="true"></mat-divider>
     </mat-list>

@@ -14,7 +14,6 @@ import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,7 +38,6 @@ const initApp = () => initializeApp(environment.firebase);
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     SharedModule,
     provideFirebaseApp(() => initApp()),
     provideFirestore(() => {
