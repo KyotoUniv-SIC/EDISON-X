@@ -5,6 +5,15 @@ summary {
 /* ホバー時のスタイル */
 summary:hover {
   cursor: pointer; /* カーソルを指マークに */
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
+.mat-button-toggle-checked {
+  background-color: #6c8fb6;
+  color: white;
+}
+
+.mat-button-toggle-checked:nth-of-type(2) {
+  background-color: #b67cb6;
+  color: white;
+}
