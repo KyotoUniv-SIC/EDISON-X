@@ -39,10 +39,11 @@ module.exports.calcElectricityCost = f.pubsub
 
     // alpha = (priceEastJuly + priceDormJuly / rate) / ((1 + 1 / rate ^ 2) * priceDormAverage)
     const alpha = (priceEastJuly + priceDormJuly / rate) / (1 + 1 / rate / rate) / priceDormAverage;
+    console.log('alpha: ' + alpha);
 
     const priceEast = alpha * priceDormAverage;
     const priceDorm = (alpha * priceDormAverage) / rate;
+    console.log('East price: ' + priceEast, 'Dorm price: ' + priceDorm);
     const cost = priceEast * amountEastKwh + priceDorm * amountDormKwh;
     console.log('electricity cost: ' + cost);
-    console.log('parseInt: ' + parseInt(cost));
   });
