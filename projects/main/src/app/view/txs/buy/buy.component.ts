@@ -89,12 +89,20 @@ export class BuyComponent implements OnInit {
       backgroundColor: '#6c8fb6',
     },
   ];
+
   panelOpenState = false;
+  public selectedVal: string | null;
+
   constructor() {
     this.appSubmit = new EventEmitter();
+    this.selectedVal = 'upx-0';
   }
 
   ngOnInit(): void {}
+
+  public onValChange(val: string) {
+    this.selectedVal = val;
+  }
 
   onSubmit(accountID: string, price: string, amount: string, denom: string) {
     const now = new Date();

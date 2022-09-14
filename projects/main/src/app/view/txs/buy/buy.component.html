@@ -1,11 +1,15 @@
 <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10" fxLayout="row">
   <h2>Buy Tokens</h2>
   <mat-card class="mb-3">
-    <div class="text-center w-auto flex flex-nowrap">
-      <p class="text-gray-400">Your Balance</p>
-      <div class="flex flex-col w-1/4 right-0 mx-auto">
-        <p class="w-1/3 text-right whitespace-nowrap">{{ uupxAmount | microNumber }} UPX</p>
-        <p class="w-1/3 text-right whitespace-nowrap">{{ uspxAmount | microNumber }} SPX</p>
+    <div class="w-auto">
+      <div class="text-gray-400">Your Balance</div>
+      <div class="flex w-full flex-wrap text-center">
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          UPX: <span class="text-2xl">{{ uupxAmount | microNumber }}</span>
+        </div>
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          SPX:<span class="text-2xl">{{ uspxAmount | microNumber }}</span>
+        </div>
       </div>
     </div>
   </mat-card>
@@ -13,9 +17,15 @@
   <mat-card class="mb-5">
     <mat-list class="my-5">
       <p class="text-gray-400">Token Select</p>
-      <mat-button-toggle-group #denomRef class="w-full" #group="matButtonToggleGroup">
-        <mat-button-toggle #denomRef value="UPX" class="w-1/2 text-2xl" [value]="tokens[0].value"> UPX </mat-button-toggle>
-        <mat-button-toggle #denomRef value="SPX" class="w-1/2 text-2xl" [value]="tokens[1].value"> SPX </mat-button-toggle>
+      <mat-button-toggle-group
+        #denomRef
+        class="w-full"
+        #group="matButtonToggleGroup"
+        [value]="selectedVal"
+        (change)="onValChange(group.value)"
+      >
+        <mat-button-toggle value="UPX" class="w-1/2 text-2xl"> UPX </mat-button-toggle>
+        <mat-button-toggle value="SPX" class="w-1/2 text-2xl"> SPX </mat-button-toggle>
       </mat-button-toggle-group>
     </mat-list>
     <mat-divider [inset]="true"></mat-divider>
@@ -175,7 +185,7 @@
       </div>
     </mat-list>
     <div class="mb-10">
-      <button mat-stroked-button class="w-full text-lg bg-green-600 text-white">Bid Request</button>
+      <button mat-raised-button class="w-full text-lg" color="primary">Bid Request</button>
     </div>
   </mat-card>
 
