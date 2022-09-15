@@ -91,26 +91,26 @@ export class BuyComponent implements OnInit {
   ];
 
   panelOpenState = false;
-  public selectedVal: string | null;
+  selectedDenom: string;
 
   constructor() {
     this.appSubmit = new EventEmitter();
-    this.selectedVal = 'upx-0';
+    this.selectedDenom = 'UPX';
   }
 
   ngOnInit(): void {}
 
-  public onValChange(val: string) {
-    this.selectedVal = val;
+  onDenomChange(denom: string) {
+    this.selectedDenom = denom;
   }
 
-  onSubmit(accountID: string, price: string, amount: string, denom: string) {
+  onSubmit(accountID: string, price: string, amount: string) {
     const now = new Date();
     if (0 <= now.getUTCHours() && now.getUTCHours() < 2) {
       alert('EDISONでは、9:00-1:00(JST)のAskの入札ができません');
       return;
     }
-    if (!denom) {
+    if (!this.selectedDenom) {
       alert('トークンの種類を指定してください。\nUPX=電力会社、SPX=太陽光発電');
       return;
     }
@@ -120,16 +120,11 @@ export class BuyComponent implements OnInit {
     }
     const ujpyPrice = Math.floor(Number(price) * 1000000).toString();
     const utokenAmount = Math.floor(Number(amount) * 1000000).toString();
-    this.appSubmit.emit({ accountID: this.studentAccount?.id, ujpyPrice, utokenAmount, denom });
+    this.appSubmit.emit({ accountID: this.studentAccount?.id, ujpyPrice, utokenAmount, denom: this.selectedDenom });
   }
 
   calcTotalPrice(price: any, amount: any) {
     if (!price || !amount) return null;
     return price * amount;
   }
-
-  tokens: Token[] = [
-    { value: 'upx-0', viewValue: 'UPX' },
-    { value: 'spx-1', viewValue: 'SPX' },
-  ];
 }
