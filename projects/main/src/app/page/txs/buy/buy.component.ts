@@ -109,7 +109,7 @@ export class BuyComponent implements OnInit {
   ngOnInit(): void {}
 
   async onSubmit($event: BuyOnSubmitEvent) {
-    if ($event.denom == 'spx-1') {
+    if ($event.denom == 'SPX') {
       await this.renewableBidApp.create(
         new RenewableBid({
           account_id: $event.accountID,
