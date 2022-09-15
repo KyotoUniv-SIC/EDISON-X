@@ -104,7 +104,7 @@ export class BuyComponent implements OnInit {
     this.selectedDenom = denom;
   }
 
-  onSubmit(accountID: string, price: string, amount: string) {
+  onSubmit(price: string, amount: string) {
     const now = new Date();
     if (0 <= now.getUTCHours() && now.getUTCHours() < 2) {
       alert('EDISONでは、9:00-1:00(JST)のAskの入札ができません');
