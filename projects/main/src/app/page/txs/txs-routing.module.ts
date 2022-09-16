@@ -1,5 +1,4 @@
 import { BuyComponent } from './buy/buy.component';
-import { HistoryComponent } from './history/history.component';
 import { SellComponent } from './sell/sell.component';
 import { TxsComponent } from './txs.component';
 import { NgModule } from '@angular/core';
@@ -9,7 +8,6 @@ const routes: Routes = [
   { path: '', component: TxsComponent },
   { path: 'buy', component: BuyComponent },
   { path: 'sell', component: SellComponent },
-  { path: 'history', component: HistoryComponent },
   {
     path: 'order/solar',
     loadChildren: () => import('./order/solar/solar.module').then((m) => m.AppSolarModule),
