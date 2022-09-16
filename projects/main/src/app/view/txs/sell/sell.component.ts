@@ -49,7 +49,6 @@ export class SellComponent implements OnInit {
   isNormalContractToday?: boolean | null;
   @Input()
   isRenewableContractToday?: boolean | null;
-
   @Input()
   accountID?: string | null;
   @Input()
@@ -91,19 +90,27 @@ export class SellComponent implements OnInit {
     },
   ];
 
+  panelOpenState = false;
+  selectedDenom: string;
+
   constructor() {
     this.appSubmit = new EventEmitter();
+    this.selectedDenom = 'UPX';
   }
 
   ngOnInit(): void {}
 
-  onSubmit(accountID: string, price: string, amount: string, denom: string) {
+  onDenomChange(denom: string) {
+    this.selectedDenom = denom;
+  }
+
+  onSubmit(price: string, amount: string) {
     const now = new Date();
     if (0 <= now.getUTCHours() && now.getUTCHours() < 2) {
       alert('EDISONでは、9:00-11:00(JST)のAskの入札ができません');
       return;
     }
-    if (!denom) {
+    if (!this.selectedDenom) {
       alert('トークンの種類を指定してください。\nUPX=電力会社、SPX=太陽光発電');
       return;
     }
@@ -111,25 +118,21 @@ export class SellComponent implements OnInit {
       alert('ユーザーログイン情報を取得できません');
       return;
     }
-    if (denom == 'upx-0' && Number(amount) > this.uupxAmount!) {
+    if (this.selectedDenom == 'UPX' && Number(amount) > this.uupxAmount!) {
       alert('UPXの残高が足りません。');
       return;
     }
-    if (denom == 'spx-1' && Number(amount) > this.uspxAmount!) {
+    if (this.selectedDenom == 'SPX' && Number(amount) > this.uspxAmount!) {
       alert('SPXの残高が足りません。');
       return;
     }
     const ujpyPrice = Math.floor(Number(price) * 1000000).toString();
     const utokenAmount = Math.floor(Number(amount) * 1000000).toString();
-    this.appSubmit.emit({ accountID: this.studentAccount?.id, ujpyPrice, utokenAmount, denom });
+    this.appSubmit.emit({ accountID: this.studentAccount?.id, ujpyPrice, utokenAmount, denom: this.selectedDenom });
   }
 
   calcTotalPrice(price: any, amount: any) {
     if (!price || !amount) return null;
     return price * amount;
   }
-  tokens: Token[] = [
-    { value: 'upx-0', viewValue: 'UPX' },
-    { value: 'spx-1', viewValue: 'SPX' },
-  ];
 }
