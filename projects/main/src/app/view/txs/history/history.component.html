@@ -1,0 +1,205 @@
+<div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10" fxLayout="row">
+  <h2>Bid Tokens</h2>
+  <mat-card class="mb-3">
+    <div class="w-auto">
+      <div class="text-gray-400">Your Balance</div>
+      <div class="flex w-full flex-wrap text-center">
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          UPX: <span class="text-2xl">{{ uupxAmount | microNumber }}</span>
+        </div>
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          SPX:<span class="text-2xl">{{ uspxAmount | microNumber }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<!-- <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10" fxLayout="row">
+  <h2>Bid Tokens</h2>
+  <mat-card class="mb-3">
+    <div class="w-auto">
+      <div class="text-gray-400">Your Balance</div>
+      <div class="flex w-full flex-wrap text-center">
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          UPX: <span class="text-2xl">{{ uupxAmount | microNumber }}</span>
+        </div>
+        <div class="w-2/5 whitespace-nowrap m-auto">
+          SPX:<span class="text-2xl">{{ uspxAmount | microNumber }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <form (submit)="onSubmit(priceRef.value, amountRef.value)">
+    <mat-card class="mb-5">
+      <mat-list class="my-5">
+        <p class="text-gray-400">Token Select</p>
+        <mat-button-toggle-group class="w-full" #group="matButtonToggleGroup" (change)="onDenomChange(group.value)" value="UPX">
+          <mat-button-toggle value="UPX" class="w-1/2 text-2xl"> UPX </mat-button-toggle>
+          <mat-button-toggle value="SPX" class="w-1/2 text-2xl"> SPX </mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-list>
+      <mat-divider [inset]="true"></mat-divider>
+
+      <mat-list class="mb-5">
+        <div class="text-gray-400 mb-3">1{{ group.value }} =</div>
+        <div class="flex place-content-center">
+          <div class="text-center w-auto flex flex-nowrap">
+            <mat-form-field class="break-all w-1/2 m-auto">
+              <mat-label>Input JPY</mat-label>
+              <input class="h-7" #priceRef matInput type="number" step="0.1" [(ngModel)]="price" name="price" required />
+            </mat-form-field>
+
+            <div class="mt-5 text-2xl">JPY</div>
+          </div>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header class="h-5" style="background-color: #90a4ae" [collapsedHeight]="'20px'" [expandedHeight]="'20px'">
+              <mat-panel-title class="justify-center text-white"> More Info </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="my-3 text-lg">Latest Contract Price</div>
+            <div class="mb-3">
+              <mat-card class="mb-2" style="border: 1px solid rgba(0, 0, 0, 0.2)">
+                <div class="text-lg">UPX</div>
+                <div class="text-center">
+                  <div>
+                    Latest UPX Price: &nbsp;&nbsp;<span class="text-lg">{{ singlePriceNormal?.price_ujpy | microString }}</span> JPY
+                  </div>
+                  <div>
+                    Contract Amount:&nbsp;&nbsp;&nbsp;<span class="text-lg"> {{ singlePriceNormal?.amount_uupx | microString }}</span> UPX
+                  </div>
+                  <div>
+                    Market Date:&nbsp;&nbsp; <span class="text-lg">{{ singlePriceNormalDate | date: 'yy/MM/dd' }}</span>
+                  </div>
+                </div>
+              </mat-card>
+              <mat-card class="mb-2" style="border: 1px solid rgba(0, 0, 0, 0.2)">
+                <div class="text-lg">SPX</div>
+                <div class="text-center">
+                  <div>
+                    Latest SPX Price:&nbsp;&nbsp; <span class="text-lg">{{ singlePriceRenewable?.price_ujpy | microString }}</span> JPY
+                  </div>
+                  <div>
+                    Contract Amount:&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-lg">{{
+                      singlePriceRenewable?.amount_uspx | microString
+                    }}</span>
+                    SPX
+                  </div>
+                  <div>
+                    Market Date:&nbsp;&nbsp; <span class="text-lg">{{ singlePriceRenewableDate | date: 'yy/MM/dd' }}</span>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+
+            <mat-divider [inset]="true"></mat-divider>
+
+            <ng-container *ngIf="normalGraphAmounts == null || normalGraphPrices == null; then loading; else loadedNormal"></ng-container>
+            <ng-template #loading>
+              <mat-progress-spinner [diameter]="60" [mode]="'indeterminate'"></mat-progress-spinner>
+            </ng-template>
+            <ng-template #loadedNormal>
+              <div class="my-3 text-lg">Yesterday's Order</div>
+              <mat-list>
+                <mat-list-item>
+                  <span>UPX</span>
+                </mat-list-item>
+                <ng-container *ngIf="isNormalContractToday; then existNormalContract; else noContract"></ng-container>
+                <ng-template #existNormalContract>
+                  <mat-list-item>
+                    <mat-list-item class="flex flex-wrap">
+                      <span class="break-all" style="font-size: medium">Contract Price:</span>
+                      <span class="flex-auto break-all"></span>
+                      <span class="break-all">{{ singlePriceNormal?.price_ujpy | microString }}</span>
+                      <span class="break-all" style="margin-left: 10px">JPY</span>
+                    </mat-list-item>
+                  </mat-list-item>
+                </ng-template>
+                <ng-template #noContract>
+                  <mat-list-item>
+                    <span class="break-all" style="color: #ff0000">No Contract</span>
+                  </mat-list-item>
+                </ng-template>
+              </mat-list>
+              <canvas
+                baseChart
+                [datasets]="normalGraphAmounts!"
+                [labels]="normalGraphPrices!"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                [colors]="barColors"
+              >
+              </canvas>
+            </ng-template>
+            <ng-container
+              *ngIf="renewableGraphAmounts == null || renewableGraphPrices == null; then loading; else loadedRenewable"
+            ></ng-container>
+            <ng-template #loadedRenewable>
+              <mat-list>
+                <mat-list-item>
+                  <span>SPX</span>
+                </mat-list-item>
+                <ng-container *ngIf="isRenewableContractToday; then existRenewableContract; else noContract"></ng-container>
+                <ng-template #existRenewableContract>
+                  <mat-list-item>
+                    <mat-list-item class="flex flex-wrap">
+                      <span class="break-all">Contract Price:</span>
+                      <span class="flex-auto break-all"></span>
+                      <span class="break-all">{{ singlePriceRenewable?.price_ujpy | microString }}</span>
+                      <span class="break-all" style="margin-left: 10px">JPY</span>
+                    </mat-list-item>
+                  </mat-list-item>
+                </ng-template>
+                <ng-template #noContract>
+                  <mat-list-item>
+                    <span class="break-all" style="color: #ff0000">No Contract</span>
+                  </mat-list-item>
+                </ng-template>
+              </mat-list>
+              <canvas
+                baseChart
+                [datasets]="renewableGraphAmounts!"
+                [labels]="renewableGraphPrices!"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                [colors]="barColors"
+              >
+              </canvas>
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-list>
+      <mat-divider [inset]="true"></mat-divider>
+      <mat-list class="mb-3">
+        <div class="text-center w-auto flex flex-nowrap">
+          <p class="text-gray-400 w-1/3 text-right align-bottom">Token Amount</p>
+          <mat-form-field class="break-all w-1/4 right-0 mx-auto">
+            <mat-label>Input Amount</mat-label>
+            <input class="h-7" #amountRef matInput type="number" step="0.1" [(ngModel)]="amount" name="amount" required />
+          </mat-form-field>
+        </div>
+        <div class="text-center w-auto flex flex-nowrap">
+          <p class="text-gray-400 w-1/3 text-right">Total Price</p>
+          <span class="whitespace-nowrap w-1/4 right-0 mx-auto"
+            ><span class="text-lg">{{ calcTotalPrice(price, amount) }}</span> JPY</span
+          >
+        </div>
+        <div class="text-center w-auto flex flex-nowrap">
+          <p class="text-gray-400 w-1/3 text-right">Total Energy</p>
+          <span class="whitespace-nowrap break-all w-1/4 right-0 mx-auto">
+            <span class="text-lg">{{ amount }}</span> kWh</span
+          >
+        </div>
+      </mat-list>
+      <div class="mb-10">
+        <button mat-raised-button class="w-full text-lg" color="primary">Bid Request</button>
+      </div>
+    </mat-card>
+  </form>
+</div> -->
