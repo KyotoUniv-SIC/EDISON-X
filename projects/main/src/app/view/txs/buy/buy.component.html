@@ -1,5 +1,5 @@
 <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10" fxLayout="row">
-  <h2>Buy Tokens</h2>
+  <h2>Bid Tokens</h2>
   <mat-card class="mb-3">
     <div class="w-auto">
       <div class="text-gray-400">Your Balance</div>
@@ -38,14 +38,14 @@
         </div>
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-            <mat-expansion-panel-header class="h-5 bg-gray-400" [collapsedHeight]="'20px'" [expandedHeight]="'20px'">
-              <mat-panel-title class="justify-center"> More Info </mat-panel-title>
+            <mat-expansion-panel-header class="h-5" style="background-color: #90a4ae" [collapsedHeight]="'20px'" [expandedHeight]="'20px'">
+              <mat-panel-title class="justify-center text-white"> More Info </mat-panel-title>
             </mat-expansion-panel-header>
 
             <div class="my-3 text-lg">Latest Contract Price</div>
             <div class="mb-3">
-              <mat-card class="mb-2" style="background-color: #6c8fb6; color: white">
-                <div>UPX</div>
+              <mat-card class="mb-2">
+                <div class="text-lg">UPX</div>
                 <div class="text-center">
                   <div>
                     Latest UPX Price: &nbsp;&nbsp;<span class="text-lg">{{ singlePriceNormal?.price_ujpy | microString }}</span> JPY
@@ -58,8 +58,8 @@
                   </div>
                 </div>
               </mat-card>
-              <mat-card class="mb-2" style="background-color: #b67cb6; color: white">
-                <div>SPX</div>
+              <mat-card class="mb-2">
+                <div class="text-lg">SPX</div>
                 <div class="text-center">
                   <div>
                     Latest SPX Price:&nbsp;&nbsp; <span class="text-lg">{{ singlePriceRenewable?.price_ujpy | microString }}</span> JPY
