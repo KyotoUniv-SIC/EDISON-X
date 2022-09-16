@@ -13,10 +13,6 @@ export class HistoryComponent implements OnInit {
   createdAt?: Date | null;
   @Input()
   bidCreatedAt?: Date | null;
-  @Input()
-  uupxAmount?: number | null;
-  @Input()
-  uspxAmount?: number | null;
 
   constructor() {}
 
