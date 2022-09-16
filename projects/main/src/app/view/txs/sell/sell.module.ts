@@ -10,7 +10,7 @@ import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [SellComponent],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MaterialModule, PipesModule, ChartsModule, MatExpansionModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MaterialModule, PipesModule, ChartsModule],
   exports: [SellComponent],
 })
 export class SellModule {}
