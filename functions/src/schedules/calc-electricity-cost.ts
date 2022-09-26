@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
+import { cost_setting } from '../cost-settings';
 import { monthly_usage } from '../monthly-usages';
 import { student_account } from '../student-accounts';
+import { CostSetting } from '@local/common';
 import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB' });
@@ -46,4 +48,5 @@ module.exports.calcElectricityCost = f.pubsub
     console.log('East price: ' + priceEast, 'Dorm price: ' + priceDorm);
     const cost = priceEast * amountEastKwh + priceDorm * amountDormKwh;
     console.log('electricity cost: ' + cost);
+    await cost_setting.create(new CostSetting({ system_cost_ujpy: '0', electricity_cost_ujpy: Math.floor(cost).toString() }));
   });
