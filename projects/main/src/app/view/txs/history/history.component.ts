@@ -27,11 +27,6 @@ export class HistoryComponent implements OnInit {
   selectedToken = 'default';
   selectedTransaction = 'default';
 
-  // range = new FormGroup({
-  //   start: new FormControl<Date | null>(null),
-  //   end: new FormControl<Date | null>(null),
-  // });
-
   powerType(type: boolean) {
     if (!type) {
       return 'utility';
