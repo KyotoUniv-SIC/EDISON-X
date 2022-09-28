@@ -38,6 +38,13 @@ export interface History {
   isBid: boolean;
 }
 
+export interface TxsType {}
+
+export interface Denom {
+  isUPX: boolean;
+  isSPX: boolean;
+}
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -49,6 +56,8 @@ export class HistoryComponent implements OnInit {
   uspxAmount$: Observable<number> | undefined;
   orders$: Observable<Order[]> | undefined;
   histories$: Observable<History[]> | undefined;
+  txsTypes$: Observable<TxsType[]> | undefined;
+  denoms$: Observable<Denom[]> | undefined;
 
   constructor(
     private auth: Auth,
@@ -156,6 +165,42 @@ export class HistoryComponent implements OnInit {
         });
       }),
     );
+
+    // this.txsTypes$ = combineLatest([normalBids$, normalAsks$, renewableBids$, renewableAsks$]).pipe(
+    //   map(([auctions, normalAsks, renewableBids, renewableAsks]) => {
+    //     const auctionList = auctions
+    //       .filter((txs) => txs.is_auction == true)
+    //       .map(() => ({
+    //         isAuction: true,
+    //         isDailyWithdraw: false,
+    //         isAdmin: false,
+    //       }));
+    //     const dailyWithdrawList = dailyWithdraws
+    //       .filter((txs) => txs.is_dailywithdraw == true)
+    //       .map(() => ({
+    //         isAuction: false,
+    //         isDailyWithdraw: true,
+    //         isAdmin: false,
+    //       }));
+    //     const adminList = admins
+    //       .filter((txs) => txs.is_admin == true)
+    //       .map(() => ({
+    //         isAuction: false,
+    //         isDailyWithdraw:false,
+    //         isAdmin:  true,
+    //       }));
+
+    //     return normalBidList.concat(normalAskList, renewableBidList, renewableAskList).sort(function (first, second) {
+    //       if (first.date > second.date) {
+    //         return -1;
+    //       } else if (first.date < second.date) {
+    //         return 1;
+    //       } else {
+    //         return 0;
+    //       }
+    //     });
+    //   }),
+    // );
 
     const primaryBid$ = this.studentAccount$.pipe(mergeMap((account) => this.primaryBidApp.list$(account.id)));
     const normalBidHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.normalBidHistoryApp.list$(account.id)));

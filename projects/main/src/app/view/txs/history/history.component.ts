@@ -19,6 +19,8 @@ export class HistoryComponent implements OnInit {
   orders?: Order[] | null;
   @Input()
   histories?: History[] | null;
+  // @Input()
+  // txsTypes$: TxsType[] | null;
 
   constructor() {}
 
@@ -26,6 +28,7 @@ export class HistoryComponent implements OnInit {
 
   selectedToken = 'default';
   selectedTransaction = 'default';
+  panelOpenState = false;
 
   powerType(type: boolean) {
     if (!type) {
