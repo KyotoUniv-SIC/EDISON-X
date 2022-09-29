@@ -1,8 +1,17 @@
 /* eslint-disable camelcase */
 import { edisonTestConfig } from './config.model';
-import { StudentAccountFirestore } from '@local/common';
+import { StudentAccount, StudentAccountFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
 import { getDocs, getFirestore, collection, Timestamp, doc, serverTimestamp, FieldValue, setDoc } from 'firebase/firestore';
+import { account } from '../accounts';
+
+export const list = async(collectionName: string)=>{
+  const config = edisonTestConfig;
+  const app = initializeApp(config);
+  const db = getFirestore(app);
+  const snapshots = await getDocs(collection(db, collectionName));
+  return snapshots.docs.map((doc) => doc.data());
+}
 
 export const listByStudentID = async (studentAccountID: string, collectionName: string) => {
   const config = edisonTestConfig;
@@ -135,3 +144,8 @@ export const listLastMonth = async (studentAccountID: string, collectionName: st
     .filter((ele) => ele.created_at == now)
     .filter((ele) => ele.created_at > lastMonth);
 };
+
+export const  getStudentAccount = async (studentAccountID:string)=>{
+  const accountList = await list('account');
+  return accountList.filter(account => account.id ==studentAccountID)
+}
