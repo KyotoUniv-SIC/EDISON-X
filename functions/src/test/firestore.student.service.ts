@@ -1,9 +1,40 @@
 /* eslint-disable camelcase */
 import { edisonTestConfig } from './config.model';
-import { StudentAccount, StudentAccountFirestore } from '@local/common';
+import { StudentAccountFirestore } from '@local/common';
 import { initializeApp } from 'firebase/app';
 import { getDocs, getFirestore, collection, Timestamp, doc, serverTimestamp, FieldValue, setDoc } from 'firebase/firestore';
-import { account } from '../accounts';
+
+
+export const get = async (collectionName:string)=>{
+  const dataList = await list(collectionName);
+  return dataList
+}
+
+export const getStudentAccount = async (ID:string,collectionName:string)=>{
+  const dataList = await list(collectionName);
+  return dataList.filter(account => account.id == ID)[0]
+}
+
+
+export const getLatest = async (collectionName:string)=>{
+  const dataList = await list(collectionName);
+  return dataList.sort((first, second) => {
+    if (!first.created_at) {
+      return 1;
+    } else if (!second.bid_created_at) {
+      return -1;
+    } else {
+      if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+        return -1;
+      } else if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  })[0]
+
+}
 
 export const list = async(collectionName: string)=>{
   const config = edisonTestConfig;
@@ -145,7 +176,3 @@ export const listLastMonth = async (studentAccountID: string, collectionName: st
     .filter((ele) => ele.created_at > lastMonth);
 };
 
-export const  get = async (ID:string)=>{
-  const accountList = await list('account');
-  return accountList.filter(account => account.id == ID)[0]
-}
