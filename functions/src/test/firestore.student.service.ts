@@ -138,6 +138,6 @@ export const listLastMonth = async (studentAccountID: string, collectionName: st
       }
     })
     .filter((ele) => ele.account_id == studentAccountID)
-    .filter((ele) => (ele.created_at as Timestamp).toDate() == now)
+    .filter((ele) => (ele.created_at as Timestamp).toDate() < now)
     .filter((ele) => (ele.created_at as Timestamp).toDate() > lastMonth);
 };

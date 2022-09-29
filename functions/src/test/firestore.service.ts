@@ -104,3 +104,33 @@ export const autoID = () => {
   }
   return autoID;
 };
+
+export const listLastMonth = async (collectionName: string, roomID: string) => {
+  const now = new Date();
+  console.log(now);
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  console.log(lastMonth);
+
+  const list = await listLatest(collectionName);
+
+  return list
+    .sort((first, second) => {
+      if (!first.created_at) {
+        return 1;
+      } else if (!second.created_at) {
+        return -1;
+      } else {
+        if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+          return -1;
+        } else if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    })
+    .filter((ele) => ele.room_id == roomID)
+    .filter((ele) => (ele.created_at as Timestamp).toDate() < now)
+    .filter((ele) => (ele.created_at as Timestamp).toDate() > lastMonth);
+};
