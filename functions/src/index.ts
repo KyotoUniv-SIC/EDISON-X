@@ -91,6 +91,7 @@ const files = {
   xrpl_monthly_txs: './xrpl-monthly-txs',
   xrpl_txs: './xrpl-txs',
   // scheduled functions
+  calc_electricity_cost: './schedules/calc-electricity-cost',
   contract_normal: './schedules/contract-normal',
   contract_renewable: './schedules/contract-renewable',
   daily_withdraw: './schedules/daily-withdraw',
