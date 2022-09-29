@@ -145,7 +145,7 @@ export const listLastMonth = async (studentAccountID: string, collectionName: st
     .filter((ele) => ele.created_at > lastMonth);
 };
 
-export const  getStudentAccount = async (studentAccountID:string)=>{
+export const  get = async (ID:string)=>{
   const accountList = await list('account');
-  return accountList.filter(account => account.id ==studentAccountID)
+  return accountList.filter(account => account.id == ID)[0]
 }
