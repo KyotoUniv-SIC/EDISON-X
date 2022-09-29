@@ -109,7 +109,7 @@ export class SellComponent implements OnInit {
 
   ngOnInit(): void {}
   async onSubmit($event: SellOnSubmitEvent) {
-    if ($event.denom == 'spx-1') {
+    if ($event.denom == 'SPX') {
       await this.renewableAskApp.create(
         new RenewableAsk({
           type: proto.main.RenewableAskType.SECONDARY,

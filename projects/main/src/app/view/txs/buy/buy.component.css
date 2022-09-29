@@ -5,6 +5,5 @@ summary {
 /* ホバー時のスタイル */
 summary:hover {
   cursor: pointer; /* カーソルを指マークに */
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
-
