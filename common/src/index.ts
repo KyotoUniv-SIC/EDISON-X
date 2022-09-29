@@ -47,3 +47,6 @@ export * from './entities/delta-amounts';
 export * from './entities/renewable-reward-settings';
 export * from './entities/renewable-rankings';
 export * from './entities/monthly-settlements';
+export * from './entities/xrpl-txs';
+export * from './entities/xrpl-monthly-txs';
+export * from './entities/primary-ask-settings';

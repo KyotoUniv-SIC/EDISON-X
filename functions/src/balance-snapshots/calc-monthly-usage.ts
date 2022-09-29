@@ -130,5 +130,6 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
     amount_mwh: usage.toString(),
   });
   await monthly_usage.create(monthlyUsage);
-  await monthlyUsageOnCreate({ data: () => monthlyUsage }, null);
+  const primaryAsk = await monthlyUsageOnCreate({ data: () => monthlyUsage }, null);
+  return primaryAsk;
 };

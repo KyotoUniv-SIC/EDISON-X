@@ -67,8 +67,14 @@
 
           <div>
             <mat-card-content style="font-size: large; margin-top: 15px">Total</mat-card-content>
-            <canvas baseChart height="150" width="150" [data]="totalBalanceData!" [labels]="doughnutChartLabels"
-            [chartType]="doughnutChartType" [colors]="doughnutColors"
+            <canvas
+              baseChart
+              height="150"
+              width="150"
+              [data]="totalBalanceData!"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              [colors]="doughnutColors"
             >
             </canvas>
           </div>
@@ -229,6 +235,8 @@
           In addition to these, you have to pay fuel regulatory costs and renewable energy surcharge. So, the average price of electricity
           for end users is approximately <b>&yen;27/kWh</b>.
         </p>
+        <p style="color: #ff0000">The UPX base price has been changed to <b>&yen;21.5/kWh</b>.</p>
+        <p style="color: #ff0000">The SPX base price has been changed to <b>&yen;22.0/kWh</b> since Sep. Please note.</p>
       </mat-card-content>
     </mat-card>
   </div>

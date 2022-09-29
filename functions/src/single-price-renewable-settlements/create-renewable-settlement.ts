@@ -1,12 +1,14 @@
 /* eslint-disable camelcase */
 // import { single_price_renewable_settlement } from '.';
+// import { admin_account } from '../admin-accounts';
 import { renewable_ask_history } from '../renewable-ask-histories';
 import { renewable_ask } from '../renewable-asks';
 import { renewable_bid_history } from '../renewable-bid-histories';
 import { renewable_bid } from '../renewable-bids';
 import { renewable_settlement } from '../renewable-settlements';
 import { renewableSettlementOnCreate } from '../renewable-settlements/create-balance';
-import { proto, RenewableAskHistory, RenewableBidHistory, RenewableSettlement } from '@local/common';
+import { xrpl_tx } from '../xrpl-txs';
+import { proto, RenewableAskHistory, RenewableBidHistory, RenewableSettlement, XrplTx } from '@local/common';
 
 // single_price_renewable_settlement.onCreateHandler.push()
 export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, context: any) => {
@@ -15,6 +17,8 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
     console.log('no renewable contract');
     return;
   }
+
+  const xrplTxs = new XrplTx({ txs: [] });
 
   const renewableBids = await renewable_bid.listValid();
   const sortRenewableBids = renewableBids.sort((first, second) => parseInt(second.price_ujpy) - parseInt(first.price_ujpy));
@@ -60,26 +64,31 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             sortRenewableAsks[j].created_at,
           ),
         );
+        console.log('hoge01', sortRenewableAsks[j].id);
         await renewable_ask.delete_(sortRenewableAsks[j].id);
       }
       break;
     }
 
     if (parseInt(sortRenewableBids[i].amount_uspx) < parseInt(sortRenewableAsks[j].amount_uspx)) {
+      const bidAccountId = sortRenewableBids[i].account_id;
+      const askAccountId = sortRenewableAsks[j].account_id;
+      const contractAmount = sortRenewableBids[i].amount_uspx;
+
       const renewableSettlement = new RenewableSettlement({
-        bid_id: sortRenewableBids[i].account_id,
-        ask_id: sortRenewableAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uspx: sortRenewableBids[i].amount_uspx,
+        amount_uspx: contractAmount,
       });
       await renewable_settlement.create(renewableSettlement);
 
       await renewable_bid_history.create(
         new RenewableBidHistory(
           {
-            account_id: sortRenewableBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortRenewableBids[i].price_ujpy,
-            amount_uspx: sortRenewableBids[i].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -92,18 +101,25 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
         new RenewableAskHistory(
           {
             type: sortRenewableAsks[j].type as unknown as proto.main.RenewableAskHistoryType,
-            account_id: sortRenewableAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortRenewableAsks[j].price_ujpy,
-            amount_uspx: sortRenewableBids[i].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge02', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
+
+      xrplTxs.txs.push({
+        from_account_id: askAccountId,
+        dist_account_id: bidAccountId,
+        amount_uspx: contractAmount,
+      });
 
       sortRenewableAsks[j].amount_uspx = (
         parseInt(sortRenewableAsks[j].amount_uspx) - parseInt(sortRenewableBids[i].amount_uspx)
@@ -115,7 +131,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             new RenewableAskHistory(
               {
                 type: sortRenewableAsks[j].type as unknown as proto.main.RenewableAskHistoryType,
-                account_id: sortRenewableAsks[j].account_id,
+                account_id: askAccountId,
                 price_ujpy: sortRenewableAsks[j].price_ujpy,
                 amount_uspx: sortRenewableAsks[j].amount_uspx,
                 is_accepted: false,
@@ -124,25 +140,30 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
+          console.log('hoge03', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
       }
     } else if (parseInt(sortRenewableBids[i].amount_uspx) > parseInt(sortRenewableAsks[j].amount_uspx)) {
+      const bidAccountId = sortRenewableBids[i].account_id;
+      const askAccountId = sortRenewableAsks[j].account_id;
+      const contractAmount = sortRenewableAsks[j].amount_uspx;
+
       const renewableSettlement = new RenewableSettlement({
-        bid_id: sortRenewableBids[i].account_id,
-        ask_id: sortRenewableAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uspx: sortRenewableAsks[j].amount_uspx,
+        amount_uspx: contractAmount,
       });
       await renewable_settlement.create(renewableSettlement);
 
       await renewable_bid_history.create(
         new RenewableBidHistory(
           {
-            account_id: sortRenewableBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortRenewableBids[i].price_ujpy,
-            amount_uspx: sortRenewableAsks[j].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -155,18 +176,25 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
         new RenewableAskHistory(
           {
             type: sortRenewableAsks[j].type as unknown as proto.main.RenewableAskHistoryType,
-            account_id: sortRenewableAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortRenewableAsks[j].price_ujpy,
-            amount_uspx: sortRenewableAsks[j].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge04', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
+
+      xrplTxs.txs.push({
+        from_account_id: askAccountId,
+        dist_account_id: bidAccountId,
+        amount_uspx: contractAmount,
+      });
 
       sortRenewableBids[i].amount_uspx = (
         parseInt(sortRenewableBids[i].amount_uspx) - parseInt(sortRenewableAsks[j].amount_uspx)
@@ -177,7 +205,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           await renewable_bid_history.create(
             new RenewableBidHistory(
               {
-                account_id: sortRenewableBids[i].account_id,
+                account_id: bidAccountId,
                 price_ujpy: sortRenewableBids[i].price_ujpy,
                 amount_uspx: sortRenewableBids[i].amount_uspx,
                 is_accepted: false,
@@ -191,20 +219,23 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
         break;
       }
     } else {
+      const bidAccountId = sortRenewableBids[i].account_id;
+      const askAccountId = sortRenewableAsks[j].account_id;
+      const contractAmount = sortRenewableBids[i].amount_uspx;
       const renewableSettlement = new RenewableSettlement({
-        bid_id: sortRenewableBids[i].account_id,
-        ask_id: sortRenewableAsks[j].account_id,
+        bid_id: bidAccountId,
+        ask_id: askAccountId,
         price_ujpy: data.price_ujpy,
-        amount_uspx: sortRenewableBids[i].amount_uspx,
+        amount_uspx: contractAmount,
       });
       await renewable_settlement.create(renewableSettlement);
 
       await renewable_bid_history.create(
         new RenewableBidHistory(
           {
-            account_id: sortRenewableBids[i].account_id,
+            account_id: bidAccountId,
             price_ujpy: sortRenewableBids[i].price_ujpy,
-            amount_uspx: sortRenewableBids[i].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
@@ -218,18 +249,25 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
         new RenewableAskHistory(
           {
             type: sortRenewableAsks[j].type as unknown as proto.main.RenewableAskHistoryType,
-            account_id: sortRenewableAsks[j].account_id,
+            account_id: askAccountId,
             price_ujpy: sortRenewableAsks[j].price_ujpy,
-            amount_uspx: sortRenewableBids[i].amount_uspx,
+            amount_uspx: contractAmount,
             is_accepted: true,
             contract_price_ujpy: data.price_ujpy,
           },
           sortRenewableAsks[j].created_at,
         ),
       );
+      console.log('hoge05', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
+
+      xrplTxs.txs.push({
+        from_account_id: askAccountId,
+        dist_account_id: bidAccountId,
+        amount_uspx: contractAmount,
+      });
 
       i++;
       j++;
@@ -264,11 +302,13 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
+          console.log('hoge06', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
       }
     }
   }
+  await xrpl_tx.create(xrplTxs);
   console.log('complete Renewable settlement');
 };

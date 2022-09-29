@@ -46,6 +46,13 @@ export async function list() {
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as RenewableAskSetting));
 }
 
+export async function listDesc() {
+  return await collection()
+    .orderBy('created_at', 'desc')
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as RenewableAskSetting));
+}
+
 export async function create(data: RenewableAskSetting) {
   const doc = document();
   data.id = doc.id;

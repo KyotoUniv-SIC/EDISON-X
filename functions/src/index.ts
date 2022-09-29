@@ -14,6 +14,7 @@ import './normal-bid-deletes/delete-normal-bid';
 import './normal-settlements/create-balance';
 import './primary-asks/create-balance';
 import './renewable-ask-deletes/delete-renewable-ask';
+import './renewable-ask-settings/update-price';
 import './renewable-asks/update-available-balance';
 import './renewable-bid-deletes/delete-renewable-bid';
 import './renewable-settlements/create-balance';
@@ -22,6 +23,8 @@ import './single-price-normal-settlements/create-normal-settlement';
 import './single-price-renewable-settlements/create-renewable-settlement';
 import './student-accounts/create-balance';
 import './student-accounts/xrpl';
+import './xrpl-monthly-txs/send-txs';
+import './xrpl-txs/send-txs';
 import * as admin from 'firebase-admin';
 
 // import * as functions from 'firebase-functions';
@@ -71,6 +74,7 @@ const files = {
   normal_bids: './normal-bids',
   normal_settlements: './normal-settlements',
   primary_asks: './primary-asks',
+  primary_ask_settings: './primary-ask-settings',
   primary_bids: './primary-bids',
   renewable_ask_deletes: './renewable-ask-deletes',
   renewable_ask_histories: './renewable-ask-histories',
@@ -84,6 +88,8 @@ const files = {
   normals: './single-price-normal-settlements',
   renewables: './single-price-renewable-settlements',
   student_accounts: './student-accounts',
+  xrpl_monthly_txs: './xrpl-monthly-txs',
+  xrpl_txs: './xrpl-txs',
   // scheduled functions
   contract_normal: './schedules/contract-normal',
   contract_renewable: './schedules/contract-renewable',
