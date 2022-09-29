@@ -3,6 +3,11 @@ import { edisonTestConfig } from './config.model';
 import { initializeApp } from 'firebase/app';
 import { getDocs, collection, getFirestore, Timestamp, doc, serverTimestamp, FieldValue, setDoc } from 'firebase/firestore';
 
+export const get = async (collectionName: string) => {
+  const dataList = await list(collectionName);
+  return dataList;
+};
+
 export const list = async (collectionName: string) => {
   const config = edisonTestConfig;
   const app = initializeApp(config);
