@@ -76,20 +76,25 @@ export class ChartMonthlyUsageService {
       const nextMonth = new Date(now.getFullYear(), i + 1, 1);
       const thisMonthLastYear = new Date(now.getFullYear() - 1, i, 1);
       const nextMonthLastYear = new Date(now.getFullYear() - 1, i + 1, 1);
-      const usage = usages.reduce(
-        (sum, element) =>
-          thisMonth < (element.created_at as Timestamp).toDate() && (element.created_at as Timestamp).toDate() < nextMonth
-            ? sum + parseInt(element.amount_kwh_str)
-            : sum,
-        0,
-      );
-      const usageLastYear = usages.reduce(
-        (sum, element) =>
-          thisMonthLastYear < (element.created_at as Timestamp).toDate() && (element.created_at as Timestamp).toDate() < nextMonthLastYear
-            ? sum + parseInt(element.amount_kwh_str)
-            : sum,
-        0,
-      );
+      const usage = usages
+        .filter((usage) => usage.created_at)
+        .reduce(
+          (sum, element) =>
+            thisMonth < (element.created_at as Timestamp).toDate() && (element.created_at as Timestamp).toDate() < nextMonth
+              ? sum + parseInt(element.amount_kwh_str)
+              : sum,
+          0,
+        );
+      console.log(usages.filter((usage) => !usage.created_at));
+      const usageLastYear = usages
+        .filter((usage) => usage.created_at)
+        .reduce(
+          (sum, element) =>
+            thisMonthLastYear < (element.created_at as Timestamp).toDate() && (element.created_at as Timestamp).toDate() < nextMonthLastYear
+              ? sum + parseInt(element.amount_kwh_str)
+              : sum,
+          0,
+        );
       totalUsageThisYear.push(usage);
       totalUsageLastYear.push(usageLastYear);
     }
