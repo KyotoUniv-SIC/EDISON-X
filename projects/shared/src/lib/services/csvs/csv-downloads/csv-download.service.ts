@@ -240,6 +240,8 @@ export class CsvDownloadService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(paymentsData, ',');
-    this.csvCommon.downloadCsv(csv, 'monthly_payments');
+    const yearLabel = !year ? 'all_year' : year.toString();
+    const monthLabel = !month ? 'all_month' : month.toString();
+    this.csvCommon.downloadCsv(csv, 'monthly_payments_' + yearLabel + '_' + monthLabel);
   }
 }

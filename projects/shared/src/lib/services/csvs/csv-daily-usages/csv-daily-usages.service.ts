@@ -2,6 +2,7 @@ import { DailyUsageApplicationService } from '../../daily-usages/daily-usage.app
 import { DailyPaymentApplicationService } from '../../student-accounts/daily-payments/daily-payment.application.service';
 import { StudentAccountApplicationService } from '../../student-accounts/student-account.application.service';
 import { CSVCommonService } from '../csv-common.service';
+import { CsvOrderHistoriesService } from '../csv-order-histories/csv-order-histories.service';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { DailyPayment } from '@local/common';
@@ -16,13 +17,17 @@ export class CsvDailyUsagesService {
     private readonly studentApp: StudentAccountApplicationService,
     private readonly dailyUsageApp: DailyUsageApplicationService,
     private readonly dailyPaymentApp: DailyPaymentApplicationService,
+    private readonly csvOrderHistory: CsvOrderHistoriesService,
   ) {}
 
   async downloadDailyUsages(range: DateRange) {
+    const endDate = new Date(range.end);
+    endDate.setDate(endDate.getDate() + 1);
     const usages = await this.dailyUsageApp.list();
     const filteredUsages = usages
-      .filter((usage) => (usage.created_at as Timestamp).toDate() > range.start)
-      .filter((usage) => (usage.created_at as Timestamp).toDate() < range.end)
+      .filter((usage) => usage.created_at)
+      .filter((usage) => (usage.created_at as Timestamp).toDate() >= range.start)
+      .filter((usage) => (usage.created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
       .sort((first, second) => {
         if (!first.created_at) {
@@ -52,17 +57,20 @@ export class CsvDailyUsagesService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(usagesData, ',');
-    this.csvCommon.downloadCsv(csv, 'all_daily_usages');
+    this.csvCommon.downloadCsv(csv, 'all_daily_usages_' + this.csvOrderHistory.createDateLabel(range.start, range.end));
   }
 
   async downloadDailyPayments(range: DateRange) {
+    const endDate = new Date(range.end);
+    endDate.setDate(endDate.getDate() + 1);
     const students = await this.studentApp.list();
     let dailyPayments: DailyPayment[] = [];
     for (let student of students) {
       const payments = await this.dailyPaymentApp.list(student.id);
       const filteredPayment = payments
-        .filter((payment) => (payment.created_at as Timestamp).toDate() > range.start)
-        .filter((payment) => (payment.created_at as Timestamp).toDate() < range.end);
+        .filter((payment) => payment.created_at)
+        .filter((payment) => (payment.created_at as Timestamp).toDate() >= range.start)
+        .filter((payment) => (payment.created_at as Timestamp).toDate() < endDate);
       Array.prototype.push.apply(dailyPayments, filteredPayment);
     }
     if (!dailyPayments.length) {
@@ -100,6 +108,6 @@ export class CsvDailyUsagesService {
         };
       });
     const csv = this.csvCommon.jsonToCsv(paymentsData, ',');
-    this.csvCommon.downloadCsv(csv, 'daily_usages');
+    this.csvCommon.downloadCsv(csv, 'daily_usages_' + this.csvOrderHistory.createDateLabel(range.start, range.end));
   }
 }

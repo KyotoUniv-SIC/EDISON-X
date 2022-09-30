@@ -25,11 +25,13 @@ export class CsvOrderHistoriesService {
   ) {}
 
   async downloadNormalBids(option: HistoryOption) {
+    const endDate = new Date(option.end);
+    endDate.setDate(endDate.getDate() + 1);
     const bids = await this.normalBidHistoryApp.listAll();
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() > option.start)
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end)
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() >= option.start)
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
       .sort((first, second) => {
         if (!first.bid_created_at) {
@@ -65,15 +67,17 @@ export class CsvOrderHistoriesService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(bidsData, ',');
-    this.csvCommon.downloadCsv(csv, 'upx_bid_history');
+    this.csvCommon.downloadCsv(csv, 'upx_bid_history_' + this.createDateLabel(option.start, option.end));
   }
 
   async downloadNormalAsks(option: HistoryOption) {
+    const endDate = new Date(option.end);
+    endDate.setDate(endDate.getDate() + 1);
     const asks = await this.normalAskHistoryApp.listAll();
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() > option.start)
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end)
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() >= option.start)
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
       .sort((first, second) => {
         if (!first.ask_created_at) {
@@ -109,15 +113,18 @@ export class CsvOrderHistoriesService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(asksData, ',');
-    this.csvCommon.downloadCsv(csv, 'upx_ask_history');
+    this.csvCommon.downloadCsv(csv, 'upx_ask_history_' + this.createDateLabel(option.start, option.end));
   }
 
   async downloadRenewableBids(option: HistoryOption) {
+    const endDate = new Date(option.end);
+    endDate.setDate(endDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() + 1);
     const bids = await this.renewableBidHistoryApp.listAll();
     const sortContractBids = option.onlyContracted ? bids.filter((bid) => bid.is_accepted) : bids;
     const filteredBids = sortContractBids
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() > option.start)
-      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < option.end)
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() >= option.start)
+      .filter((bid) => (bid.bid_created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
       .sort((first, second) => {
         if (!first.bid_created_at) {
@@ -153,15 +160,17 @@ export class CsvOrderHistoriesService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(bidsData, ',');
-    this.csvCommon.downloadCsv(csv, 'spx_bid_history');
+    this.csvCommon.downloadCsv(csv, 'spx_bid_history_' + this.createDateLabel(option.start, option.end));
   }
 
   async downloadRenewableAsks(option: HistoryOption) {
+    const endDate = new Date(option.end);
+    endDate.setDate(endDate.getDate() + 1);
     const asks = await this.renewableAskHistoryApp.listAll();
     const sortContractAsks = option.onlyContracted ? asks.filter((ask) => ask.is_accepted) : asks;
     const filteredAsks = sortContractAsks
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() > option.start)
-      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < option.end)
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() >= option.start)
+      .filter((ask) => (ask.ask_created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
       .sort((first, second) => {
         if (!first.ask_created_at) {
@@ -197,6 +206,22 @@ export class CsvOrderHistoriesService {
       };
     });
     const csv = this.csvCommon.jsonToCsv(asksData, ',');
-    this.csvCommon.downloadCsv(csv, 'spx_ask_history');
+    this.csvCommon.downloadCsv(csv, 'spx_ask_history_' + this.createDateLabel(option.start, option.end));
+  }
+
+  createDateLabel(start: Date, end: Date) {
+    const startYear = start.getFullYear().toString().padStart(4, '0');
+    const startMonth = (start.getMonth() + 1).toString().padStart(2, '0');
+    const startDay = start.getDate().toString().padStart(2, '0');
+    const startStr = startYear + startMonth + startDay;
+    if (start >= end) {
+      return startStr;
+    } else {
+      const endYear = end.getFullYear().toString().padStart(4, '0');
+      const endMonth = (end.getMonth() + 1).toString().padStart(2, '0');
+      const endDay = end.getDate().toString().padStart(2, '0');
+      const endStr = endYear + endMonth + endDay;
+      return startStr + '_' + endStr;
+    }
   }
 }
