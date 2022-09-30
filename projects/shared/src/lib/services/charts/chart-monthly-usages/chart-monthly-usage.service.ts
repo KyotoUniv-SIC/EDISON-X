@@ -85,7 +85,6 @@ export class ChartMonthlyUsageService {
               : sum,
           0,
         );
-      console.log(usages.filter((usage) => !usage.created_at));
       const usageLastYear = usages
         .filter((usage) => usage.created_at)
         .reduce(
