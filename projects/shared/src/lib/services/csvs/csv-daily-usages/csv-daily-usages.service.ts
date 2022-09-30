@@ -25,6 +25,7 @@ export class CsvDailyUsagesService {
     endDate.setDate(endDate.getDate() + 1);
     const usages = await this.dailyUsageApp.list();
     const filteredUsages = usages
+      .filter((usage) => usage.created_at)
       .filter((usage) => (usage.created_at as Timestamp).toDate() >= range.start)
       .filter((usage) => (usage.created_at as Timestamp).toDate() < endDate)
       // 昇順に並び替え
@@ -67,6 +68,7 @@ export class CsvDailyUsagesService {
     for (let student of students) {
       const payments = await this.dailyPaymentApp.list(student.id);
       const filteredPayment = payments
+        .filter((payment) => payment.created_at)
         .filter((payment) => (payment.created_at as Timestamp).toDate() >= range.start)
         .filter((payment) => (payment.created_at as Timestamp).toDate() < endDate);
       Array.prototype.push.apply(dailyPayments, filteredPayment);
