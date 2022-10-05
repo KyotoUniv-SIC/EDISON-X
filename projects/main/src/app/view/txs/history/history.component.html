@@ -55,48 +55,66 @@
       <ng-template #loading>
         <mat-progress-spinner [diameter]="60" [mode]="'indeterminate'"></mat-progress-spinner>
       </ng-template>
-      <ng-container *ngIf="histories === null; then loading; else loadedHistory"></ng-container>
+      <ng-container *ngIf="balanceHistories === null; then loading; else loadedHistory"></ng-container>
       <ng-template #loadedHistory>
-        <ng-container *ngIf="!histories?.length">
+        <ng-container *ngIf="!balanceHistories?.length">
           <mat-list-item>No history</mat-list-item>
         </ng-container>
-        <ng-container *ngFor="let history of histories">
-          <mat-list-item routerLink="/txs/history/{{ powerType(history.isSolar) }}/{{ txType(history.isBid) }}/{{ history.id }}">
-            <span class="text-sm mr-4">{{ history.date | date: 'MM/dd HH:MM' }}</span>
+        <ng-container *ngFor="let balanceHistory of balanceHistories">
+          <mat-list-item
+            routerLink="/txs/history/{{ isPrimary(balanceHistory.isPrimary) }}{{ isWithdraw(balanceHistory.isWithdraw) }}/{{
+              powerType(balanceHistory.isSolar)
+            }}/{{ txType(balanceHistory.isBid) }}/{{ balanceHistory.id }}"
+          >
+            <span class="text-sm mr-4">{{ balanceHistory.date | date: 'MM/dd HH:MM' }}</span>
 
-            <ng-container *ngIf="history.isSolar === true; then solar; else utility"></ng-container>
-
-            <ng-template #solar>
-              <div class="text-sm mr-10">SPX</div>
-              <div class="text-sm flex-auto">
-                <ng-container *ngIf="history.isBid === true; then solarBid; else solarAsk"></ng-container>
-                <ng-template #solarBid>
-                  <span style="color: #3f51b5">+{{ history.utokenAmount | microString }}</span>
-                </ng-template>
-                <ng-template #solarAsk>
-                  <span style="color: #ff4081">-{{ history.utokenAmount | microString }}</span>
-                </ng-template>
-              </div>
-              <div class="text-sm">
-                <!-- <ng-container
-                  *ngIf="txs.isAuction === true; then auction; else txs.isDailyWithdraw === true; then: dailyWithdraw; else: admin"
-                ></ng-container> -->
-                Auction
-              </div>
-            </ng-template>
-
-            <ng-template #utility>
+            <ng-container *ngIf="balanceHistory.isPrimary === true; then primary; else others"></ng-container>
+            <ng-template #primary>
               <div class="text-sm mr-10">UPX</div>
               <div class="text-sm flex-auto">
-                <ng-container *ngIf="history.isBid === true; then utilityBid; else utilityAsk"></ng-container>
-                <ng-template #utilityBid>
-                  <span style="color: #3f51b5">+{{ history.utokenAmount | microString }}</span>
-                </ng-template>
-                <ng-template #utilityAsk>
-                  <span style="color: #ff4081">-{{ history.utokenAmount | microString }}</span>
-                </ng-template>
+                <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
               </div>
-              <div class="text-sm">Daily-withdraw</div>
+              <div class="text-sm">Primary</div>
+            </ng-template>
+            <ng-template #others>
+              <ng-container *ngIf="balanceHistory.isWithdraw === true; then withdraw; else auction"> </ng-container>
+              <ng-template #withdraw>
+                <div class="text-sm mr-10">UPX</div>
+                <div class="text-sm flex-auto">
+                  <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+                </div>
+                <div class="text-sm">Withdraw</div>
+              </ng-template>
+              <ng-template #auction>
+                <ng-container *ngIf="balanceHistory.isSolar === true; then solar; else utility"></ng-container>
+                <ng-template #solar>
+                  <div class="text-sm mr-10">SPX</div>
+                  <div class="text-sm flex-auto">
+                    <ng-container *ngIf="balanceHistory.isBid === true; then solarBid; else solarAsk"></ng-container>
+                    <ng-template #solarBid>
+                      <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+                    </ng-template>
+                    <ng-template #solarAsk>
+                      <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
+                    </ng-template>
+                  </div>
+                  <div class="text-sm">Auction</div>
+                </ng-template>
+
+                <ng-template #utility>
+                  <div class="text-sm mr-10">UPX</div>
+                  <div class="text-sm flex-auto">
+                    <ng-container *ngIf="balanceHistory.isBid === true; then utilityBid; else utilityAsk"></ng-container>
+                    <ng-template #utilityBid>
+                      <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+                    </ng-template>
+                    <ng-template #utilityAsk>
+                      <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
+                    </ng-template>
+                  </div>
+                  <div class="text-sm">Auction</div>
+                </ng-template>
+              </ng-template>
             </ng-template>
           </mat-list-item>
 

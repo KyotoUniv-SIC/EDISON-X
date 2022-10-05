@@ -1,4 +1,4 @@
-import { Order, History } from '../../../page/txs/history/history.component';
+import { Order, BalanceHistory } from '../../../page/txs/history/history.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { StudentAccount } from '@local/common';
@@ -18,9 +18,7 @@ export class HistoryComponent implements OnInit {
   @Input()
   orders?: Order[] | null;
   @Input()
-  histories?: History[] | null;
-  // @Input()
-  // txsTypes$: TxsType[] | null;
+  balanceHistories?: BalanceHistory[] | null;
 
   constructor() {}
 
@@ -29,6 +27,21 @@ export class HistoryComponent implements OnInit {
   selectedToken = 'default';
   selectedTransaction = 'default';
   panelOpenState = false;
+
+  isPrimary(type: boolean) {
+    if (!type) {
+      return '';
+    } else {
+      return 'primary';
+    }
+  }
+  isWithdraw(type: boolean) {
+    if (!type) {
+      return 'auction';
+    } else {
+      return 'withdraw';
+    }
+  }
 
   powerType(type: boolean) {
     if (!type) {
