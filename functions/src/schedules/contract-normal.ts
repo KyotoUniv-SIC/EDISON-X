@@ -41,7 +41,7 @@ module.exports.contractNormal = f.pubsub
               bid.created_at,
             ),
           );
-          await normal_bid.delete_(bid.id);
+          await normal_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -59,7 +59,7 @@ module.exports.contractNormal = f.pubsub
               ask.created_at,
             ),
           );
-          await normal_ask.delete_(ask.id);
+          await normal_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
 
@@ -97,7 +97,7 @@ module.exports.contractNormal = f.pubsub
               bid.created_at,
             ),
           );
-          await normal_bid.delete_(bid.id);
+          await normal_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -115,7 +115,7 @@ module.exports.contractNormal = f.pubsub
               ask.created_at,
             ),
           );
-          await normal_ask.delete_(ask.id);
+          await normal_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
       return;
@@ -189,7 +189,7 @@ module.exports.contractNormal = f.pubsub
               bid.created_at,
             ),
           );
-          await normal_bid.delete_(bid.id);
+          await normal_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -207,7 +207,7 @@ module.exports.contractNormal = f.pubsub
               ask.created_at,
             ),
           );
-          await normal_ask.delete_(ask.id);
+          await normal_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
     } else {
