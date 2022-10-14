@@ -21,11 +21,11 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
   const xrplTxs = new XrplTx({ txs: [] });
 
   const normalBids = await normal_bid.listValid();
-  // 降順
+  // 降順に並び替え
   const sortNormalBids = normalBids.sort((first, second) => parseInt(second.price_ujpy) - parseInt(first.price_ujpy));
 
   const normalAsks = await normal_ask.listValid();
-  // 昇順
+  // 昇順に並び替え
   const sortNormalAsks = normalAsks.sort((first, second) => parseInt(first.price_ujpy) - parseInt(second.price_ujpy));
 
   let i = 0;
@@ -123,14 +123,14 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
 
       sortNormalAsks[j].amount_uupx = (parseInt(sortNormalAsks[j].amount_uupx) - parseInt(sortNormalBids[i].amount_uupx)).toString();
       i++;
-      // Bidがなくなると終了、残りのAskをHistoryへ
       if (i >= sortNormalBids.length) {
+        // Bidがなくなると終了、残りのAskをHistoryへ
         for (; j < sortNormalAsks.length; j++) {
           await normal_ask_history.create(
             new NormalAskHistory(
               {
                 type: sortNormalAsks[j].type as unknown as proto.main.NormalAskHistoryType,
-                account_id: askAccountId,
+                account_id: sortNormalAsks[j].account_id,
                 price_ujpy: sortNormalAsks[j].price_ujpy,
                 amount_uupx: sortNormalAsks[j].amount_uupx,
                 is_accepted: false,
@@ -200,7 +200,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           await normal_bid_history.create(
             new NormalBidHistory(
               {
-                account_id: bidAccountId,
+                account_id: sortNormalBids[i].account_id,
                 price_ujpy: sortNormalBids[i].price_ujpy,
                 amount_uupx: sortNormalBids[i].amount_uupx,
                 is_accepted: false,

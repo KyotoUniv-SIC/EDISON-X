@@ -21,8 +21,9 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
   const xrplTxs = new XrplTx({ txs: [] });
 
   const renewableBids = await renewable_bid.listValid();
+  // 降順に並び替え
   const sortRenewableBids = renewableBids.sort((first, second) => parseInt(second.price_ujpy) - parseInt(first.price_ujpy));
-
+  // 昇順に並び替え
   const renewableAsks = await renewable_ask.listValid();
   const sortRenewableAsks = renewableAsks.sort((first, second) => parseInt(first.price_ujpy) - parseInt(second.price_ujpy));
 
@@ -30,6 +31,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
   let j = 0;
   const condition = true;
   while (condition) {
+    // どちらかが成約価格から乖離した時点で終了、残りをHistoryへ
     if (
       parseInt(sortRenewableBids[i].price_ujpy) < parseInt(data.price_ujpy) ||
       parseInt(sortRenewableAsks[j].price_ujpy) > parseInt(data.price_ujpy)
@@ -64,7 +66,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             sortRenewableAsks[j].created_at,
           ),
         );
-        console.log('hoge01', sortRenewableAsks[j].id);
         await renewable_ask.delete_(sortRenewableAsks[j].id);
       }
       break;
@@ -110,7 +111,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      console.log('hoge02', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -126,12 +126,13 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
       ).toString();
       i++;
       if (i >= sortRenewableBids.length) {
+        // Bidがなくなると終了、残りのAskをHistoryへ
         for (; j < sortRenewableAsks.length; j++) {
           await renewable_ask_history.create(
             new RenewableAskHistory(
               {
                 type: sortRenewableAsks[j].type as unknown as proto.main.RenewableAskHistoryType,
-                account_id: askAccountId,
+                account_id: sortRenewableAsks[j].account_id,
                 price_ujpy: sortRenewableAsks[j].price_ujpy,
                 amount_uspx: sortRenewableAsks[j].amount_uspx,
                 is_accepted: false,
@@ -140,7 +141,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
-          console.log('hoge03', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
@@ -185,7 +185,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      console.log('hoge04', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -201,11 +200,12 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
       ).toString();
       j++;
       if (j >= sortRenewableAsks.length) {
+        // Askがなくなると終了、残りのBidをHistoryへ
         for (; i < sortRenewableBids.length; i++) {
           await renewable_bid_history.create(
             new RenewableBidHistory(
               {
-                account_id: bidAccountId,
+                account_id: sortRenewableBids[i].account_id,
                 price_ujpy: sortRenewableBids[i].price_ujpy,
                 amount_uspx: sortRenewableBids[i].amount_uspx,
                 is_accepted: false,
@@ -258,7 +258,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      console.log('hoge05', sortRenewableAsks[j].id);
       await renewable_ask.delete_(sortRenewableAsks[j].id);
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
@@ -302,7 +301,6 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
-          console.log('hoge06', sortRenewableAsks[j].id);
           await renewable_ask.delete_(sortRenewableAsks[j].id);
         }
         break;
