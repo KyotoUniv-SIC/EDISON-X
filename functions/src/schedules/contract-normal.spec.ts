@@ -1,5 +1,5 @@
-import { normalAskListValid } from '../models/normal-ask/list-valid.data';
-import { normalBidListValid } from '../models/normal-bid/list-valid.data';
+import { normalAskListValid } from '../models/normal-asks/list-valid.data';
+import { normalBidListValid } from '../models/normal-bids/list-valid.data';
 import { NormalAskHistory, NormalBidHistory, SinglePriceNormalSettlement } from '@local/common';
 
 describe('Normal Contract Test', () => {
