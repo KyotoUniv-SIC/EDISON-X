@@ -7,8 +7,8 @@ export const onCreateHandler: FirestoreCreateHandler[] = [];
 export const onUpdateHandler: FirestoreUpdateHandler[] = [];
 export const onDeleteHandler: FirestoreDeleteHandler[] = [];
 
-const f = functions.region('asia-northeast1');
-export const onCreate = f.firestore.document(CostSettingFirestore.virtualPath).onCreate(async (snapshot, context) => {
+const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB' });
+module.exports.onCreate = f.firestore.document(CostSettingFirestore.virtualPath).onCreate(async (snapshot, context) => {
   if (await isTriggeredOnce(context.eventId)) {
     return;
   }
@@ -23,32 +23,32 @@ export const onCreate = f.firestore.document(CostSettingFirestore.virtualPath).o
   }
 });
 
-export const onUpdate = f.firestore.document(CostSettingFirestore.virtualPath).onUpdate(async (snapshot, context) => {
-  if (await isTriggeredOnce(context.eventId)) {
-    return;
-  }
+// module.exports.onUpdate = f.firestore.document(CostSettingFirestore.virtualPath).onUpdate(async (snapshot, context) => {
+//   if (await isTriggeredOnce(context.eventId)) {
+//     return;
+//   }
 
-  for (const handler of onUpdateHandler) {
-    try {
-      await handler(snapshot, context);
-    } catch (e) {
-      console.error(`Error: in function ${handler.name}`);
-      console.error(e);
-    }
-  }
-});
+//   for (const handler of onUpdateHandler) {
+//     try {
+//       await handler(snapshot, context);
+//     } catch (e) {
+//       console.error(`Error: in function ${handler.name}`);
+//       console.error(e);
+//     }
+//   }
+// });
 
-export const onDelete = f.firestore.document(CostSettingFirestore.virtualPath).onDelete(async (snapshot, context) => {
-  if (await isTriggeredOnce(context.eventId)) {
-    return;
-  }
+// module.exports.onDelete = f.firestore.document(CostSettingFirestore.virtualPath).onDelete(async (snapshot, context) => {
+//   if (await isTriggeredOnce(context.eventId)) {
+//     return;
+//   }
 
-  for (const handler of onDeleteHandler) {
-    try {
-      await handler(snapshot, context);
-    } catch (e) {
-      console.error(`Error: in function ${handler.name}`);
-      console.error(e);
-    }
-  }
-});
+//   for (const handler of onDeleteHandler) {
+//     try {
+//       await handler(snapshot, context);
+//     } catch (e) {
+//       console.error(`Error: in function ${handler.name}`);
+//       console.error(e);
+//     }
+//   }
+// });

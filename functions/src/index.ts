@@ -3,6 +3,7 @@ import './accounts/create-student-account';
 import './balance-snapshots/calc-monthly-usage';
 import './balances/update-available-balance';
 import './chat-deletes/delete-chat';
+import './cost-settings/calc-monthly-payment';
 import './daily-payments/create-balance';
 import './message-deletes/delete-message';
 import './message-reads/update-message';
@@ -12,21 +13,24 @@ import './normal-asks/update-available-balance';
 import './normal-bid-deletes/delete-normal-bid';
 import './normal-settlements/create-balance';
 import './primary-asks/create-balance';
-import './primary-asks/create-primary-bid';
 import './renewable-ask-deletes/delete-renewable-ask';
+import './renewable-ask-settings/update-price';
 import './renewable-asks/update-available-balance';
-import './renewable-bids/renewable-bid-delete';
+import './renewable-bid-deletes/delete-renewable-bid';
 import './renewable-settlements/create-balance';
 import './room-changes/update-student-account';
 import './single-price-normal-settlements/create-normal-settlement';
 import './single-price-renewable-settlements/create-renewable-settlement';
 import './student-accounts/create-balance';
 import './student-accounts/xrpl';
+import './xrpl-monthly-txs/send-txs';
+import './xrpl-txs/send-txs';
 import * as admin from 'firebase-admin';
 
 // import * as functions from 'firebase-functions';
 
 admin.initializeApp();
+admin.firestore().settings({ ignoreUndefinedProperties: true });
 // admin.initializeApp({
 //   credential: admin.credential.cert(JSON.parse(JSON.stringify(functions.config().service_account).replace(/\\\\n/g, '\\n'))),
 //   databaseURL: functions.config().admin.database_url,
@@ -59,6 +63,7 @@ const files = {
   message_reads: './message-reads',
   messages: './messages',
   monthly_payments: './monthly-payments',
+  monthly_settlements: './monthly-settlements',
   monthly_usages: './monthly-usages',
   normal_ask_deletes: './normal-ask-deletes',
   normal_ask_histories: './normal-ask-histories',
@@ -69,6 +74,7 @@ const files = {
   normal_bids: './normal-bids',
   normal_settlements: './normal-settlements',
   primary_asks: './primary-asks',
+  primary_ask_settings: './primary-ask-settings',
   primary_bids: './primary-bids',
   renewable_ask_deletes: './renewable-ask-deletes',
   renewable_ask_histories: './renewable-ask-histories',
@@ -82,13 +88,17 @@ const files = {
   normals: './single-price-normal-settlements',
   renewables: './single-price-renewable-settlements',
   student_accounts: './student-accounts',
+  xrpl_monthly_txs: './xrpl-monthly-txs',
+  xrpl_txs: './xrpl-txs',
   // scheduled functions
+  calc_electricity_cost: './schedules/calc-electricity-cost',
   contract_normal: './schedules/contract-normal',
   contract_renewable: './schedules/contract-renewable',
   daily_withdraw: './schedules/daily-withdraw',
   monthly_settlement: './schedules/monthly-settlement',
   operation_normal: './schedules/operation-normal',
   operation_renewable: './schedules/operation-renewable',
+  send_mails: './schedules/send-mails',
 };
 
 const loadFunctions = (filesObj: any) => {

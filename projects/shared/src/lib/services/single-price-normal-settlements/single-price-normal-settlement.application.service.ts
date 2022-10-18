@@ -14,39 +14,22 @@ export class SinglePriceNormalSettlementApplicationService {
     return this.singlePriceNormalSettlement.list$().pipe(
       map(
         (params) =>
-          params.sort(function (first, second) {
-            if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
-              return 1;
-            } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
-              return -1;
-            } else {
-              return 0;
-            }
-          })[0],
+          params
+            .sort(function (first, second) {
+              if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
+                return 1;
+              } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
+                return -1;
+              } else {
+                return 0;
+              }
+            })
+            .find((params) => params.amount_uupx != '0')!,
       ),
     );
-  }
-  list$() {
-    return this.singlePriceNormalSettlement.list$();
   }
 
-  listLatestMonth$() {
-    const settlements = this.list$().pipe(
-      map((params) =>
-        params
-          .sort(function (first, second) {
-            if ((first.created_at as Timestamp).toDate() < (second.created_at as Timestamp).toDate()) {
-              return 1;
-            } else if ((first.created_at as Timestamp).toDate() > (second.created_at as Timestamp).toDate()) {
-              return -1;
-            } else {
-              return 0;
-            }
-          })
-          .slice(0, 30)
-          .reverse(),
-      ),
-    );
-    return settlements;
+  list$() {
+    return this.singlePriceNormalSettlement.list$();
   }
 }

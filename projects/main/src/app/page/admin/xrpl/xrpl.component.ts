@@ -79,8 +79,6 @@ export class XrplComponent implements OnInit {
         };
       }),
     );
-
-    client.disconnect();
   }
 
   ngOnInit(): void {}

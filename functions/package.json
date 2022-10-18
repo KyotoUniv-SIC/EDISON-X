@@ -19,9 +19,10 @@
   "main": "lib/index.js",
   "dependencies": {
     "@local/common": "file:common",
+    "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "firebase-admin": "^9.11.1",
-    "firebase-functions": "^3.21.2",
+    "firebase-functions": "^3.22.0",
     "xrpl": "^2.1.1"
   },
   "devDependencies": {

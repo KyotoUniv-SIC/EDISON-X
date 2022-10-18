@@ -7,7 +7,9 @@ import { student_account } from '.';
 import { account_private } from '../account-privates';
 import { admin_account } from '../admin-accounts';
 import { daily_usage } from '../daily-usages';
+import { primary_ask_setting } from '../primary-ask-settings';
 import { primary_ask } from '../primary-asks';
+import { primaryAskOnCreate } from '../primary-asks/create-balance';
 import { AccountPrivate, PrimaryAsk, StudentAccount } from '@local/common';
 import * as crypto from 'crypto-js';
 
@@ -44,7 +46,7 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${tsSignedNormal.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `Error sending transaction: ${tsResultNormal.result.meta.TransactionResult}`;
+      console.log(`Error sending transaction: ${tsResultNormal.result.meta.TransactionResult}`);
     }
 
     const trustSetTxRenewable = {
@@ -65,9 +67,9 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
       console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${tsSignedRenewable.hash}`);
     } else {
       // eslint-disable-next-line no-throw-literal
-      throw `Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`;
+      console.log(`Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`);
     }
-    client.disconnect();
+    await client.disconnect();
     return wallet;
   }
   const wallet = await createWallet();
@@ -76,7 +78,14 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
   const privKey = process.env.PRIV_KEY;
   if (privKey) {
     const encryptedSeed = crypto.AES.encrypt(wallet.seed, privKey).toString();
-    await account_private.create(new AccountPrivate({ student_account_id: data.id, xrp_seed: encryptedSeed }));
+    const accountPrivates = await account_private.listLatest(data.id);
+    if (accountPrivates.length) {
+      await account_private.create(
+        new AccountPrivate({ student_account_id: data.id, xrp_seed: encryptedSeed, email: accountPrivates[0].email }),
+      );
+    } else {
+      await account_private.create(new AccountPrivate({ student_account_id: data.id, xrp_seed: encryptedSeed }));
+    }
   } else {
     console.log('No privKey detected!');
   }
@@ -91,5 +100,11 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
   if (!uupxAmount) {
     console.log(student.room_id, 'have no usage data');
   }
-  await primary_ask.create(new PrimaryAsk({ account_id: data.id, price_ujpy: '27000000', amount_uupx: uupxAmount.toString() }));
+  const primaryAskSetting = await primary_ask_setting.getLatest();
+  const price = primaryAskSetting.price_ujpy ?? '21500000';
+  const ratio = parseInt(primaryAskSetting.ratio_percentage) / 100 ?? 1;
+
+  const primaryAsk = new PrimaryAsk({ account_id: data.id, price_ujpy: price, amount_uupx: (uupxAmount * ratio).toString() });
+  await primary_ask.create(primaryAsk);
+  await primaryAskOnCreate({ data: () => primaryAsk }, null);
 });

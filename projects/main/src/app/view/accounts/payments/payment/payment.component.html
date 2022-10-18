@@ -11,31 +11,45 @@
       <mat-list-item class="flex flex-wrap">
         <span class="break-all">Primary Transaction:</span>
         <span class="flex-auto break-all"></span>
-        <span class="break-all">{{ monthlyPayment?.amount_primary_ujpy | microString }}</span>
+        <span class="break-all">{{ monthlyPayment?.amount_primary_ujpy | microString }} JPY</span>
       </mat-list-item>
       <mat-divider [inset]="true"></mat-divider>
       <mat-list-item class="flex flex-wrap">
         <span class="break-all">Surplus or Shortage Tokens:</span>
         <span class="flex-auto break-all"></span>
-        <span class="break-all">{{ monthlyPayment?.amount_adjust_ujpy | microString }}</span>
+        <span class="break-all">{{ monthlyPayment?.amount_utoken | microString }}</span>
+      </mat-list-item>
+      <mat-divider [inset]="true"></mat-divider>
+      <mat-list-item class="flex flex-wrap">
+        <span class="break-all">Payment of Surplus or Shortage Tokens:</span>
+        <span class="flex-auto break-all"></span>
+        <ng-container *ngIf="!monthlyPayment?.amount_adjust_ujpy; then empty; else exist"></ng-container>
+        <ng-template #empty>
+          <mat-chip-list>
+            <mat-chip color="warn" selected>Unsettled</mat-chip>
+          </mat-chip-list>
+        </ng-template>
+        <ng-template #exist>
+          <span class="break-all">{{ monthlyPayment?.amount_adjust_ujpy | microString }} JPY</span>
+        </ng-template>
       </mat-list-item>
       <mat-divider [inset]="true"></mat-divider>
       <mat-list-item class="flex flex-wrap">
         <span class="break-all">Payments to the Market:</span>
         <span class="flex-auto break-all"></span>
-        <span class="break-all">{{ monthlyPayment?.amount_market_ujpy | microString }}</span>
+        <span class="break-all">{{ monthlyPayment?.amount_market_ujpy | microString }} JPY</span>
       </mat-list-item>
       <mat-divider [inset]="true"></mat-divider>
       <mat-list-item class="flex flex-wrap">
         <span class="break-all">CO2 Ranking Reward:</span>
         <span class="flex-auto break-all"></span>
-        <span class="break-all">{{ monthlyPayment?.amount_reward_ujpy | microString }}</span>
+        <span class="break-all">{{ monthlyPayment?.amount_reward_ujpy | microString }} JPY</span>
       </mat-list-item>
       <mat-divider [inset]="true"></mat-divider>
       <mat-list-item class="flex flex-wrap">
         <span class="break-all">Total Payment</span>
         <span class="flex-auto break-all"></span>
-        <span class="break-all">{{ monthlyPayment?.amount_ujpy | microString }}</span>
+        <span class="break-all">{{ monthlyPayment?.amount_ujpy | microString }} JPY</span>
       </mat-list-item>
       <mat-divider [inset]="true"></mat-divider>
       <mat-list-item class="flex flex-wrap">

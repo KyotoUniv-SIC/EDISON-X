@@ -59,7 +59,8 @@ describe('XRPL Create Wallet Test', () => {
         // eslint-disable-next-line no-throw-literal
         throw `Error sending transaction: ${tsResultRenewable.result.meta.TransactionResult}`;
       }
-      client.disconnect();
+      await client.disconnect();
+      console.log('disconnected');
       return testWallet;
     }
     const wallet = await createWallet();

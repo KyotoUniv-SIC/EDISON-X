@@ -4,12 +4,14 @@ import { normal_ask } from '../normal-asks';
 import { normal_bid_history } from '../normal-bid-histories';
 import { normal_bid } from '../normal-bids';
 import { single_price_normal_settlement } from '../single-price-normal-settlements';
+import { singlePriceNormalSettlementOnCreate } from '../single-price-normal-settlements/create-normal-settlement';
 import { NormalAskHistory, NormalBidHistory, SinglePriceNormalSettlement } from '@local/common';
 import * as functions from 'firebase-functions';
 
-const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540 });
+const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
 module.exports.contractNormal = f.pubsub
-  .schedule('0 9 * * *') // .schedule('0,30 * * * *')
+  .schedule('0 9 * * *')
+  // .schedule('0,30 * * * *')
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
     const normalBids = await normal_bid.listValid();
@@ -18,35 +20,49 @@ module.exports.contractNormal = f.pubsub
     if (!normalBids.length || !normalAsks.length) {
       console.log('bid,askの不足でUPX成約は0です。');
 
-      for (const bid of normalBids) {
-        await normal_bid_history.create(
-          new NormalBidHistory(
-            {
-              account_id: bid.account_id,
-              price_ujpy: bid.price_ujpy,
-              amount_uupx: bid.amount_uupx,
-              is_accepted: false,
-            },
-            bid.created_at,
-          ),
-        );
-        await normal_bid.delete_(bid.id);
-      }
+      await single_price_normal_settlement.create(
+        new SinglePriceNormalSettlement({
+          price_ujpy: '0',
+          amount_uupx: '0',
+        }),
+      );
 
-      for (const ask of normalAsks) {
-        await normal_ask_history.create(
-          new NormalAskHistory(
-            {
-              account_id: ask.account_id,
-              price_ujpy: ask.price_ujpy,
-              amount_uupx: ask.amount_uupx,
-              is_accepted: false,
-            },
-            ask.created_at,
-          ),
-        );
-        await normal_ask.delete_(ask.id);
-      }
+      await Promise.all(
+        normalBids.map(async (bid) => {
+          await normal_bid_history.create(
+            new NormalBidHistory(
+              {
+                account_id: bid.account_id,
+                price_ujpy: bid.price_ujpy,
+                amount_uupx: bid.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              bid.created_at,
+            ),
+          );
+          await normal_bid.delete_(bid.id);
+        }),
+      );
+
+      await Promise.all(
+        normalAsks.map(async (ask) => {
+          await normal_ask_history.create(
+            new NormalAskHistory(
+              {
+                account_id: ask.account_id,
+                price_ujpy: ask.price_ujpy,
+                amount_uupx: ask.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              ask.created_at,
+            ),
+          );
+          await normal_ask.delete_(ask.id);
+        }),
+      );
+
       return;
     }
 
@@ -60,35 +76,48 @@ module.exports.contractNormal = f.pubsub
     if (parseInt(sortNormalBids[0].price_ujpy) < parseInt(sortNormalAsks[0].price_ujpy)) {
       console.log('UPX成約はありませんでした。');
 
-      for (const bid of sortNormalBids) {
-        await normal_bid_history.create(
-          new NormalBidHistory(
-            {
-              account_id: bid.account_id,
-              price_ujpy: bid.price_ujpy,
-              amount_uupx: bid.amount_uupx,
-              is_accepted: false,
-            },
-            bid.created_at,
-          ),
-        );
-        await normal_bid.delete_(bid.id);
-      }
+      await single_price_normal_settlement.create(
+        new SinglePriceNormalSettlement({
+          price_ujpy: '0',
+          amount_uupx: '0',
+        }),
+      );
 
-      for (const ask of sortNormalAsks) {
-        await normal_ask_history.create(
-          new NormalAskHistory(
-            {
-              account_id: ask.account_id,
-              price_ujpy: ask.price_ujpy,
-              amount_uupx: ask.amount_uupx,
-              is_accepted: false,
-            },
-            ask.created_at,
-          ),
-        );
-        await normal_ask.delete_(ask.id);
-      }
+      await Promise.all(
+        sortNormalBids.map(async (bid) => {
+          await normal_bid_history.create(
+            new NormalBidHistory(
+              {
+                account_id: bid.account_id,
+                price_ujpy: bid.price_ujpy,
+                amount_uupx: bid.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              bid.created_at,
+            ),
+          );
+          await normal_bid.delete_(bid.id);
+        }),
+      );
+
+      await Promise.all(
+        sortNormalAsks.map(async (ask) => {
+          await normal_ask_history.create(
+            new NormalAskHistory(
+              {
+                account_id: ask.account_id,
+                price_ujpy: ask.price_ujpy,
+                amount_uupx: ask.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              ask.created_at,
+            ),
+          );
+          await normal_ask.delete_(ask.id);
+        }),
+      );
       return;
     }
 
@@ -139,11 +168,49 @@ module.exports.contractNormal = f.pubsub
     // const equilibriumPrice = sortNormalBids[i].price <= sortNormalAsks[j].price ? sortNormalBids[i].price : sortNormalAsks[j].price;
     // 止まったときの低い方が成約取引量となる
     // const equilibriumAmount = sumBidAmountHistory[i] <= sumAskAmountHistory[j] ? sumBidAmountHistory[i] : sumAskAmountHistory[j];
+    const singlePrice = new SinglePriceNormalSettlement({
+      price_ujpy: equilibriumPrice.toString(),
+      amount_uupx: equilibriumAmount.toString(),
+    });
+    await single_price_normal_settlement.create(singlePrice);
 
-    await single_price_normal_settlement.create(
-      new SinglePriceNormalSettlement({
-        price_ujpy: equilibriumPrice.toString(),
-        amount_uupx: equilibriumAmount.toString(),
-      }),
-    );
+    if (equilibriumAmount == 0) {
+      await Promise.all(
+        normalBids.map(async (bid) => {
+          await normal_bid_history.create(
+            new NormalBidHistory(
+              {
+                account_id: bid.account_id,
+                price_ujpy: bid.price_ujpy,
+                amount_uupx: bid.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              bid.created_at,
+            ),
+          );
+          await normal_bid.delete_(bid.id);
+        }),
+      );
+
+      await Promise.all(
+        normalAsks.map(async (ask) => {
+          await normal_ask_history.create(
+            new NormalAskHistory(
+              {
+                account_id: ask.account_id,
+                price_ujpy: ask.price_ujpy,
+                amount_uupx: ask.amount_uupx,
+                is_accepted: false,
+                contract_price_ujpy: '0',
+              },
+              ask.created_at,
+            ),
+          );
+          await normal_ask.delete_(ask.id);
+        }),
+      );
+    } else {
+      await singlePriceNormalSettlementOnCreate({ data: () => singlePrice }, null);
+    }
   });

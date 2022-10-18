@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CostSetting, NormalAskSetting, RenewableAskSetting, RenewableRewardSetting } from '@local/common';
+import { CostSetting, NormalAskSetting, PrimaryAskSetting, RenewableAskSetting, RenewableRewardSetting } from '@local/common';
+
+export type SetPrimaryOnSubmitEvent = {
+  ujpyPrice: string;
+  uupxRatio: string;
+};
 
 export type SetNormalOnSubmitEvent = {
   ujpyPrice: string;
@@ -30,6 +35,8 @@ export type SetRewardOnSubmitEvent = {
 })
 export class TokensComponent implements OnInit {
   @Input()
+  primarySetting?: PrimaryAskSetting | null;
+  @Input()
   normalSetting?: NormalAskSetting | null;
   @Input()
   renewableSetting?: RenewableAskSetting | null;
@@ -37,6 +44,8 @@ export class TokensComponent implements OnInit {
   costSetting?: CostSetting | null;
   @Input()
   renewableRewardSetting?: RenewableRewardSetting | null;
+  @Output()
+  appSubmitPrimary: EventEmitter<SetPrimaryOnSubmitEvent>;
   @Output()
   appSubmitNormal: EventEmitter<SetNormalOnSubmitEvent>;
   @Output()
@@ -49,6 +58,7 @@ export class TokensComponent implements OnInit {
   checked: boolean = false;
 
   constructor() {
+    this.appSubmitPrimary = new EventEmitter();
     this.appSubmitNormal = new EventEmitter();
     this.appSubmitRenewable = new EventEmitter();
     this.appSubmitCost = new EventEmitter();
@@ -56,6 +66,16 @@ export class TokensComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onSubmitPrimary(price: string, ratio: string) {
+    if (!price) {
+      alert('価格を設定してください');
+      return;
+    }
+    const ujpyPrice = Math.floor(Number(price) * 1000000).toString();
+    const uupxRatio = Math.floor(Number(ratio)).toString();
+    this.appSubmitPrimary.emit({ ujpyPrice, uupxRatio });
+  }
 
   onSubmitNormal(price: string, ratio: string) {
     if (!price) {

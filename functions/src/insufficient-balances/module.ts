@@ -55,16 +55,13 @@ export async function listThisMonth(studentAccountID: string) {
 }
 
 export async function listLastMonth(studentAccountID: string) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const now = new Date();
   const lastMonth = new Date();
-  lastMonth.setDate(lastMonth.getDate() + 1);
   lastMonth.setMonth(lastMonth.getMonth() - 1);
-  lastMonth.setHours(0, 0, 0, 0);
 
   return await collection(studentAccountID)
     .orderBy('created_at', 'desc')
-    .where('created_at', '<', today)
+    .where('created_at', '<', now)
     .where('created_at', '>', lastMonth)
     .get()
     .then((snapshot) => snapshot.docs.map((doc) => doc.data() as InsufficientBalance));

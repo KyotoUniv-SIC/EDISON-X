@@ -1,8 +1,22 @@
-import { CO2Ranking, LastMonthData, LastMonthDataSource, Ranking } from '../../page/dashboard/dashboard.component';
+import { CO2Ranking, LastMonthDataSource, Ranking } from '../../page/dashboard/dashboard.component';
 import { Component, Input, OnInit } from '@angular/core';
-import { DailyUsage, NormalAsk, NormalBid, RenewableAsk, SinglePriceNormalSettlement, SinglePriceRenewableSettlement } from '@local/common';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label, MultiDataSet, Color } from 'ng2-charts';
+import {
+  DailyUsage,
+  NormalAsk,
+  NormalBid,
+  RenewableAsk,
+  RenewableRewardSetting,
+  SinglePriceNormalSettlement,
+  SinglePriceRenewableSettlement,
+} from '@local/common';
+import { ChartOptions, ChartDataSets } from 'chart.js';
+import { MultiDataSet } from 'ng2-charts';
+import {
+  balanceChartLabels,
+  balanceColors,
+  balanceChartType,
+} from 'projects/shared/src/lib/services/charts/chart-balances/chart-balance.service';
+import { contractChartType, contractChartLegend } from 'projects/shared/src/lib/services/charts/chart-contracts/chart-contract.service';
 
 export interface PeriodicElement {
   usage: string;
@@ -41,13 +55,13 @@ export class DashboardComponent implements OnInit {
   rank?: number | null;
   @Input()
   co2Rank?: CO2Ranking | null;
+  @Input()
+  renewableRewardSetting?: RenewableRewardSetting | null;
 
   @Input()
   normalSettlement?: SinglePriceNormalSettlement | null;
   @Input()
   normalDate?: Date | null;
-  @Input()
-  normalSettlements?: SinglePriceNormalSettlement[] | null;
   @Input()
   normalChartDataSets?: ChartDataSets[] | null;
   @Input()
@@ -78,29 +92,12 @@ export class DashboardComponent implements OnInit {
   @Input()
   lastMonthDataSource?: LastMonthDataSource[] | null;
 
-  doughnutChartLabels: Label[] = ['UPX', 'SPX'];
-  doughnutChartType: ChartType = 'doughnut';
-  doughnutColors: Color[] = [
-    {
-      backgroundColor: ['#6c8fb6', '#b67cb6'],
-    },
-  ];
+  doughnutChartLabels = balanceChartLabels;
+  doughnutChartType = balanceChartType;
+  doughnutColors = balanceColors;
 
-  barChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  barChartLabels: Label[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  barChartType: ChartType = 'bar';
-  barChartLegend = true;
-  barChartPlugins = [];
-  barColors: Color[] = [
-    {
-      backgroundColor: '#6c8fb6',
-    },
-    {
-      backgroundColor: '#b67cb6',
-    },
-  ];
+  barChartType = contractChartType;
+  barChartLegend = contractChartLegend;
 
   displayedColumns: string[] = ['classification', 'usage', 'unit', 'charge'];
   dataSource = [

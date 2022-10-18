@@ -1,0 +1,18 @@
+syntax = "proto3";
+package main;
+
+import "firebase_rules_options.proto";
+
+option (google.firebase.rules.firebase_rules).full_package_names = true;
+
+message XrplTx {
+  string id = 1;
+  repeated Tx txs = 2;
+}
+
+message Tx{
+  string from_account_id = 1;
+  string dist_account_id = 2;
+  string amount_uupx = 3;
+  string amount_uspx = 4;
+}
