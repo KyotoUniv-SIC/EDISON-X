@@ -1,6 +1,5 @@
 import { Order, BalanceHistory } from '../../../page/txs/history/history.component';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { StudentAccount } from '@local/common';
 
 @Component({
@@ -19,6 +18,8 @@ export class HistoryComponent implements OnInit {
   orders?: Order[] | null;
   @Input()
   balanceHistories?: BalanceHistory[] | null;
+  @Input()
+  insufficiencyAmount?: number | null;
 
   constructor() {}
 

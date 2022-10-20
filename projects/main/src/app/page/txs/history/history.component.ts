@@ -62,6 +62,7 @@ export class HistoryComponent implements OnInit {
   studentAccount$: Observable<StudentAccount> | undefined;
   uupxAmount$: Observable<number> | undefined;
   uspxAmount$: Observable<number> | undefined;
+  insufficiencyAmount$: Observable<number> | undefined;
   orders$: Observable<Order[]> | undefined;
   histories$: Observable<History[]> | undefined;
   balanceHistories$: Observable<BalanceHistory[]> | undefined;

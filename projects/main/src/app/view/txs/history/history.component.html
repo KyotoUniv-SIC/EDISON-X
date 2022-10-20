@@ -10,6 +10,13 @@
         <div class="w-2/5 whitespace-nowrap m-auto">
           SPX:<span class="text-2xl">{{ uspxAmount | microNumber }}</span>
         </div>
+        <ng-container *ngIf="insufficiencyAmount">
+          <mat-list-item class="flex flex-wrap" style="padding: auto">
+            <span class="break-all text-xl">Insufficient Balance:</span>
+            <span class="flex-auto break-all"></span>
+            <span class="break-all text-xl" style="font-size: x-large">{{ insufficiencyAmount | microNumber }}</span>
+          </mat-list-item>
+        </ng-container>
       </div>
     </div>
   </mat-card>
@@ -71,6 +78,7 @@
             <ng-container *ngIf="balanceHistory.isPrimary === true; then primary; else others"></ng-container>
             <ng-template #primary>
               <div class="text-sm mr-10">UPX</div>
+
               <div class="text-sm flex-auto">
                 <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
               </div>
@@ -88,7 +96,10 @@
               <ng-template #auction>
                 <ng-container *ngIf="balanceHistory.isSolar === true; then solar; else utility"></ng-container>
                 <ng-template #solar>
-                  <div class="text-sm mr-10">SPX</div>
+                  <div class="table-column">
+                    <div class="text-sm mr-10">SPX</div>
+                    <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
+                  </div>
                   <div class="text-sm flex-auto">
                     <ng-container *ngIf="balanceHistory.isBid === true; then solarBid; else solarAsk"></ng-container>
                     <ng-template #solarBid>
@@ -102,7 +113,10 @@
                 </ng-template>
 
                 <ng-template #utility>
-                  <div class="text-sm mr-10">UPX</div>
+                  <div class="table-column">
+                    <div class="text-sm mr-10">UPX</div>
+                    <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
+                  </div>
                   <div class="text-sm flex-auto">
                     <ng-container *ngIf="balanceHistory.isBid === true; then utilityBid; else utilityAsk"></ng-container>
                     <ng-template #utilityBid>
