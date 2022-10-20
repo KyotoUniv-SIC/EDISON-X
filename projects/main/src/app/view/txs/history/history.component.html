@@ -62,7 +62,7 @@
         </ng-container>
         <ng-container *ngFor="let balanceHistory of balanceHistories">
           <mat-list-item
-            routerLink="/txs/history/{{ isPrimary(balanceHistory.isPrimary) }}{{ isWithdraw(balanceHistory.isWithdraw) }}/{{
+            routerLink="/txs/history/{{ isPrimary(balanceHistory.isPrimary) }}{{ isWithdraw(balanceHistory.isDailyPayment) }}/{{
               powerType(balanceHistory.isSolar)
             }}/{{ txType(balanceHistory.isBid) }}/{{ balanceHistory.id }}"
           >
@@ -77,13 +77,13 @@
               <div class="text-sm">Primary</div>
             </ng-template>
             <ng-template #others>
-              <ng-container *ngIf="balanceHistory.isWithdraw === true; then withdraw; else auction"> </ng-container>
-              <ng-template #withdraw>
+              <ng-container *ngIf="balanceHistory.isDailyPayment === true; then dailyPayment; else auction"> </ng-container>
+              <ng-template #dailyPayment>
                 <div class="text-sm mr-10">UPX</div>
                 <div class="text-sm flex-auto">
                   <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
                 </div>
-                <div class="text-sm">Withdraw</div>
+                <div class="text-sm">Daily-payment</div>
               </ng-template>
               <ng-template #auction>
                 <ng-container *ngIf="balanceHistory.isSolar === true; then solar; else utility"></ng-container>

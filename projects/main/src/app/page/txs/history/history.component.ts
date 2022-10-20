@@ -199,13 +199,13 @@ export class HistoryComponent implements OnInit {
     this.balanceHistories$ = combineLatest([
       primaryBid$,
       primaryAsk$,
-      dailyPayment$,
+      // dailyPayment$,
       normalBidHistories$,
       normalAskHistories$,
       renewableBidHistories$,
       renewableAskHistories$,
     ]).pipe(
-      map(([primaryBids, primaryAsks, dailyPayments, normalBids, normalAsks, renewableBids, renewableAsks]) => {
+      map(([primaryBids, primaryAsks, normalBids, normalAsks, renewableBids, renewableAsks]) => {
         const primaryBidList = primaryBids.map((bid) => ({
           id: bid.id,
           date: !bid.created_at ? now : (bid.created_at as Timestamp).toDate(),
@@ -232,18 +232,18 @@ export class HistoryComponent implements OnInit {
           isDailyPayment: false,
         }));
 
-        const dailyPaymentList = primaryAsks.map((dailyPayment) => ({
-          id: dailyPayment.id,
-          date: !dailyPayment.created_at ? now : (dailyPayment.created_at as Timestamp).toDate(),
-          utokenAmount: dailyPayment.amount_uupx,
-          ujpyPrice: dailyPayment.price_ujpy,
-          ujpyContractPrice: dailyPayment.price_ujpy,
-          isAccepted: true,
-          isSolar: false,
-          isBid: false,
-          isPrimary: false,
-          isDailyPayment: true,
-        }));
+        // const dailyPaymentList = dailyPayments.map((dailyPayment) => ({
+        //   id: dailyPayment.id,
+        //   date: !dailyPayment.created_at ? now : (dailyPayment.created_at as Timestamp).toDate(),
+        //   utokenAmount: dailyPayment.amount_uupx,
+        //   ujpyPrice: dailyPayment.price_ujpy,
+        //   ujpyContractPrice: dailyPayment.price_ujpy,
+        //   isAccepted: true,
+        //   isSolar: false,
+        //   isBid: false,
+        //   isPrimary: false,
+        //   isDailyPayment: true,
+        // }));
 
         const normalBidList = normalBids.map((bid) => ({
           id: bid.id,
