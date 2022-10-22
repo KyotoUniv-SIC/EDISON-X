@@ -1,64 +1,47 @@
-import { Balance, NormalSettlement } from '@local/common';
+/* eslint-disable camelcase */
+import { AdminAccount, Balance, NormalSettlement } from '@local/common';
 
-describe('Balance Normal Settlement Test', () => {
-  it('Change Balance by Settlement', () => {
-    const balances = [
-      new Balance({
-        id: 'balance01',
-        student_account_id: 'test05',
-        amount_uupx: '100000000',
-        amount_uspx: '100000000',
-      }),
-      new Balance({
-        id: 'balance02',
-        student_account_id: 'test12',
-        amount_uupx: '200000000',
-        amount_uspx: '200000000',
-      }),
-    ];
-    const expectedBalances = [
-      new Balance({
-        id: 'balance01',
-        student_account_id: 'test05',
-        amount_uupx: '125000000',
-        amount_uspx: '100000000',
-      }),
-      new Balance({
-        id: 'balance02',
-        student_account_id: 'test12',
-        amount_uupx: '175000000',
-        amount_uspx: '200000000',
-      }),
-    ];
+describe('Normal Settlement Test', () => {
+  it('Change balance with the settlement', () => {
     const data = new NormalSettlement({
-      bid_id: 'test05',
-      ask_id: 'test12',
-      price_ujpy: '25000000',
-      amount_uupx: '25000000',
+      bid_id: 'test01',
+      ask_id: 'test02',
+      price_ujpy: '2000000',
+      amount_uupx: '10000000',
     });
-    const newBalance = [];
+    const adminAccount = [new AdminAccount({ id: 'admin01', name: 'admin' })];
 
-    const bidderBalance = balances.filter((balance) => balance.student_account_id == data.bid_id);
-    newBalance.push(
-      new Balance({
-        id: bidderBalance[0].id,
+    if (data.bid_id == data.ask_id) {
+      console.log('Bid & Ask sent by same user');
+      return;
+    }
+    let updatedBidderBalance;
+    if (data.bid_id != adminAccount[0].id) {
+      const bidderBalance = [
+        new Balance({ id: 'balance01', student_account_id: 'test01', amount_uupx: '25000000', amount_uspx: '10000000' }),
+      ];
+      updatedBidderBalance = new Balance({
         student_account_id: data.bid_id,
         amount_uupx: (parseInt(bidderBalance[0].amount_uupx) + parseInt(data.amount_uupx)).toString(),
         amount_uspx: bidderBalance[0].amount_uspx,
-      }),
-    );
+      });
+      console.log(updatedBidderBalance);
+    }
 
-    const sellerBalance = balances.filter((balance) => balance.student_account_id == data.ask_id);
-    newBalance.push(
-      new Balance({
-        id: sellerBalance[0].id,
+    let updatedSellerBalance;
+    if (data.ask_id != adminAccount[0].id) {
+      const sellerBalance = [
+        new Balance({ id: 'balance02', student_account_id: 'test02', amount_uupx: '30000000', amount_uspx: '15000000' }),
+      ];
+      updatedSellerBalance = new Balance({
         student_account_id: data.ask_id,
         amount_uupx: (parseInt(sellerBalance[0].amount_uupx) - parseInt(data.amount_uupx)).toString(),
         amount_uspx: sellerBalance[0].amount_uspx,
-      }),
-    );
-    console.log(newBalance);
+      });
+      console.log(updatedSellerBalance);
+    }
 
-    expect(newBalance).toStrictEqual(expectedBalances);
+    expect(updatedBidderBalance?.amount_uupx).toBe('35000000');
+    expect(updatedSellerBalance?.amount_uupx).toBe('20000000');
   });
 });
