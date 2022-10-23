@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { available_balance } from '../available-balances';
 import { balance } from '../balances';
 import { daily_payment } from '../daily-payments';
 import { dailyPaymentOnCreate } from '../daily-payments/create-balance';
@@ -34,6 +35,17 @@ module.exports.dailyWithdraw = f.pubsub
             amount_insufficiency: '0',
           });
           await daily_payment.create(dailyPayment);
+
+          // 残高更新がない場合，available-balanceのリセットを行う
+          const currentBalance = await balance.listLatest(student.id);
+          const availableBalance = await available_balance.getLatest(student.id);
+
+          await available_balance.update({
+            id: availableBalance[0].id,
+            student_account_id: availableBalance[0].student_account_id,
+            amount_uupx: currentBalance[0].amount_uupx,
+            amount_uspx: currentBalance[0].amount_uspx,
+          });
         }
       } else if (!students.length) {
         // console.log(dailyUsage.room_id, 'no student');
