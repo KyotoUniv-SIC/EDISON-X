@@ -59,10 +59,10 @@
     </details>
 
     <mat-nav-list>
+      <ng-container *ngIf="balanceHistories === null; then loading; else loadedHistory"></ng-container>
       <ng-template #loading>
         <mat-progress-spinner [diameter]="60" [mode]="'indeterminate'"></mat-progress-spinner>
       </ng-template>
-      <ng-container *ngIf="balanceHistories === null; then loading; else loadedHistory"></ng-container>
       <ng-template #loadedHistory>
         <ng-container *ngIf="!balanceHistories?.length">
           <mat-list-item>No history</mat-list-item>
@@ -73,7 +73,7 @@
           >
             <div class="table-column">
               <div class="text-xs mr-4">{{ balanceHistory.date | date: 'YY/MM/dd' }}</div>
-              <div class="text-xs mr-4" S>{{ balanceHistory.date | date: 'HH:mm' }}</div>
+              <div class="text-xs mr-4">{{ balanceHistory.date | date: 'HH:mm' }}</div>
             </div>
             <ng-container *ngIf="balanceHistory.isPrimary === true; then primary; else others"></ng-container>
             <ng-template #primary>
@@ -135,6 +135,32 @@
           </mat-list-item>
 
           <mat-divider [inset]="true"></mat-divider>
+        </ng-container>
+      </ng-template>
+    </mat-nav-list>
+  </mat-card>
+
+  <mat-card class="mb-3">
+    <mat-nav-list>
+      <div class="text-gray-400 mb-2">Your Daily Withdraw history</div>
+      <ng-container *ngIf="paymentHistories === null; then loading; else loadedPaymentHistory"></ng-container>
+      <ng-template #loading>
+        <mat-progress-spinner [diameter]="60" [mode]="'indeterminate'"></mat-progress-spinner>
+      </ng-template>
+      <ng-template #loadedPaymentHistory>
+        <ng-container *ngIf="!paymentHistories?.length">
+          <mat-list-item>No history</mat-list-item>
+        </ng-container>
+        <ng-container *ngFor="let paymentHistory of paymentHistories">
+          <mat-list-item routerLink="/txs/history/dailyWithdraw{{ powerType(paymentHistory.isSolar) }}/{{ paymentHistory.id }}">
+            <div class="table-column">
+              <div class="text-xs mr-4">{{ paymentHistory.date | date: 'YY/MM/dd' }}</div>
+              <div class="text-xs mr-4" style="color: #ff4081">-{{ paymentHistory.date | date: 'HH:mm' }}</div>
+            </div>
+            <div class="text-sm flex-auto">
+              <span>{{ paymentHistory.utokenAmount | microString }}</span>
+            </div>
+          </mat-list-item>
         </ng-container>
       </ng-template>
     </mat-nav-list>
