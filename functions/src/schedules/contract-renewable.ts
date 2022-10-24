@@ -41,7 +41,7 @@ module.exports.contractRenewable = f.pubsub
               bid.created_at,
             ),
           );
-          await renewable_bid.delete_(bid.id);
+          await renewable_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -60,7 +60,7 @@ module.exports.contractRenewable = f.pubsub
               ask.created_at,
             ),
           );
-          await renewable_ask.delete_(ask.id);
+          await renewable_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
 
@@ -98,7 +98,7 @@ module.exports.contractRenewable = f.pubsub
               bid.created_at,
             ),
           );
-          await renewable_bid.delete_(bid.id);
+          await renewable_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -117,7 +117,7 @@ module.exports.contractRenewable = f.pubsub
               ask.created_at,
             ),
           );
-          await renewable_ask.delete_(ask.id);
+          await renewable_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
 
@@ -194,7 +194,7 @@ module.exports.contractRenewable = f.pubsub
               bid.created_at,
             ),
           );
-          await renewable_bid.delete_(bid.id);
+          await renewable_bid.update({ id: bid.id, is_deleted: true });
         }),
       );
 
@@ -213,7 +213,7 @@ module.exports.contractRenewable = f.pubsub
               ask.created_at,
             ),
           );
-          await renewable_ask.delete_(ask.id);
+          await renewable_ask.update({ id: ask.id, is_deleted: true });
         }),
       );
     } else {

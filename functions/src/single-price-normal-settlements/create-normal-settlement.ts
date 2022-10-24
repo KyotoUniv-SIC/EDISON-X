@@ -50,7 +50,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
             sortNormalBids[i].created_at,
           ),
         );
-        await normal_bid.delete_(sortNormalBids[i].id);
+        await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
       }
 
       for (; j < sortNormalAsks.length; j++) {
@@ -67,7 +67,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
             sortNormalAsks[j].created_at,
           ),
         );
-        await normal_ask.delete_(sortNormalAsks[j].id);
+        await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
       }
       break;
     }
@@ -97,7 +97,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalBids[i].created_at,
         ),
       );
-      await normal_bid.delete_(sortNormalBids[i].id);
+      await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
 
       await normal_ask_history.create(
         new NormalAskHistory(
@@ -112,7 +112,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalAsks[j].created_at,
         ),
       );
-      await normal_ask.delete_(sortNormalAsks[j].id);
+      await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
       xrplTxs.txs.push({
@@ -139,7 +139,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
               sortNormalAsks[j].created_at,
             ),
           );
-          await normal_ask.delete_(sortNormalAsks[j].id);
+          await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
         }
         break;
       }
@@ -168,7 +168,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalBids[i].created_at,
         ),
       );
-      await normal_bid.delete_(sortNormalBids[i].id);
+      await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
 
       await normal_ask_history.create(
         new NormalAskHistory(
@@ -183,7 +183,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalAsks[j].created_at,
         ),
       );
-      await normal_ask.delete_(sortNormalAsks[j].id);
+      await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
       xrplTxs.txs.push({
@@ -209,7 +209,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
               sortNormalBids[i].created_at,
             ),
           );
-          await normal_bid.delete_(sortNormalBids[i].id);
+          await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
         }
         break;
       }
@@ -239,7 +239,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
         ),
       );
 
-      await normal_bid.delete_(sortNormalBids[i].id);
+      await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
 
       await normal_ask_history.create(
         new NormalAskHistory(
@@ -254,7 +254,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
           sortNormalAsks[j].created_at,
         ),
       );
-      await normal_ask.delete_(sortNormalAsks[j].id);
+      await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
 
       await normalSettlementOnCreate({ data: () => normalSettlement }, null);
       xrplTxs.txs.push({
@@ -280,7 +280,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
               sortNormalBids[i].created_at,
             ),
           );
-          await normal_bid.delete_(sortNormalBids[i].id);
+          await normal_bid.update({ id: sortNormalBids[i].id, is_deleted: true });
         }
 
         for (; j < sortNormalAsks.length; j++) {
@@ -297,7 +297,7 @@ export const singlePriceNormalSettlementOnCreate = async (snapshot: any, context
               sortNormalAsks[j].created_at,
             ),
           );
-          await normal_ask.delete_(sortNormalAsks[j].id);
+          await normal_ask.update({ id: sortNormalAsks[j].id, is_deleted: true });
         }
         break;
       }

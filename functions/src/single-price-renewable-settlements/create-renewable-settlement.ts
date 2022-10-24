@@ -49,7 +49,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             sortRenewableBids[i].created_at,
           ),
         );
-        await renewable_bid.delete_(sortRenewableBids[i].id);
+        await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
       }
 
       for (; j < sortRenewableAsks.length; j++) {
@@ -66,7 +66,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
             sortRenewableAsks[j].created_at,
           ),
         );
-        await renewable_ask.delete_(sortRenewableAsks[j].id);
+        await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
       }
       break;
     }
@@ -96,7 +96,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableBids[i].created_at,
         ),
       );
-      await renewable_bid.delete_(sortRenewableBids[i].id);
+      await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
 
       await renewable_ask_history.create(
         new RenewableAskHistory(
@@ -111,7 +111,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      await renewable_ask.delete_(sortRenewableAsks[j].id);
+      await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
 
@@ -141,7 +141,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
-          await renewable_ask.delete_(sortRenewableAsks[j].id);
+          await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
         }
         break;
       }
@@ -170,7 +170,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableBids[i].created_at,
         ),
       );
-      await renewable_bid.delete_(sortRenewableBids[i].id);
+      await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
 
       await renewable_ask_history.create(
         new RenewableAskHistory(
@@ -185,7 +185,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      await renewable_ask.delete_(sortRenewableAsks[j].id);
+      await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
 
@@ -214,7 +214,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableBids[i].created_at,
             ),
           );
-          await renewable_bid.delete_(sortRenewableBids[i].id);
+          await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
         }
         break;
       }
@@ -243,7 +243,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
         ),
       );
 
-      await renewable_bid.delete_(sortRenewableBids[i].id);
+      await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
 
       await renewable_ask_history.create(
         new RenewableAskHistory(
@@ -258,7 +258,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
           sortRenewableAsks[j].created_at,
         ),
       );
-      await renewable_ask.delete_(sortRenewableAsks[j].id);
+      await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
 
       await renewableSettlementOnCreate({ data: () => renewableSettlement }, null);
 
@@ -284,7 +284,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableBids[i].created_at,
             ),
           );
-          await renewable_bid.delete_(sortRenewableBids[i].id);
+          await renewable_bid.update({ id: sortRenewableBids[i].id, is_deleted: true });
         }
 
         for (; j < sortRenewableAsks.length; j++) {
@@ -301,7 +301,7 @@ export const singlePriceRenewableSettlementOnCreate = async (snapshot: any, cont
               sortRenewableAsks[j].created_at,
             ),
           );
-          await renewable_ask.delete_(sortRenewableAsks[j].id);
+          await renewable_ask.update({ id: sortRenewableAsks[j].id, is_deleted: true });
         }
         break;
       }
