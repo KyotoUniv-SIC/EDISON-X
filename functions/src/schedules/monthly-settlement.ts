@@ -53,17 +53,17 @@ module.exports.monthlySettlement = f.pubsub
     }
     for (const ask of normalAsks) {
       if (ask.is_accepted) {
-        income += (parseInt(ask.price_ujpy) * parseInt(ask.amount_uupx)) / 1000000;
+        income += (parseInt(ask.contract_price_ujpy) * parseInt(ask.amount_uupx)) / 1000000;
       }
     }
     for (const bid of normalBids) {
       if (bid.is_accepted) {
-        income -= (parseInt(bid.price_ujpy) * parseInt(bid.amount_uupx)) / 1000000;
+        income -= (parseInt(bid.contract_price_ujpy) * parseInt(bid.amount_uupx)) / 1000000;
       }
     }
     for (const ask of renewableAsks) {
       if (ask.is_accepted) {
-        income += (parseInt(ask.price_ujpy) * parseInt(ask.amount_uspx)) / 1000000;
+        income += (parseInt(ask.contract_price_ujpy) * parseInt(ask.amount_uspx)) / 1000000;
       }
     }
     const date = new Date();
