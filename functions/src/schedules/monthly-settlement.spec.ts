@@ -4,7 +4,38 @@ import { Timestamp } from 'firebase/firestore';
 describe('Monthly Settlement Test', () => {
   it('Create monthly-settlement', () => {
     // WIP
-    const students = await student_account.list();
+    const students = [
+      new StudentAccount({ id: 'test01', name: 'test01', room_id: 'higashi301' }),
+      new StudentAccount({ id: 'test02', name: 'test02', room_id: 'koushi201' }),
+      new StudentAccount({ id: 'test03', name: 'test03', room_id: 'sentetsu401' }),
+      new StudentAccount({ id: 'test04', name: 'test04', room_id: 'sentetsu401' }),
+    ];
+    const balances = [
+      new Balance({
+        id: 'balance01',
+        student_account_id: 'test01',
+        amount_uupx: '10000000',
+        amount_uspx: '10000000',
+      }),
+      new Balance({
+        id: 'balance02',
+        student_account_id: 'test02',
+        amount_uupx: '0',
+        amount_uspx: '0',
+      }),
+      new Balance({
+        id: 'balance03',
+        student_account_id: 'test03',
+        amount_uupx: '25000000',
+        amount_uspx: '0',
+      }),
+      new Balance({
+        id: 'balance04',
+        student_account_id: 'test04',
+        amount_uupx: '30000000',
+        amount_uspx: '2000000',
+      }),
+    ];
     let purchase = 0;
     let sale = 0;
     for (const student of students) {
