@@ -1,6 +1,6 @@
 import { Balance, DailyPayment, InsufficientBalance } from '@local/common';
 
-describe('Daily Payment test', () => {
+describe('Daily Payment Test', () => {
   it('Create balance', () => {
     const data = new DailyPayment({
       student_account_id: 'test01',

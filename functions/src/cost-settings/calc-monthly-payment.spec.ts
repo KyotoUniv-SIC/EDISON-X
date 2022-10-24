@@ -1,6 +1,6 @@
 import { CostSetting, DiscountPrice, MonthlyPayment, MonthlySettlement, PrimaryAsk, StudentAccount } from '@local/common';
 
-describe('Cost Setting test', () => {
+describe('Cost Setting Test', () => {
   it('Calculate monthly-payment', () => {
     const data = new CostSetting({
       electricity_cost_ujpy: '30000000000',

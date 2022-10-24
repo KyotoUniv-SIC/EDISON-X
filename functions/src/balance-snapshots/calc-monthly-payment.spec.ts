@@ -12,7 +12,7 @@ import {
   RenewableRewardSetting,
 } from '@local/common';
 
-describe('Balance Snapshot test', () => {
+describe('Balance Snapshot Test', () => {
   it('Calculate payment', () => {
     const data = new BalanceSnapshot({
       id: 'balance01',

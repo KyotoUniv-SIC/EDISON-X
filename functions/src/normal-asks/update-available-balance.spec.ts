@@ -1,6 +1,6 @@
 import { AvailableBalance, NormalAsk, proto } from '@local/common';
 
-describe('Normal Ask test', () => {
+describe('Normal Ask Test', () => {
   it('Update available-balance', async () => {
     const data = new NormalAsk({
       id: 'ask01',

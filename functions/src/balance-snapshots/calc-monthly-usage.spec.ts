@@ -1,6 +1,6 @@
 import { BalanceSnapshot, DailyPayment, MonthlyUsage } from '@local/common';
 
-describe('Balance Snapshot test', () => {
+describe('Balance Snapshot Test', () => {
   it('Calculate usage', () => {
     const data = new BalanceSnapshot({
       id: 'balance01',

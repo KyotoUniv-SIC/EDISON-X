@@ -1,6 +1,6 @@
 import { AvailableBalance, Balance } from '@local/common';
 
-describe('Balance test', () => {
+describe('Balance Test', () => {
   it('Update AvailableBalance', async () => {
     let result: AvailableBalance;
     const data = new Balance({ id: 'testBalance', student_account_id: 'student01', amount_uupx: '3000000', amount_uspx: '4000000' });

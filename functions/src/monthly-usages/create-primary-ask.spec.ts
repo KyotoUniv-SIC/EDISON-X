@@ -1,7 +1,7 @@
 import { Timestamp } from '@firebase/firestore';
 import { DailyUsage, MonthlyUsage, PrimaryAsk, PrimaryAskSetting, StudentAccount } from '@local/common';
 
-describe('Monthly Usage test', () => {
+describe('Monthly Usage Test', () => {
   it('calc primary-ask issue amount', async () => {
     const now = new Date();
     const lastMonth = new Date();
