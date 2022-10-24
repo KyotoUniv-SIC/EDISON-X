@@ -4,41 +4,16 @@ import { Timestamp } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { StudentAccount } from '@local/common';
 import { NormalAskHistoryApplicationService } from 'projects/shared/src/lib/services/normal-ask-histories/normal-ask-history.application.service';
-import { NormalAskApplicationService } from 'projects/shared/src/lib/services/normal-asks/normal-ask.application.service';
 import { NormalBidHistoryApplicationService } from 'projects/shared/src/lib/services/normal-bid-histories/normal-bid-history.application.service';
-import { NormalBidApplicationService } from 'projects/shared/src/lib/services/normal-bids/normal-bid.application.service';
-import { PrimaryAskApplicationService } from 'projects/shared/src/lib/services/primary-asks/primary-ask.application.service';
 import { PrimaryBidApplicationService } from 'projects/shared/src/lib/services/primary-bids/primary-bid.application.service';
 import { RenewableAskHistoryApplicationService } from 'projects/shared/src/lib/services/renewable-ask-histories/renewable-ask-history.application.service';
-import { RenewableAskApplicationService } from 'projects/shared/src/lib/services/renewable-asks/renewable-ask.application.service';
 import { RenewableBidHistoryApplicationService } from 'projects/shared/src/lib/services/renewable-bid-histories/renewable-bid-history.application.service';
-import { RenewableBidApplicationService } from 'projects/shared/src/lib/services/renewable-bids/renewable-bid.application.service';
 import { AvailableBalanceApplicationService } from 'projects/shared/src/lib/services/student-accounts/available-balances/available-balance.application.service';
 import { DailyPaymentApplicationService } from 'projects/shared/src/lib/services/student-accounts/daily-payments/daily-payment.application.service';
 import { InsufficientBalanceApplicationService } from 'projects/shared/src/lib/services/student-accounts/insufficient-balances/insufficient-balance.application.service';
 import { StudentAccountApplicationService } from 'projects/shared/src/lib/services/student-accounts/student-account.application.service';
 import { combineLatest, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-
-export interface Order {
-  id: string;
-  date: Date;
-  utokenAmount: string;
-  ujpyPrice: string;
-  isSolar: boolean;
-  isBid: boolean;
-}
-
-// export interface History {
-//   id: string;
-//   date: Date;
-//   utokenAmount: string;
-//   ujpyPrice: string;
-//   ujpyContractPrice: string;
-//   isAccepted: boolean;
-//   isSolar: boolean;
-//   isBid: boolean;
-// }
 
 export interface BalanceHistory {
   id: string;
@@ -48,9 +23,15 @@ export interface BalanceHistory {
   isSolar: boolean; // UPXかSPXかの判別
   isBid: boolean; // Bid, Askの判別（utokenAmountの符号）
   isPrimary: boolean; // 月初の配布か否かの判別
-  isDailyPayment: boolean; // 引き落としか否かの判別
   ujpyPrice: string;
   ujpyContractPrice: string;
+}
+
+export interface PaymentHistory {
+  id: string;
+  date: Date;
+  utokenAmount: string; // 量の表示用（正値）
+  isSolar: boolean; // UPXかSPXかの判別
 }
 
 @Component({
@@ -63,9 +44,9 @@ export class HistoryComponent implements OnInit {
   uupxAmount$: Observable<number> | undefined;
   uspxAmount$: Observable<number> | undefined;
   insufficiencyAmount$: Observable<number> | undefined;
-  orders$: Observable<Order[]> | undefined;
   histories$: Observable<History[]> | undefined;
   balanceHistories$: Observable<BalanceHistory[]> | undefined;
+  paymentHistories$: Observable<PaymentHistory[]> | undefined;
 
   constructor(
     private auth: Auth,
@@ -74,12 +55,7 @@ export class HistoryComponent implements OnInit {
     private readonly availableBalanceApp: AvailableBalanceApplicationService,
     private readonly insufficientBalanceApp: InsufficientBalanceApplicationService,
     private readonly primaryBidApp: PrimaryBidApplicationService,
-    private readonly primaryAskApp: PrimaryAskApplicationService,
     private readonly dailyPaymentApp: DailyPaymentApplicationService,
-    private readonly normalBidApp: NormalBidApplicationService,
-    private readonly normalAskApp: NormalAskApplicationService,
-    private readonly renewableBidApp: RenewableBidApplicationService,
-    private readonly renewableAskApp: RenewableAskApplicationService,
     private readonly normalBidHistoryApp: NormalBidHistoryApplicationService,
     private readonly normalAskHistoryApp: NormalAskHistoryApplicationService,
     private readonly renewableBidHistoryApp: RenewableBidHistoryApplicationService,
@@ -91,11 +67,6 @@ export class HistoryComponent implements OnInit {
     firstDay.setUTCHours(0, 0, 0, 0);
     const user$ = authState(this.auth);
     this.studentAccount$ = user$.pipe(mergeMap((user) => this.studentAccApp.getByUid$(user?.uid!)));
-
-    const normalBids$ = this.studentAccount$.pipe(mergeMap((account) => this.normalBidApp.listUid$(account.id)));
-    const normalAsks$ = this.studentAccount$.pipe(mergeMap((account) => this.normalAskApp.listUid$(account.id)));
-    const renewableBids$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableBidApp.listUid$(account.id)));
-    const renewableAsks$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableAskApp.listUid$(account.id)));
 
     const balance$ = this.studentAccount$.pipe(mergeMap((account) => this.availableBalanceApp.list$(account.id)));
     const insufficiency$ = this.studentAccount$.pipe(mergeMap((account) => this.insufficientBalanceApp.list(account.id))).pipe(
@@ -121,92 +92,28 @@ export class HistoryComponent implements OnInit {
           : parseInt(balance.amount_uspx),
       ),
     );
-
-    this.orders$ = combineLatest([normalBids$, normalAsks$, renewableBids$, renewableAsks$]).pipe(
-      map(([normalBids, normalAsks, renewableBids, renewableAsks]) => {
-        const normalBidList = normalBids
-          .filter((bid) => bid.is_deleted == false)
-          .map((bid) => ({
-            id: bid.id,
-            date: !bid.created_at ? now : (bid.created_at as Timestamp).toDate(),
-            utokenAmount: bid.amount_uupx,
-            ujpyPrice: bid.price_ujpy,
-            isSolar: false,
-            isBid: true,
-          }));
-        const normalAskList = normalAsks
-          .filter((ask) => ask.is_deleted == false)
-          .map((ask) => ({
-            id: ask.id,
-            date: !ask.created_at ? now : (ask.created_at as Timestamp).toDate(),
-            utokenAmount: ask.amount_uupx,
-            ujpyPrice: ask.price_ujpy,
-            isSolar: false,
-            isBid: false,
-          }));
-        const renewableBidList = renewableBids
-          .filter((bid) => bid.is_deleted == false)
-          .map((bid) => ({
-            id: bid.id,
-            date: !bid.created_at ? now : (bid.created_at as Timestamp).toDate(),
-            utokenAmount: bid.amount_uspx,
-            ujpyPrice: bid.price_ujpy,
-            isSolar: true,
-            isBid: true,
-          }));
-        const renewableAskList = renewableAsks
-          .filter((ask) => ask.is_deleted == false)
-          .map((ask) => ({
-            id: ask.id,
-            date: !ask.created_at ? now : (ask.created_at as Timestamp).toDate(),
-            utokenAmount: ask.amount_uspx,
-            ujpyPrice: ask.price_ujpy,
-            isSolar: true,
-            isBid: false,
-          }));
-        return normalBidList.concat(normalAskList, renewableBidList, renewableAskList).sort(function (first, second) {
-          if (first.date > second.date) {
-            return -1;
-          } else if (first.date < second.date) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      }),
+    this.insufficiencyAmount$ = combineLatest([balance$, insufficiency$]).pipe(
+      map(([balance, insufficiency]) =>
+        parseInt(balance.amount_uupx) + parseInt(balance.amount_uspx) < insufficiency
+          ? insufficiency - parseInt(balance.amount_uupx) - parseInt(balance.amount_uspx)
+          : 0,
+      ),
     );
 
     const primaryBid$ = this.studentAccount$.pipe(mergeMap((account) => this.primaryBidApp.list$(account.id)));
-    const primaryAsk$ = this.studentAccount$.pipe(mergeMap((account) => this.primaryAskApp.list$(account.id)));
-    const dailyPayment$ = this.studentAccount$.pipe(mergeMap((account) => this.dailyPaymentApp.list$(account.id)));
     const normalBidHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.normalBidHistoryApp.list$(account.id)));
     const normalAskHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.normalAskHistoryApp.list$(account.id)));
     const renewableBidHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableBidHistoryApp.list$(account.id)));
     const renewableAskHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableAskHistoryApp.list$(account.id)));
 
-    // export interface BalanceHistory {
-    //   id: string;
-    //   date: Date;
-    //   utokenAmount: number; // 量の表示用（正値）
-    //   isAccepted: boolean;
-    //   isSolar: boolean; // UPXかSPXかの判別
-    //   isBid: boolean; // Bid, Askの判別（utokenAmountの符号）
-    //   isPrimary: boolean; // 月初の配布か否かの判別
-    //   isDailyPayment: boolean; // 引き落としか否かの判別
-    //   // 価格情報入れるなら追加
-    //   ujpyPrice: string;
-    //   ujpyContractPrice: string;
-
     this.balanceHistories$ = combineLatest([
       primaryBid$,
-      primaryAsk$,
-      // dailyPayment$,
       normalBidHistories$,
       normalAskHistories$,
       renewableBidHistories$,
       renewableAskHistories$,
     ]).pipe(
-      map(([primaryBids, primaryAsks, normalBids, normalAsks, renewableBids, renewableAsks]) => {
+      map(([primaryBids, normalBids, normalAsks, renewableBids, renewableAsks]) => {
         const primaryBidList = primaryBids.map((bid) => ({
           id: bid.id,
           date: !bid.created_at ? now : (bid.created_at as Timestamp).toDate(),
@@ -216,35 +123,8 @@ export class HistoryComponent implements OnInit {
           isAccepted: true,
           isSolar: false,
           isBid: true,
-          isPrimary: false,
-          isDailyPayment: false,
-        }));
-
-        const primaryAskList = primaryAsks.map((ask) => ({
-          id: ask.id,
-          date: !ask.created_at ? now : (ask.created_at as Timestamp).toDate(),
-          utokenAmount: ask.amount_uupx,
-          ujpyPrice: ask.price_ujpy,
-          ujpyContractPrice: ask.price_ujpy,
-          isAccepted: true,
-          isSolar: false,
-          isBid: false,
           isPrimary: true,
-          isDailyPayment: false,
         }));
-
-        // const dailyPaymentList = dailyPayments.map((dailyPayment) => ({
-        //   id: dailyPayment.id,
-        //   date: !dailyPayment.created_at ? now : (dailyPayment.created_at as Timestamp).toDate(),
-        //   utokenAmount: dailyPayment.amount_uupx,
-        //   ujpyPrice: dailyPayment.price_ujpy,
-        //   ujpyContractPrice: dailyPayment.price_ujpy,
-        //   isAccepted: true,
-        //   isSolar: false,
-        //   isBid: false,
-        //   isPrimary: false,
-        //   isDailyPayment: true,
-        // }));
 
         const normalBidList = normalBids.map((bid) => ({
           id: bid.id,
@@ -256,7 +136,6 @@ export class HistoryComponent implements OnInit {
           isSolar: false,
           isBid: true,
           isPrimary: false,
-          isDailyPayment: false,
         }));
         const normalAskList = normalAsks.map((ask) => ({
           id: ask.id,
@@ -268,7 +147,6 @@ export class HistoryComponent implements OnInit {
           isSolar: false,
           isBid: false,
           isPrimary: false,
-          isDailyPayment: false,
         }));
         const renewableBidList = renewableBids.map((bid) => ({
           id: bid.id,
@@ -280,7 +158,6 @@ export class HistoryComponent implements OnInit {
           isSolar: true,
           isBid: true,
           isPrimary: false,
-          isDailyPayment: false,
         }));
         const renewableAskList = renewableAsks.map((ask) => ({
           id: ask.id,
@@ -292,20 +169,61 @@ export class HistoryComponent implements OnInit {
           isSolar: true,
           isBid: false,
           isPrimary: false,
-          isDailyPayment: false,
         }));
-        return primaryBidList
-          .concat(primaryAskList, normalBidList, normalAskList, renewableBidList, renewableAskList)
-          .filter((history) => history.date > firstDay)
-          .sort(function (first, second) {
-            if (first.date > second.date) {
-              return -1;
-            } else if (first.date < second.date) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
+        return (
+          primaryBidList
+            .concat(normalBidList, normalAskList, renewableBidList, renewableAskList)
+            // .filter((history) => history.date > firstDay)
+
+            .sort(function (first, second) {
+              if (first.date > second.date) {
+                return -1;
+              } else if (first.date < second.date) {
+                return 1;
+              } else {
+                return 0;
+              }
+            })
+        );
+      }),
+    );
+    this.balanceHistories$.subscribe((a) => console.log(a));
+
+    const dailyPayment$ = this.studentAccount$.pipe(mergeMap((account) => this.dailyPaymentApp.list$(account.id)));
+    this.paymentHistories$ = dailyPayment$.pipe(
+      map((payments) => {
+        let paymentHistories = [];
+        for (const payment of payments) {
+          if (parseInt(payment.amount_uupx)) {
+            paymentHistories.push({
+              id: payment.id,
+              date: (payment.created_at as Timestamp).toDate(),
+              utokenAmount: payment.amount_uupx,
+              isSolar: false,
+            });
+          }
+          if (parseInt(payment.amount_uspx)) {
+            paymentHistories.push({
+              id: payment.id,
+              date: (payment.created_at as Timestamp).toDate(),
+              utokenAmount: payment.amount_uupx,
+              isSolar: true,
+            });
+          }
+        }
+        return (
+          paymentHistories
+            // .filter((history) => history.date > firstDay)
+            .sort(function (first, second) {
+              if (first.date > second.date) {
+                return -1;
+              } else if (first.date < second.date) {
+                return 1;
+              } else {
+                return 0;
+              }
+            })
+        );
       }),
     );
   }

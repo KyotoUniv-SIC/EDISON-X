@@ -69,13 +69,11 @@
         </ng-container>
         <ng-container *ngFor="let balanceHistory of balanceHistories">
           <mat-list-item
-            routerLink="/txs/history/{{ isPrimary(balanceHistory.isPrimary) }}{{ isWithdraw(balanceHistory.isDailyPayment) }}/{{
-              powerType(balanceHistory.isSolar)
-            }}/{{ txType(balanceHistory.isBid) }}/{{ balanceHistory.id }}"
+            routerLink="/txs/history/{{ powerType(balanceHistory.isSolar) }}/{{ txType(balanceHistory.isBid) }}/{{ balanceHistory.id }}"
           >
             <div class="table-column">
               <div class="text-xs mr-4">{{ balanceHistory.date | date: 'YY/MM/dd' }}</div>
-              <div class="text-xs mr-4">{{ balanceHistory.date | date: 'HH:MM' }}</div>
+              <div class="text-xs mr-4" S>{{ balanceHistory.date | date: 'HH:mm' }}</div>
             </div>
             <ng-container *ngIf="balanceHistory.isPrimary === true; then primary; else others"></ng-container>
             <ng-template #primary>
@@ -87,61 +85,51 @@
               <div class="text-sm">Primary</div>
             </ng-template>
             <ng-template #others>
-              <ng-container *ngIf="balanceHistory.isDailyPayment === true; then dailyPayment; else auction"> </ng-container>
-              <ng-template #dailyPayment>
-                <div class="text-sm mr-10">UPX</div>
-                <div class="text-sm flex-auto">
-                  <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+              <ng-container *ngIf="balanceHistory.isSolar === true; then solar; else utility"></ng-container>
+              <ng-template #solar>
+                <div class="table-column">
+                  <div class="text-sm mr-10">SPX</div>
+                  <ng-container *ngIf="balanceHistory.isAccepted === true; then accept; else reject"></ng-container>
+                  <ng-template #accept>
+                    <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
+                  </ng-template>
+                  <ng-template #reject>
+                    <div class="text-xs text-red-400">Rejected</div>
+                  </ng-template>
                 </div>
-                <div class="text-sm">Daily-payment</div>
+                <div class="text-sm flex-auto">
+                  <ng-container *ngIf="balanceHistory.isBid === true; then solarBid; else solarAsk"></ng-container>
+                  <ng-template #solarBid>
+                    <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+                  </ng-template>
+                  <ng-template #solarAsk>
+                    <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
+                  </ng-template>
+                </div>
+                <div class="text-sm">Auction</div>
               </ng-template>
-              <ng-template #auction>
-                <ng-container *ngIf="balanceHistory.isSolar === true; then solar; else utility"></ng-container>
-                <ng-template #solar>
-                  <div class="table-column">
-                    <div class="text-sm mr-10">SPX</div>
-                    <ng-container *ngIf="balanceHistory.isAccepted === true; then accept; else reject"></ng-container>
-                    <ng-template #accept>
-                      <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
-                    </ng-template>
-                    <ng-template #reject>
-                      <div class="text-xs text-red-400">Rejected</div>
-                    </ng-template>
-                  </div>
-                  <div class="text-sm flex-auto">
-                    <ng-container *ngIf="balanceHistory.isBid === true; then solarBid; else solarAsk"></ng-container>
-                    <ng-template #solarBid>
-                      <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
-                    </ng-template>
-                    <ng-template #solarAsk>
-                      <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
-                    </ng-template>
-                  </div>
-                  <div class="text-sm">Auction</div>
-                </ng-template>
 
-                <ng-template #utility>
-                  <div class="table-column">
-                    <div class="text-sm mr-10">UPX</div>
-                    <ng-container *ngIf="balanceHistory.isAccepted === true; then accept; else reject"></ng-container>
-                    <ng-template #accept>
-                      <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
-                    </ng-template>
-                    <ng-template #reject>
-                      <div class="text-xs text-red-400">Rejected</div>
-                    </ng-template>
-                  </div>
-                  <div class="text-sm flex-auto">
-                    <ng-container *ngIf="balanceHistory.isBid === true; then utilityBid; else utilityAsk"></ng-container>
-                    <ng-template #utilityBid>
-                      <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
-                    </ng-template>
-                    <ng-template #utilityAsk>
-                      <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
-                    </ng-template>
-                  </div>
-                  <div class="text-sm">Auction</div>
-                </ng-template>
+              <ng-template #utility>
+                <div class="table-column">
+                  <div class="text-sm mr-10">UPX</div>
+                  <ng-container *ngIf="balanceHistory.isAccepted === true; then accept; else reject"></ng-container>
+                  <ng-template #accept>
+                    <div class="text-xs text-gray-400">￥{{ balanceHistory.ujpyContractPrice | microString }}</div>
+                  </ng-template>
+                  <ng-template #reject>
+                    <div class="text-xs text-red-400">Rejected</div>
+                  </ng-template>
+                </div>
+                <div class="text-sm flex-auto">
+                  <ng-container *ngIf="balanceHistory.isBid === true; then utilityBid; else utilityAsk"></ng-container>
+                  <ng-template #utilityBid>
+                    <span style="color: #3f51b5">+{{ balanceHistory.utokenAmount | microString }}</span>
+                  </ng-template>
+                  <ng-template #utilityAsk>
+                    <span style="color: #ff4081">-{{ balanceHistory.utokenAmount | microString }}</span>
+                  </ng-template>
+                </div>
+                <div class="text-sm">Auction</div>
               </ng-template>
             </ng-template>
           </mat-list-item>

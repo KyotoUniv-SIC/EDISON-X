@@ -1,4 +1,4 @@
-import { Order, BalanceHistory } from '../../../page/txs/history/history.component';
+import { BalanceHistory, PaymentHistory } from '../../../page/txs/history/history.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { StudentAccount } from '@local/common';
 
@@ -15,11 +15,11 @@ export class HistoryComponent implements OnInit {
   @Input()
   uspxAmount?: number | null;
   @Input()
-  orders?: Order[] | null;
+  insufficiencyAmount?: number | null;
   @Input()
   balanceHistories?: BalanceHistory[] | null;
   @Input()
-  insufficiencyAmount?: number | null;
+  paymentHistories?: PaymentHistory[] | null;
 
   constructor() {}
 
@@ -28,21 +28,6 @@ export class HistoryComponent implements OnInit {
   selectedToken = 'default';
   selectedTransaction = 'default';
   panelOpenState = false;
-
-  isPrimary(type: boolean) {
-    if (!type) {
-      return '';
-    } else {
-      return 'primary';
-    }
-  }
-  isWithdraw(type: boolean) {
-    if (!type) {
-      return 'auction';
-    } else {
-      return 'withdraw';
-    }
-  }
 
   powerType(type: boolean) {
     if (!type) {
