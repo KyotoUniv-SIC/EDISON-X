@@ -204,9 +204,7 @@ export class HistoryComponent implements OnInit {
               isInsufficiency: false,
             });
           }
-        }
-        for (const payment of payments) {
-          if (parseInt(payment.amount_uspx) > 0) {
+          if (parseInt(payment.amount_uspx)) {
             paymentHistories.push({
               id: payment.id,
               date: (payment.created_at as Timestamp).toDate(),
@@ -215,8 +213,6 @@ export class HistoryComponent implements OnInit {
               isInsufficiency: false,
             });
           }
-        }
-        for (const payment of payments) {
           if (parseInt(payment.amount_insufficiency)) {
             paymentHistories.push({
               id: payment.id,
