@@ -4,19 +4,20 @@
     <div class="w-auto">
       <div class="text-gray-400">Your Balance</div>
       <div class="flex w-full flex-wrap text-center">
-        <div class="w-2/5 whitespace-nowrap m-auto">
+        <ng-container *ngIf="insufficiencyAmount">
+          <div class="w-full">
+            <div class="break-words text-red-400">
+              Insufficient Balance:
+              <span class="text-2xl">{{ insufficiencyAmount | microNumber }}</span>
+            </div>
+          </div>
+        </ng-container>
+        <div class="w-2/5 m-auto break-words">
           UPX: <span class="text-2xl">{{ uupxAmount | microNumber }}</span>
         </div>
-        <div class="w-2/5 whitespace-nowrap m-auto">
+        <div class="w-2/5 m-auto break-words">
           SPX:<span class="text-2xl">{{ uspxAmount | microNumber }}</span>
         </div>
-        <ng-container *ngIf="insufficiencyAmount">
-          <mat-list-item class="flex flex-wrap" style="padding: auto">
-            <span class="break-all text-xl">Insufficient Balance:</span>
-            <span class="flex-auto break-all"></span>
-            <span class="break-all text-xl" style="font-size: x-large">{{ insufficiencyAmount | microNumber }}</span>
-          </mat-list-item>
-        </ng-container>
       </div>
     </div>
   </mat-card>
