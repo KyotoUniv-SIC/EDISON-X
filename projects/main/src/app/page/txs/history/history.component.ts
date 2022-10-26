@@ -204,15 +204,19 @@ export class HistoryComponent implements OnInit {
               isInsufficiency: false,
             });
           }
-          if (parseInt(payment.amount_uspx)) {
+        }
+        for (const payment of payments) {
+          if (parseInt(payment.amount_uspx) > 0) {
             paymentHistories.push({
               id: payment.id,
               date: (payment.created_at as Timestamp).toDate(),
-              utokenAmount: payment.amount_uupx,
+              utokenAmount: payment.amount_uspx,
               isSolar: true,
               isInsufficiency: false,
             });
           }
+        }
+        for (const payment of payments) {
           if (parseInt(payment.amount_insufficiency)) {
             paymentHistories.push({
               id: payment.id,
@@ -239,6 +243,7 @@ export class HistoryComponent implements OnInit {
       }),
     );
     this.paymentHistories$.subscribe((a) => console.log(a));
+    dailyPayment$.subscribe((a) => console.log(a));
   }
 
   ngOnInit(): void {}
