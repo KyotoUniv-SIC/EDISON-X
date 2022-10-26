@@ -32,6 +32,7 @@ export interface PaymentHistory {
   date: Date;
   utokenAmount: string; // 量の表示用（正値）
   isSolar: boolean; // UPXかSPXかの判別
+  isInsufficiency: boolean; // insufficiencyかの判別
 }
 
 @Component({
@@ -200,6 +201,7 @@ export class HistoryComponent implements OnInit {
               date: (payment.created_at as Timestamp).toDate(),
               utokenAmount: payment.amount_uupx,
               isSolar: false,
+              isInsufficiency: false
             });
           }
           if (parseInt(payment.amount_uspx)) {
@@ -208,6 +210,16 @@ export class HistoryComponent implements OnInit {
               date: (payment.created_at as Timestamp).toDate(),
               utokenAmount: payment.amount_uupx,
               isSolar: true,
+              isInsufficiency: false
+            });
+          }
+          if (parseInt(payment.amount_insufficiency)) {
+            paymentHistories.push({
+              id: payment.id,
+              date: (payment.created_at as Timestamp).toDate(),
+              utokenAmount: payment.amount_insufficiency,
+              isSolar: false,
+              isInsufficiency: true
             });
           }
         }
