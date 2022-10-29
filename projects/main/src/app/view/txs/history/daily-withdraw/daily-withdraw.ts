@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
-import { NormalBidHistory, PrimaryBid } from '@local/common';
+import { PaymentHistory } from 'projects/main/src/app/page/txs/history/history.component';
 
 @Component({
   selector: 'view-daily-withdraw',
@@ -9,15 +9,8 @@ import { NormalBidHistory, PrimaryBid } from '@local/common';
 })
 export class DailyWithdrawComponent implements OnInit {
   @Input()
-  normalBid?: NormalBidHistory | null;
-  @Input()
-  primaryBid?: PrimaryBid | null;
-  @Input()
-  createdAt?: Date | null;
-  @Input()
-  bidCreatedAt?: Date | null;
-  @Input()
-  createdAtPrimary?: Date | null;
+  dailyWithdraw?: PaymentHistory | null;
+
 
   constructor() {}
 
