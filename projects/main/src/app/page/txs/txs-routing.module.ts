@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'history/utility',
     loadChildren: () => import('./history/utility/utility.module').then((m) => m.AppUtilityModule),
   },
+  {
+    path: 'history/daily-withdraw',
+    loadChildren: () => import('./history/daily-withdraw/daily-withdraw.module').then((m) => m.AppDailyWithdrawModule),
+  },
 ];
 
 @NgModule({
