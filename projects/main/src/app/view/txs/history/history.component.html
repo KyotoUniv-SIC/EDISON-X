@@ -179,7 +179,7 @@
         </ng-container>
         <mat-divider [inset]="true"></mat-divider>
         <ng-container *ngFor="let paymentHistory of paymentHistories">
-          <mat-list-item routerLink="/txs/history/dailyWithdraw{{ powerType(paymentHistory.isSolar) }}/{{ paymentHistory.id }}">
+          <mat-list-item routerLink="/txs/history/daily-withdraw/{{ powerType(paymentHistory.isSolar) }}/{{ paymentHistory.id }}">
             <div class="table-column">
               <div class="text-xs mr-4">{{ paymentHistory.date | date: 'YY/MM/dd' }}</div>
               <div class="text-xs mr-4">{{ paymentHistory.date | date: 'HH:mm' }}</div>
