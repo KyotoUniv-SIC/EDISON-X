@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { Timestamp } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentAccount } from '@local/common';
 import { NormalAskHistoryApplicationService } from 'projects/shared/src/lib/services/normal-ask-histories/normal-ask-history.application.service';
 import { NormalBidHistoryApplicationService } from 'projects/shared/src/lib/services/normal-bid-histories/normal-bid-history.application.service';
@@ -13,7 +13,7 @@ import { DailyPaymentApplicationService } from 'projects/shared/src/lib/services
 import { InsufficientBalanceApplicationService } from 'projects/shared/src/lib/services/student-accounts/insufficient-balances/insufficient-balance.application.service';
 import { StudentAccountApplicationService } from 'projects/shared/src/lib/services/student-accounts/student-account.application.service';
 import { combineLatest, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { distinctUntilChanged, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 export interface BalanceHistory {
   id: string;
@@ -49,8 +49,14 @@ export class HistoryComponent implements OnInit {
   balanceHistories$: Observable<BalanceHistory[]> | undefined;
   paymentHistories$: Observable<PaymentHistory[]> | undefined;
 
+  selectedTokenType$: Observable<string>;
+  selectedTokenTypeChanged$: Observable<string>;
+  selectedTxType$: Observable<string>;
+  selectedTxTypeChanged$: Observable<string>;
+
   constructor(
     private auth: Auth,
+    private router: Router,
     private route: ActivatedRoute,
     private readonly studentAccApp: StudentAccountApplicationService,
     private readonly availableBalanceApp: AvailableBalanceApplicationService,
@@ -62,6 +68,18 @@ export class HistoryComponent implements OnInit {
     private readonly renewableBidHistoryApp: RenewableBidHistoryApplicationService,
     private readonly renewableAskHistoryApp: RenewableAskHistoryApplicationService,
   ) {
+    this.selectedTokenType$ = this.route.queryParams.pipe(map((params) => params.tokenType ?? 'all'));
+    this.selectedTokenTypeChanged$ = this.selectedTokenType$.pipe(
+      distinctUntilChanged(),
+      map((tokenType) => tokenType),
+    );
+    this.selectedTxType$ = this.route.queryParams.pipe(map((params) => params.txType ?? 'all'));
+
+    this.selectedTxTypeChanged$ = this.selectedTxType$.pipe(
+      distinctUntilChanged(),
+      map((txType) => txType),
+    );
+
     const now = new Date();
     let firstDay = new Date();
     firstDay.setUTCDate(1);
@@ -107,7 +125,7 @@ export class HistoryComponent implements OnInit {
     const renewableBidHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableBidHistoryApp.list$(account.id)));
     const renewableAskHistories$ = this.studentAccount$.pipe(mergeMap((account) => this.renewableAskHistoryApp.list$(account.id)));
 
-    this.balanceHistories$ = combineLatest([
+    const histories$ = combineLatest([
       primaryBid$,
       normalBidHistories$,
       normalAskHistories$,
@@ -171,11 +189,30 @@ export class HistoryComponent implements OnInit {
           isBid: false,
           isPrimary: false,
         }));
+        return primaryBidList.concat(normalBidList, normalAskList, renewableBidList, renewableAskList);
+      }),
+    );
+    this.balanceHistories$ = combineLatest([histories$, this.selectedTokenType$, this.selectedTxType$]).pipe(
+      map(([histories, tokenType, txType]) => {
+        let filteredHistories;
+        filteredHistories = histories;
+        if (tokenType == 'upx') {
+          filteredHistories = filteredHistories.filter((history) => !history.isSolar);
+        } else if (tokenType == 'spx') {
+          filteredHistories = filteredHistories.filter((history) => history.isSolar);
+        }
+        if (txType == 'auction') {
+          filteredHistories = filteredHistories.filter((history) => !history.isPrimary);
+        } else if (txType == 'primary') {
+          filteredHistories = filteredHistories.filter((history) => history.isPrimary);
+        } else if (txType == 'accepted') {
+          filteredHistories = filteredHistories.filter((history) => history.isAccepted);
+        } else if (txType == 'rejected') {
+          filteredHistories = filteredHistories.filter((history) => !history.isAccepted);
+        }
         return (
-          primaryBidList
-            .concat(normalBidList, normalAskList, renewableBidList, renewableAskList)
+          filteredHistories
             // .filter((history) => history.date > firstDay)
-
             .sort(function (first, second) {
               if (first.date > second.date) {
                 return -1;
@@ -188,7 +225,6 @@ export class HistoryComponent implements OnInit {
         );
       }),
     );
-    this.balanceHistories$.subscribe((a) => console.log(a));
 
     const dailyPayment$ = this.studentAccount$.pipe(mergeMap((account) => this.dailyPaymentApp.list$(account.id)));
     this.paymentHistories$ = dailyPayment$.pipe(
@@ -223,24 +259,40 @@ export class HistoryComponent implements OnInit {
             });
           }
         }
-        return (
-          paymentHistories
-            // .filter((history) => history.date > firstDay)
-            .sort(function (first, second) {
-              if (first.date > second.date) {
-                return -1;
-              } else if (first.date < second.date) {
-                return 1;
-              } else {
-                return 0;
-              }
-            })
-        );
+        return paymentHistories
+          .filter((history) => history.date > firstDay)
+          .sort(function (first, second) {
+            if (first.date > second.date) {
+              return -1;
+            } else if (first.date < second.date) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
       }),
     );
-    this.paymentHistories$.subscribe((a) => console.log(a));
-    dailyPayment$.subscribe((a) => console.log(a));
   }
 
   ngOnInit(): void {}
+
+  appSelectedTokenTypeChanged(selectedTokenType: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        tokenType: selectedTokenType,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  appSelectedTxTypeChanged(selectedTxType: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        txType: selectedTxType,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
 }

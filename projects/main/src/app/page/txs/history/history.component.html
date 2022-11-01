@@ -5,4 +5,8 @@
   [insufficiencyAmount]="insufficiencyAmount$ | async"
   [balanceHistories]="balanceHistories$ | async"
   [paymentHistories]="paymentHistories$ | async"
+  [selectedTokenType]="selectedTokenType$ | async"
+  [selectedTxType]="selectedTxType$ | async"
+  (selectedTokenTypeChanged)="appSelectedTokenTypeChanged($event)"
+  (selectedTxTypeChanged)="appSelectedTxTypeChanged($event)"
 ></view-history>

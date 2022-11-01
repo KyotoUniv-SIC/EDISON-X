@@ -1,5 +1,5 @@
 import { BalanceHistory, PaymentHistory } from '../../../page/txs/history/history.component';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StudentAccount } from '@local/common';
 
 @Component({
@@ -20,13 +20,32 @@ export class HistoryComponent implements OnInit {
   balanceHistories?: BalanceHistory[] | null;
   @Input()
   paymentHistories?: PaymentHistory[] | null;
+  @Input()
+  selectedTokenType?: string | null;
+  @Input()
+  selectedTxType?: string | null;
+
+  @Output()
+  selectedTokenTypeChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  selectedTxTypeChanged: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  selectedToken = 'default';
-  selectedTransaction = 'default';
+  tokenTypeOptions = [
+    { value: 'all', viewValue: 'All Tokens' },
+    { value: 'upx', viewValue: 'UPX' },
+    { value: 'spx', viewValue: 'SPX' },
+  ];
+  txTypeOptions = [
+    { value: 'all', viewValue: 'All Transactions' },
+    { value: 'auction', viewValue: 'Auction' },
+    { value: 'primary', viewValue: 'Primary' },
+    { value: 'accepted', viewValue: 'Accepted Transactions' },
+    { value: 'rejected', viewValue: 'Rejected Transactions' },
+  ];
   panelOpenState = false;
 
   powerType(type: boolean) {
@@ -42,5 +61,13 @@ export class HistoryComponent implements OnInit {
     } else {
       return 'bid';
     }
+  }
+
+  onSelectedTokenTypeChanged(selectedTokenType: string): void {
+    this.selectedTokenTypeChanged.emit(selectedTokenType);
+  }
+
+  onSelectedTxTypeChanged(selectedTxType: string): void {
+    this.selectedTxTypeChanged.emit(selectedTxType);
   }
 }
