@@ -197,9 +197,18 @@ export class DashboardComponent implements OnInit {
 
     // 5.System Operation Status
     const adminAccounts$ = this.adminApp.getByName$('admin');
-    this.normalOperationBids$ = adminAccounts$.pipe(mergeMap((adminAccount) => this.normalBidApp.listUid$(adminAccount[0].id)));
-    this.normalOperationAsks$ = adminAccounts$.pipe(mergeMap((adminAccount) => this.normalAskApp.listUid$(adminAccount[0].id)));
-    this.renewableOperationAsks$ = adminAccounts$.pipe(mergeMap((adminAccount) => this.renewableAskApp.listUid$(adminAccount[0].id)));
+    this.normalOperationBids$ = adminAccounts$.pipe(
+      mergeMap((adminAccount) => this.normalBidApp.listUid$(adminAccount[0].id)),
+      map((orders) => orders.filter((order) => !order.is_deleted)),
+    );
+    this.normalOperationAsks$ = adminAccounts$.pipe(
+      mergeMap((adminAccount) => this.normalAskApp.listUid$(adminAccount[0].id)),
+      map((orders) => orders.filter((order) => !order.is_deleted)),
+    );
+    this.renewableOperationAsks$ = adminAccounts$.pipe(
+      mergeMap((adminAccount) => this.renewableAskApp.listUid$(adminAccount[0].id)),
+      map((orders) => orders.filter((order) => !order.is_deleted)),
+    );
 
     // 6.Next Withdrawal
     const usageListDaily$ = studentAccount$.pipe(mergeMap((account) => this.dailyUsageApp.getRoom$(account.room_id)));
