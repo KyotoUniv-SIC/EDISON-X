@@ -1,5 +1,7 @@
 import { BalanceHistory, PaymentHistory } from '../../../page/txs/history/history.component';
+import { DateRange } from '../../admin/dashboard/dashboard.component';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { StudentAccount } from '@local/common';
 
 @Component({
@@ -29,6 +31,13 @@ export class HistoryComponent implements OnInit {
   selectedTokenTypeChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output()
   selectedTxTypeChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  selectedDateRangeChanged: EventEmitter<DateRange> = new EventEmitter<DateRange>();
+
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
 
   constructor() {}
 
@@ -69,5 +78,12 @@ export class HistoryComponent implements OnInit {
 
   onSelectedTxTypeChanged(selectedTxType: string): void {
     this.selectedTxTypeChanged.emit(selectedTxType);
+  }
+
+  onSelectedDateRangeChanged(): void {
+    if (this.range.value.start && this.range.value.end) {
+      console.log(this.range.value);
+      this.selectedDateRangeChanged.emit(this.range.value);
+    }
   }
 }

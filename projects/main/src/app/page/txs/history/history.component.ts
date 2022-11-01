@@ -1,3 +1,4 @@
+import { DateRange } from '../../../view/admin/dashboard/dashboard.component';
 import { Component, OnInit } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { Timestamp } from '@angular/fire/firestore';
@@ -50,9 +51,8 @@ export class HistoryComponent implements OnInit {
   paymentHistories$: Observable<PaymentHistory[]> | undefined;
 
   selectedTokenType$: Observable<string>;
-  selectedTokenTypeChanged$: Observable<string>;
   selectedTxType$: Observable<string>;
-  selectedTxTypeChanged$: Observable<string>;
+  selectedDateRange$: Observable<DateRange>;
 
   constructor(
     private auth: Auth,
@@ -68,24 +68,25 @@ export class HistoryComponent implements OnInit {
     private readonly renewableBidHistoryApp: RenewableBidHistoryApplicationService,
     private readonly renewableAskHistoryApp: RenewableAskHistoryApplicationService,
   ) {
-    this.selectedTokenType$ = this.route.queryParams.pipe(map((params) => params.tokenType ?? 'all'));
-    this.selectedTokenTypeChanged$ = this.selectedTokenType$.pipe(
-      distinctUntilChanged(),
-      map((tokenType) => tokenType),
-    );
-    this.selectedTxType$ = this.route.queryParams.pipe(map((params) => params.txType ?? 'all'));
-
-    this.selectedTxTypeChanged$ = this.selectedTxType$.pipe(
-      distinctUntilChanged(),
-      map((txType) => txType),
-    );
-
     const now = new Date();
     let firstDay = new Date();
     firstDay.setUTCDate(1);
     firstDay.setUTCHours(0, 0, 0, 0);
     const user$ = authState(this.auth);
     this.studentAccount$ = user$.pipe(mergeMap((user) => this.studentAccApp.getByUid$(user?.uid!)));
+
+    this.selectedTokenType$ = this.route.queryParams.pipe(map((params) => params.tokenType ?? 'all'));
+    this.selectedTxType$ = this.route.queryParams.pipe(map((params) => params.txType ?? 'all'));
+
+    this.selectedDateRange$ = this.route.queryParams.pipe(
+      map((params) => {
+        if (params.start && params.end) {
+          return { start: this.convertStringToStartDate(params.start), end: this.convertStringToEndDate(params.end) };
+        } else {
+          return { start: firstDay, end: now };
+        }
+      }),
+    );
 
     const balance$ = this.studentAccount$.pipe(mergeMap((account) => this.availableBalanceApp.list$(account.id)));
     const insufficiency$ = this.studentAccount$.pipe(mergeMap((account) => this.insufficientBalanceApp.list(account.id))).pipe(
@@ -192,8 +193,8 @@ export class HistoryComponent implements OnInit {
         return primaryBidList.concat(normalBidList, normalAskList, renewableBidList, renewableAskList);
       }),
     );
-    this.balanceHistories$ = combineLatest([histories$, this.selectedTokenType$, this.selectedTxType$]).pipe(
-      map(([histories, tokenType, txType]) => {
+    this.balanceHistories$ = combineLatest([histories$, this.selectedTokenType$, this.selectedTxType$, this.selectedDateRange$]).pipe(
+      map(([histories, tokenType, txType, range]) => {
         let filteredHistories;
         filteredHistories = histories;
         if (tokenType == 'upx') {
@@ -210,19 +211,19 @@ export class HistoryComponent implements OnInit {
         } else if (txType == 'rejected') {
           filteredHistories = filteredHistories.filter((history) => !history.isAccepted);
         }
-        return (
-          filteredHistories
-            // .filter((history) => history.date > firstDay)
-            .sort(function (first, second) {
-              if (first.date > second.date) {
-                return -1;
-              } else if (first.date < second.date) {
-                return 1;
-              } else {
-                return 0;
-              }
-            })
-        );
+        filteredHistories = filteredHistories
+          .filter((history) => history.date > range.start)
+          .filter((history) => history.date < range.end)
+          .sort(function (first, second) {
+            if (first.date > second.date) {
+              return -1;
+            } else if (first.date < second.date) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+        return filteredHistories;
       }),
     );
 
@@ -294,5 +295,37 @@ export class HistoryComponent implements OnInit {
       },
       queryParamsHandling: 'merge',
     });
+  }
+
+  appSelectedDateRangeChanged(selectedDateRage: DateRange): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        start: this.convertDateToString(selectedDateRage.start),
+        end: this.convertDateToString(selectedDateRage.end),
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  convertDateToString(dt: Date) {
+    const y = dt.getFullYear();
+    const m = ('00' + (dt.getMonth() + 1)).slice(-2);
+    const d = ('00' + dt.getDate()).slice(-2);
+    return y + m + d;
+  }
+
+  convertStringToStartDate(str: string) {
+    const year = parseInt(str.substring(0, 4));
+    const month = parseInt(str.substring(4, 6));
+    const day = parseInt(str.substring(6, 8));
+    return new Date(year, month - 1, day, 0, 0);
+  }
+
+  convertStringToEndDate(str: string) {
+    const year = parseInt(str.substring(0, 4));
+    const month = parseInt(str.substring(4, 6));
+    const day = parseInt(str.substring(6, 8));
+    return new Date(year, month - 1, day + 1, 0, 0);
   }
 }
