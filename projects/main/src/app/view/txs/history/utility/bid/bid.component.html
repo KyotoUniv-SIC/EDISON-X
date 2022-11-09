@@ -1,6 +1,6 @@
 <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10">
   <mat-card>
-    <mat-card-title>Bid History Detail</mat-card-title>
+    <mat-card-title style="color: #3f51b5">Bid History Detail</mat-card-title>
     <mat-list>
       <ng-container *ngIf="!normalBid; then primary; else loaded"></ng-container>
       <ng-template #loaded>
@@ -58,15 +58,15 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <mat-list-item class="flex flex-wrap">
-          <span class="break-all">Order Timestamp:</span>
+          <span class="break-words">Order Timestamp:</span>
           <span class="flex-auto break-all"></span>
-          <span class="break-all">{{ bidCreatedAt?.toLocaleString() }}</span>
+          <span class="break-words">{{ bidCreatedAt?.toLocaleString() }}</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
         <mat-list-item class="flex flex-wrap">
-          <span class="break-all">Market Timestamp:</span>
+          <span class="break-words">Market Timestamp:</span>
           <span class="flex-auto break-all"></span>
-          <span class="break-all">{{ createdAt?.toLocaleString() }}</span>
+          <span class="break-words">{{ createdAt?.toLocaleString() }}</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
       </ng-template>
@@ -111,14 +111,14 @@
         <mat-list-item class="flex flex-wrap">
           <span class="break-all">Amount:</span>
           <span class="flex-auto break-all"></span>
-          <span class="break-all">{{ primaryBid?.amount_uupx | microString }}kWh</span>
+          <span class="break-all">{{ primaryBid?.amount_uupx | microString }} kWh</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
 
         <mat-list-item class="flex flex-wrap">
-          <span class="break-all">Issue Timestamp:</span>
+          <span class="break-words">Issue Timestamp:</span>
           <span class="flex-auto break-all"></span>
-          <span class="break-all">{{ createdAtPrimary?.toLocaleString() }}</span>
+          <span class="break-words">{{ createdAtPrimary?.toLocaleString() }}</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
       </ng-template>
