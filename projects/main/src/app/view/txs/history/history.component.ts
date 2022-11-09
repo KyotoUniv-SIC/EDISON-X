@@ -23,6 +23,8 @@ export class HistoryComponent implements OnInit {
   @Input()
   paymentHistories?: PaymentHistory[] | null;
   @Input()
+  dailyPaymentHistories?: PaymentHistory[] | null;
+  @Input()
   selectedTokenType?: string | null;
   @Input()
   selectedTxType?: string | null;

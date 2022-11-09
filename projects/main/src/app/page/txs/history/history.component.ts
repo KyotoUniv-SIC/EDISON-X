@@ -49,6 +49,7 @@ export class HistoryComponent implements OnInit {
   histories$: Observable<History[]> | undefined;
   balanceHistories$: Observable<BalanceHistory[]> | undefined;
   paymentHistories$: Observable<PaymentHistory[]> | undefined;
+  dailyPaymentHistories$: Observable<PaymentHistory[]> | undefined;
 
   selectedTokenType$: Observable<string>;
   selectedTxType$: Observable<string>;
@@ -270,8 +271,17 @@ export class HistoryComponent implements OnInit {
             });
           }
         }
-        return paymentHistories
-          .filter((history) => history.date > firstDay)
+        return paymentHistories;
+      }),
+    );
+    this.dailyPaymentHistories$ = combineLatest([this.paymentHistories$, this.selectedDailyPaymentDateRange$]).pipe(
+      map(([histories, range]) => {
+        let filteredHistories;
+        filteredHistories = histories;
+
+        filteredHistories = filteredHistories
+          .filter((history) => history.date > range.start)
+          .filter((history) => history.date < range.end)
           .sort(function (first, second) {
             if (first.date > second.date) {
               return -1;
@@ -281,6 +291,7 @@ export class HistoryComponent implements OnInit {
               return 0;
             }
           });
+        return filteredHistories;
       }),
     );
   }
