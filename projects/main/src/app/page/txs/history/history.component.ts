@@ -91,7 +91,7 @@ export class HistoryComponent implements OnInit {
     );
     this.selectedDailyPaymentDateRange$ = this.route.queryParams.pipe(
       map((params) => {
-        if (params.start && params.end) {
+        if (params.startPayment && params.endPayment) {
           return { start: this.convertStringToStartDate(params.start), end: this.convertStringToEndDate(params.end) };
         } else {
           return { start: firstDay, end: now };
@@ -276,10 +276,10 @@ export class HistoryComponent implements OnInit {
     );
     this.dailyPaymentHistories$ = combineLatest([this.paymentHistories$, this.selectedDailyPaymentDateRange$]).pipe(
       map(([histories, range]) => {
-        let filteredHistories;
-        filteredHistories = histories;
+        let filteredDailyPaymentHistories;
+        filteredDailyPaymentHistories = histories;
 
-        filteredHistories = filteredHistories
+        filteredDailyPaymentHistories = filteredDailyPaymentHistories
           .filter((history) => history.date > range.start)
           .filter((history) => history.date < range.end)
           .sort(function (first, second) {
@@ -291,7 +291,7 @@ export class HistoryComponent implements OnInit {
               return 0;
             }
           });
-        return filteredHistories;
+        return filteredDailyPaymentHistories;
       }),
     );
   }
@@ -328,12 +328,12 @@ export class HistoryComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-  appSelectedDailyPaymentDateRangeChanged(selectedDateRange: DateRange): void {
+  appSelectedDailyPaymentDateRangeChanged(selectedDailyPaymentDateRange: DateRange): void {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        start: this.convertDateToString(selectedDateRange.start),
-        end: this.convertDateToString(selectedDateRange.end),
+        startPayment: this.convertDateToString(selectedDailyPaymentDateRange.start),
+        endPayment: this.convertDateToString(selectedDailyPaymentDateRange.end),
       },
       queryParamsHandling: 'merge',
     });

@@ -42,6 +42,10 @@ export class HistoryComponent implements OnInit {
     start: new FormControl(),
     end: new FormControl(),
   });
+  dailyPaymentRange = new FormGroup({
+    startPayment: new FormControl(),
+    endPayment: new FormControl(),
+  });
 
   constructor() {}
 
@@ -91,9 +95,9 @@ export class HistoryComponent implements OnInit {
     }
   }
   onSelectedDailyPaymentDateRangeChanged(): void {
-    if (this.range.value.start && this.range.value.end) {
-      console.log(this.range.value);
-      this.selectedDailyPaymentDateRangeChanged.emit(this.range.value);
+    if (this.dailyPaymentRange.value.startPayment && this.dailyPaymentRange.value.endPayment) {
+      console.log(this.dailyPaymentRange.value);
+      this.selectedDailyPaymentDateRangeChanged.emit(this.dailyPaymentRange.value);
     }
   }
 }
