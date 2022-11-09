@@ -27,14 +27,14 @@
     <details>
       <summary>Search Options</summary>
       <mat-card-content class="mt-2">
-        <mat-form-field appearance="fill" class="w-1/3 mr-2">
+        <mat-form-field appearance="fill" class="w-1/3 mr-3">
           <mat-label style="font-size: 5px">Select a token</mat-label>
           <mat-select class="w-5 text-xs" [(value)]="selectedTokenType" (valueChange)="onSelectedTokenTypeChanged($event)">
             <mat-option *ngFor="let tokenType of tokenTypeOptions" [value]="tokenType.value">{{ tokenType.viewValue }} </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-auto">
+        <mat-form-field appearance="fill" class="w-auto mr-3">
           <mat-label style="font-size: 5px">Select a transaction type </mat-label>
           <mat-select class="w-5 text-xs" [(value)]="selectedTxType" (valueChange)="onSelectedTxTypeChanged($event)">
             <mat-option *ngFor="let txType of txTypeOptions" [value]="txType.value">{{ txType.viewValue }} </mat-option>
