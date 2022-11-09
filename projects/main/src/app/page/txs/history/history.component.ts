@@ -14,7 +14,7 @@ import { DailyPaymentApplicationService } from 'projects/shared/src/lib/services
 import { InsufficientBalanceApplicationService } from 'projects/shared/src/lib/services/student-accounts/insufficient-balances/insufficient-balance.application.service';
 import { StudentAccountApplicationService } from 'projects/shared/src/lib/services/student-accounts/student-account.application.service';
 import { combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 export interface BalanceHistory {
   id: string;
@@ -52,7 +52,8 @@ export class HistoryComponent implements OnInit {
 
   selectedTokenType$: Observable<string>;
   selectedTxType$: Observable<string>;
-  selectedDateRange$: Observable<DateRange>;
+  selectedTxsDateRange$: Observable<DateRange>;
+  selectedDailyPaymentDateRange$: Observable<DateRange>;
 
   constructor(
     private auth: Auth,
@@ -78,7 +79,16 @@ export class HistoryComponent implements OnInit {
     this.selectedTokenType$ = this.route.queryParams.pipe(map((params) => params.tokenType ?? 'all'));
     this.selectedTxType$ = this.route.queryParams.pipe(map((params) => params.txType ?? 'all'));
 
-    this.selectedDateRange$ = this.route.queryParams.pipe(
+    this.selectedTxsDateRange$ = this.route.queryParams.pipe(
+      map((params) => {
+        if (params.start && params.end) {
+          return { start: this.convertStringToStartDate(params.start), end: this.convertStringToEndDate(params.end) };
+        } else {
+          return { start: firstDay, end: now };
+        }
+      }),
+    );
+    this.selectedDailyPaymentDateRange$ = this.route.queryParams.pipe(
       map((params) => {
         if (params.start && params.end) {
           return { start: this.convertStringToStartDate(params.start), end: this.convertStringToEndDate(params.end) };
@@ -193,7 +203,7 @@ export class HistoryComponent implements OnInit {
         return primaryBidList.concat(normalBidList, normalAskList, renewableBidList, renewableAskList);
       }),
     );
-    this.balanceHistories$ = combineLatest([histories$, this.selectedTokenType$, this.selectedTxType$, this.selectedDateRange$]).pipe(
+    this.balanceHistories$ = combineLatest([histories$, this.selectedTokenType$, this.selectedTxType$, this.selectedTxsDateRange$]).pipe(
       map(([histories, tokenType, txType, range]) => {
         let filteredHistories;
         filteredHistories = histories;
@@ -297,12 +307,22 @@ export class HistoryComponent implements OnInit {
     });
   }
 
-  appSelectedDateRangeChanged(selectedDateRage: DateRange): void {
+  appSelectedTxsDateRangeChanged(selectedDateRange: DateRange): void {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        start: this.convertDateToString(selectedDateRage.start),
-        end: this.convertDateToString(selectedDateRage.end),
+        start: this.convertDateToString(selectedDateRange.start),
+        end: this.convertDateToString(selectedDateRange.end),
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+  appSelectedDailyPaymentDateRangeChanged(selectedDateRange: DateRange): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        start: this.convertDateToString(selectedDateRange.start),
+        end: this.convertDateToString(selectedDateRange.end),
       },
       queryParamsHandling: 'merge',
     });

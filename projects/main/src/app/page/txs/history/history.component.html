@@ -9,5 +9,6 @@
   [selectedTxType]="selectedTxType$ | async"
   (selectedTokenTypeChanged)="appSelectedTokenTypeChanged($event)"
   (selectedTxTypeChanged)="appSelectedTxTypeChanged($event)"
-  (selectedDateRangeChanged)="appSelectedDateRangeChanged($event)"
+  (selectedTxsDateRangeChanged)="appSelectedTxsDateRangeChanged($event)"
+  (selectedDailyPaymentDateRangeChanged)="appSelectedDailyPaymentDateRangeChanged($event)"
 ></view-history>

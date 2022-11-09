@@ -32,7 +32,9 @@ export class HistoryComponent implements OnInit {
   @Output()
   selectedTxTypeChanged: EventEmitter<string> = new EventEmitter<string>();
   @Output()
-  selectedDateRangeChanged: EventEmitter<DateRange> = new EventEmitter<DateRange>();
+  selectedTxsDateRangeChanged: EventEmitter<DateRange> = new EventEmitter<DateRange>();
+  @Output()
+  selectedDailyPaymentDateRangeChanged: EventEmitter<DateRange> = new EventEmitter<DateRange>();
 
   range = new FormGroup({
     start: new FormControl(),
@@ -80,10 +82,16 @@ export class HistoryComponent implements OnInit {
     this.selectedTxTypeChanged.emit(selectedTxType);
   }
 
-  onSelectedDateRangeChanged(): void {
+  onSelectedTxsDateRangeChanged(): void {
     if (this.range.value.start && this.range.value.end) {
       console.log(this.range.value);
-      this.selectedDateRangeChanged.emit(this.range.value);
+      this.selectedTxsDateRangeChanged.emit(this.range.value);
+    }
+  }
+  onSelectedDailyPaymentDateRangeChanged(): void {
+    if (this.range.value.start && this.range.value.end) {
+      console.log(this.range.value);
+      this.selectedDailyPaymentDateRangeChanged.emit(this.range.value);
     }
   }
 }
