@@ -328,12 +328,12 @@ export class HistoryComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-  appSelectedDailyPaymentDateRangeChanged(selectedDailyPaymentDateRange: DateRange): void {
+  appSelectedDailyPaymentDateRangeChanged(selectedDateRange: DateRange): void {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        startPayment: this.convertDateToString(selectedDailyPaymentDateRange.start),
-        endPayment: this.convertDateToString(selectedDailyPaymentDateRange.end),
+        startPayment: this.convertDateToString(selectedDateRange.start),
+        endPayment: this.convertDateToString(selectedDateRange.end),
       },
       queryParamsHandling: 'merge',
     });
