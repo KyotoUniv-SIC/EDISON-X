@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { PrimaryAsk } from '@local/common';
 import { LoadingDialogService } from 'ng-loading-dialog';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class PrimaryAskApplicationService {
     private readonly snackBar: MatSnackBar,
     private readonly router: Router,
   ) {}
+
+  list$(uid: string) {
+    return this.primaryAsk.list$().pipe(map((params) => params.filter((param) => param.account_id == uid)));
+  }
 
   async create(data: PrimaryAsk) {
     const dialogRef = this.loadingDialog.open('Requesting Ask Deletion');

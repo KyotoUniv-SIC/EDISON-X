@@ -1,0 +1,15 @@
+<view-history
+  [studentAccount]="studentAccount$ | async"
+  [uupxAmount]="uupxAmount$ | async"
+  [uspxAmount]="uspxAmount$ | async"
+  [insufficiencyAmount]="insufficiencyAmount$ | async"
+  [balanceHistories]="balanceHistories$ | async"
+  [paymentHistories]="paymentHistories$ | async"
+  [dailyPaymentHistories]="dailyPaymentHistories$ | async"
+  [selectedTokenType]="selectedTokenType$ | async"
+  [selectedTxType]="selectedTxType$ | async"
+  (selectedTokenTypeChanged)="appSelectedTokenTypeChanged($event)"
+  (selectedTxTypeChanged)="appSelectedTxTypeChanged($event)"
+  (selectedTxsDateRangeChanged)="appSelectedTxsDateRangeChanged($event)"
+  (selectedDailyPaymentDateRangeChanged)="appSelectedDailyPaymentDateRangeChanged($event)"
+></view-history>
