@@ -92,7 +92,7 @@ export class HistoryComponent implements OnInit {
     this.selectedDailyPaymentDateRange$ = this.route.queryParams.pipe(
       map((params) => {
         if (params.startPayment && params.endPayment) {
-          return { start: this.convertStringToStartDate(params.start), end: this.convertStringToEndDate(params.end) };
+          return { start: this.convertStringToStartDate(params.startPayment), end: this.convertStringToEndDate(params.endPayment) };
         } else {
           return { start: firstDay, end: now };
         }
