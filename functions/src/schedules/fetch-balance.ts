@@ -11,7 +11,7 @@ import * as functions from 'firebase-functions';
 
 const f = functions.region('asia-northeast1').runWith({ timeoutSeconds: 540, memory: '2GB', secrets: ['PRIV_KEY'] });
 module.exports.fetchBalance = f.pubsub
-  .schedule('25 21 15 * *')
+  .schedule('0 21 1,15 * *')
   // .schedule('20,40,50 * * * *')
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
