@@ -56,7 +56,7 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
         id: monthlyPayment.id,
         student_account_id: monthlyPayment.student_account_id,
         amount_adjust_ujpy: adjustPayment.toString(),
-        amount_ujpy: (parseInt(monthlyPayment.amount_ujpy) + adjustPayment).toString(),
+        amount_ujpy: (parseInt(monthlyPayment.amount_ujpy) - parseInt(monthlyPayment.amount_adjust_ujpy ?? '0') + adjustPayment).toString(),
       });
     }
   }
