@@ -111,8 +111,8 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   await monthly_payment.create(
     new MonthlyPayment({
       student_account_id: data.student_account_id,
-      year: date.getFullYear().toString(),
-      month: date.getMonth().toString(),
+      year: date.getMonth() ? date.getFullYear().toString() : (date.getFullYear() - 1).toString(),
+      month: date.getMonth() ? date.getMonth().toString() : '12',
       amount_ujpy: (primaryPayment + marketPayment + rewardPayment).toString(),
       amount_primary_ujpy: primaryPayment.toString(),
       // amount_adjust_ujpy: adjustPayment.toString(),
@@ -125,8 +125,8 @@ export const balanceSnapshotOnCreate = async (snapshot: any, context: any) => {
   const usage = dailyPayments.reduce((prev, current) => prev + parseInt(current.amount_mwh), 0);
   const monthlyUsage = new MonthlyUsage({
     student_account_id: data.student_account_id,
-    year: date.getFullYear().toString(),
-    month: date.getMonth().toString(),
+    year: date.getMonth() ? date.getFullYear().toString() : (date.getFullYear() - 1).toString(),
+    month: date.getMonth() ? date.getMonth().toString() : '12',
     amount_mwh: usage.toString(),
   });
   await monthly_usage.create(monthlyUsage);
