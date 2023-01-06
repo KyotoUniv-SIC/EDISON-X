@@ -100,6 +100,7 @@ const files = {
   operation_renewable: './schedules/operation-renewable',
   send_mails: './schedules/send-mails',
   fix_monthly_payments: './schedules/fix-monthly-payment',
+  fetch_balance: './schedules/fetch-balance',
 };
 
 const loadFunctions = (filesObj: any) => {
