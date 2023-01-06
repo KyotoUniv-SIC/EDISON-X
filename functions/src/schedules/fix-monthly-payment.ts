@@ -14,11 +14,16 @@ module.exports.calcElectricityCost = f.pubsub
       const monthlyPayments = await monthly_payment.listLatest(student.id);
       if (monthlyPayments.length) {
         for (const payment of monthlyPayments) {
-          const total =
-            parseInt(payment.amount_adjust_ujpy ?? '0') +
-            parseInt(payment.amount_market_ujpy ?? '0') +
-            parseInt(payment.amount_primary_ujpy ?? '0') +
-            parseInt(payment.amount_reward_ujpy ?? '0');
+          let total: number;
+          if (payment.amount_adjust_ujpy) {
+            total =
+              parseInt(payment.amount_adjust_ujpy) +
+              parseInt(payment.amount_market_ujpy) +
+              parseInt(payment.amount_primary_ujpy) +
+              parseInt(payment.amount_reward_ujpy);
+          } else {
+            total = parseInt(payment.amount_market_ujpy) + parseInt(payment.amount_primary_ujpy) + parseInt(payment.amount_reward_ujpy);
+          }
 
           await monthly_payment.update({
             id: payment.id,
