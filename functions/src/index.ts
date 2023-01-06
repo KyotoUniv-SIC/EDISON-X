@@ -101,6 +101,7 @@ const files = {
   send_mails: './schedules/send-mails',
   fix_monthly_payments: './schedules/fix-monthly-payment',
   fetch_balance: './schedules/fetch-balance',
+  backup_firestore: './schedules/backup-firestore',
 };
 
 const loadFunctions = (filesObj: any) => {
