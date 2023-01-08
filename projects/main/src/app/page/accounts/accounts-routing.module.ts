@@ -6,6 +6,7 @@ import { EmailComponent } from './email/email.component';
 import { EnterComponent } from './enter/enter.component';
 import { PaymentComponent } from './payments/payment/payment.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { ResetComponent } from './reset/reset.component';
 import { RoomComponent } from './room/room.component';
 import { XrplComponent } from './xrpl/xrpl.component';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'xrpl', component: XrplComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'payments/:payment_id', component: PaymentComponent },
+  { path: 'reset', component: ResetComponent },
 ];
 
 @NgModule({
