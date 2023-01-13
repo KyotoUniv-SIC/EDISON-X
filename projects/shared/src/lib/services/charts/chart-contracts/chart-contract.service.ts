@@ -24,8 +24,8 @@ export class ChartContractService {
     }
     const referencePrices =
       settlements[0] instanceof SinglePriceNormalSettlement
-        ? Array(prices.length).fill(21.5 as number)
-        : Array(prices.length).fill(22.0 as number);
+        ? Array(prices.length).fill(25.0 as number)
+        : Array(prices.length).fill(25.5 as number);
     const dataSets = [
       {
         data: referencePrices,
