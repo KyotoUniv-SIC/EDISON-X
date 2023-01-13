@@ -22,7 +22,7 @@ describe('Cost Setting Test', () => {
     const sale = parseInt(monthlySettlement[0].sale_utoken);
     const primaryAsks = [new PrimaryAsk({ amount_uupx: '100000000', price_ujpy: '21500000' })];
 
-    const primaryPrice = primaryAsks.length ? parseInt(primaryAsks[0].price_ujpy) : 21.5;
+    const primaryPrice = primaryAsks.length ? parseInt(primaryAsks[0].price_ujpy) : 25;
 
     // 0で割るのを避ける
     let discountRate: number;

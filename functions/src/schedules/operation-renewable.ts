@@ -18,7 +18,7 @@ module.exports.operationRenewable = f.pubsub
     const setting = await renewable_ask_setting.getLatest();
     const type = proto.main.RenewableAskType.PRIMARY;
     const adminAccount = await admin_account.getByName('admin');
-    const price = !setting.price_ujpy || now.getDate() == 1 ? '22000000' : setting.price_ujpy;
+    const price = !setting.price_ujpy || now.getDate() == 1 ? '25500000' : setting.price_ujpy;
 
     const dailyUsages = await daily_usage.listYesterday();
     const dailyUsageAmount = dailyUsages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * 1000000;

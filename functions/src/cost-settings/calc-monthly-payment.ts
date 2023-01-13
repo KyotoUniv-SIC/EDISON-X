@@ -18,7 +18,7 @@ cost_setting.onCreateHandler.push(async (snapshot, context) => {
   const sale = parseInt(monthlySettlement[0].sale_utoken);
   const primaryAsks = await primary_ask.listLastMonth();
 
-  const primaryPrice = primaryAsks.length ? parseInt(primaryAsks[0].price_ujpy) : 21.5;
+  const primaryPrice = primaryAsks.length ? parseInt(primaryAsks[0].price_ujpy) : 25;
 
   // 0で割るのを避ける
   let discountRate: number;
