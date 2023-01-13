@@ -19,8 +19,7 @@ describe('Operation Normal Test', () => {
     const threshold = 2000000;
     // 価格の決定
     const setting = new NormalAskSetting({ id: 'setting01', price_ujpy: '23000000', ratio_percentage: '100', enable: true });
-    const now = new Date();
-    const price = !setting || now.getDate() == 1 ? 21500000 : parseInt(setting.price_ujpy);
+    const price = !setting ? 21500000 : parseInt(setting.price_ujpy);
     const ratio = setting.ratio_percentage ? parseInt(setting.ratio_percentage) : 100;
     const enable = setting.enable ? setting.enable : false;
 
