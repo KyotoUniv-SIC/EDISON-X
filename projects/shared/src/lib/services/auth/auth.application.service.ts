@@ -237,6 +237,9 @@ export class AuthApplicationService {
       }
     } finally {
       dialogRef.close();
+      this.snackBar.open('再設定メールを送信しました。', undefined, {
+        duration: 6000,
+      });
     }
   }
 
