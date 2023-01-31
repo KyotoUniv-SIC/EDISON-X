@@ -1,4 +1,4 @@
-<h2>Student Dashboard</h2>
+<h2 class="pl-10 pt-4">Student Dashboard</h2>
 <div class="w-full lg:mx-auto lg:flex lg:flex-row">
   <span class="flex-auto"></span>
   <mat-card class="mb-10">
@@ -143,6 +143,10 @@
           <span class="break-all text-xl" style="font-size: x-large">{{ renewableDate | date: 'yy/MM/dd' }}</span>
         </mat-list-item>
       </mat-card>
+      <mat-card-content>
+        <p style="color: #ff0000">The UPX base price has been changed to <b>&yen;25.0/kWh</b>.</p>
+        <p style="color: #ff0000">The SPX base price has been changed to <b>&yen;25.5/kWh</b> since Feb 2023.</p>
+      </mat-card-content>
       <div class="mt-10 lg:hidden">
         <button mat-flat-button class="w-full" color="accent" routerLink="/dashboard/charts">Contract Price & Amount Charts</button>
       </div>
@@ -236,7 +240,7 @@
           for end users is approximately <b>&yen;27/kWh</b>.
         </p>
         <p style="color: #ff0000">The UPX base price has been changed to <b>&yen;25.0/kWh</b>.</p>
-        <p style="color: #ff0000">The SPX base price has been changed to <b>&yen;25.5/kWh</b> since Sep. Please note.</p>
+        <p style="color: #ff0000">The SPX base price has been changed to <b>&yen;25.5/kWh</b> since Feb 2023.</p>
       </mat-card-content>
     </mat-card>
   </div>

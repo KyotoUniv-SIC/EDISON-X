@@ -137,9 +137,7 @@
         <mat-list-item class="flex flex-wrap">
           <span class="break-all">SPX Price:</span>
           <span class="flex-auto break-all"></span>
-          <span class="break-all"
-            >{{ normalSetting?.price_ujpy | microString }} + {{ renewableSetting?.price_ujpy | microString }} JPY</span
-          >
+          <span class="break-all">{{ renewableSetting?.price_ujpy | microString }} JPY</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
         <mat-list-item class="flex flex-wrap">
@@ -156,7 +154,7 @@
       <mat-card-title>Change SPX Setting</mat-card-title>
       <mat-list>
         <mat-list-item style="height: auto" class="flex flex-wrap">
-          <span class="break-all">Price Margin (+UPX Price):</span>
+          <span class="break-all">Price:</span>
           <span class="flex-auto break-all"></span>
           <mat-form-field class="break-all">
             <mat-label>Input Number</mat-label>
