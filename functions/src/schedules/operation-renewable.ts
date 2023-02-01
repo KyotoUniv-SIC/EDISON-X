@@ -2,7 +2,6 @@
 import { admin_account } from '../admin-accounts';
 import { daily_payment } from '../daily-payments';
 import { daily_usage } from '../daily-usages';
-import { normal_ask_setting } from '../normal-ask-settings';
 import { renewable_ask_setting } from '../renewable-ask-settings';
 import { renewable_ask } from '../renewable-asks';
 import { student_account } from '../student-accounts';
@@ -16,10 +15,9 @@ module.exports.operationRenewable = f.pubsub
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
     const settingRenewable = await renewable_ask_setting.getLatest();
-    const settingNormal = await normal_ask_setting.getLatest();
     const type = proto.main.RenewableAskType.PRIMARY;
     const adminAccount = await admin_account.getByName('admin');
-    const price = !settingNormal.price_ujpy ? '25500000' : (parseInt(settingNormal.price_ujpy) + 500000).toString();
+    const price = !settingRenewable.price_ujpy ? '25500000' : settingRenewable.price_ujpy;
 
     const dailyUsages = await daily_usage.listYesterday();
     const dailyUsageAmount = dailyUsages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * 1000000;
