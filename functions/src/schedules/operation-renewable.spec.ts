@@ -3,11 +3,10 @@ import { AdminAccount, DailyPayment, DailyUsage, proto, RenewableAsk, RenewableA
 
 describe('Operation Renewable Test', () => {
   it('Create renewable-order', () => {
-    const now = new Date();
     const setting = new RenewableAskSetting({ id: 'setting01', price_ujpy: '22000000', amount_uspx: '30000000' });
     const type = proto.main.RenewableAskType.PRIMARY;
     const adminAccount = [new AdminAccount({ id: 'admin01', name: 'admin' })];
-    const price = !setting.price_ujpy || now.getDate() == 1 ? '22000000' : setting.price_ujpy;
+    const price = !setting.price_ujpy ? '22000000' : setting.price_ujpy;
 
     const dailyUsages = [
       new DailyUsage({ id: 'usage01', amount_kwh_str: '4', room_id: 'higashi301' }),

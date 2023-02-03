@@ -99,7 +99,7 @@ export class BuyComponent implements OnInit {
   onSubmit(accountID: string, price: string, amount: string, denom: string) {
     const now = new Date();
     if (0 <= now.getUTCHours() && now.getUTCHours() < 2) {
-      alert('EDISONでは、9:00-1:00(JST)のAskの入札ができません');
+      alert('EDISONでは、9:00-1:00(JST)の間、入札ができません');
       return;
     }
     if (!denom) {

@@ -24,7 +24,7 @@ export const monthlyUsageOnCreate = async (snapshot: any, context: any) => {
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
   const primaryAskSetting = await primary_ask_setting.getLatest();
-  const price = primaryAskSetting.price_ujpy ?? '21500000';
+  const price = primaryAskSetting.price_ujpy ?? '25000000';
   const ratio = parseInt(primaryAskSetting.ratio_percentage) / 100 ?? 1;
 
   let primaryAsk: PrimaryAsk;

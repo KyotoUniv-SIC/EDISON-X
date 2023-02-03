@@ -101,7 +101,7 @@ student_account.onCreateHandler.push(async (snapshot, context) => {
     console.log(student.room_id, 'have no usage data');
   }
   const primaryAskSetting = await primary_ask_setting.getLatest();
-  const price = primaryAskSetting.price_ujpy ?? '21500000';
+  const price = primaryAskSetting.price_ujpy ?? '25000000';
   const ratio = parseInt(primaryAskSetting.ratio_percentage) / 100 ?? 1;
 
   const primaryAsk = new PrimaryAsk({ account_id: data.id, price_ujpy: price, amount_uupx: (uupxAmount * ratio).toString() });

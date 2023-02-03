@@ -1,11 +1,12 @@
 import { BalanceApplicationService } from '../../student-accounts/balances/balance.application.service';
 import { InsufficientBalanceApplicationService } from '../../student-accounts/insufficient-balances/insufficient-balance.application.service';
 import { MonthlyPaymentApplicationService } from '../../student-accounts/monthly-payments/monthly-payment.application.service';
+import { MonthlyUsageApplicationService } from '../../student-accounts/monthly-usages/monthly-usage.application.service';
 import { StudentAccountApplicationService } from '../../student-accounts/student-account.application.service';
 import { CSVCommonService } from '../csv-common.service';
 import { Injectable } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
-import { Balance, MonthlyPayment, NormalAsk, NormalBid, RenewableAsk, RenewableBid, StudentAccount } from '@local/common';
+import { Balance, MonthlyPayment, MonthlyUsage, NormalAsk, NormalBid, RenewableAsk, RenewableBid, StudentAccount } from '@local/common';
 import { ChartDataSets } from 'chart.js';
 import { Ranking } from 'projects/main/src/app/page/dashboard/dashboard.component';
 
@@ -19,6 +20,7 @@ export class CsvDownloadService {
     private readonly balanceApp: BalanceApplicationService,
     private readonly insufficientBalanceApp: InsufficientBalanceApplicationService,
     private readonly monthlyPaymentApp: MonthlyPaymentApplicationService,
+    private readonly monthlyUsageApp: MonthlyUsageApplicationService,
   ) {}
 
   async downloadBalances() {
@@ -194,15 +196,20 @@ export class CsvDownloadService {
   async downloadMonthlyPayments(year: number, month: number) {
     const students = await this.studentsApp.list();
     let monthlyPayments: MonthlyPayment[] = [];
+    let monthlyUsages: MonthlyUsage[] = [];
     for (let student of students) {
       let payments = await this.monthlyPaymentApp.list(student.id);
+      let usages = await this.monthlyUsageApp.list(student.id);
       if (year) {
         payments = payments.filter((payment) => payment.year == year.toString());
+        usages = usages.filter((usage) => usage.year == year.toString());
       }
       if (month) {
         payments = payments.filter((payment) => payment.month == month.toString());
+        usages = usages.filter((usage) => usage.month == month.toString());
       }
       monthlyPayments = monthlyPayments.concat(payments);
+      monthlyUsages = monthlyUsages.concat(usages);
     }
     if (!monthlyPayments.length) {
       alert('データが存在しません');
@@ -225,9 +232,13 @@ export class CsvDownloadService {
       }
     });
     const paymentsData = monthlyPayments.map((payment) => {
+      const mwhUsage = monthlyUsages.find((usage) => usage.student_account_id == payment.student_account_id)?.amount_mwh;
+      const kwhUsage = mwhUsage ? parseInt(mwhUsage) / 1000000 : 0;
       return {
         account_id: payment.student_account_id,
         account_name: students.find((student) => student.id == payment.student_account_id)?.name,
+        room_id: students.find((student) => student.id == payment.student_account_id)?.room_id,
+        usage_kWh: kwhUsage,
         total_payment: parseInt(payment.amount_ujpy) / 1000000,
         primary_payment: parseInt(payment.amount_primary_ujpy) / 1000000,
         adjust_payment: parseInt(payment.amount_adjust_ujpy) / 1000000,

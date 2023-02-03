@@ -14,11 +14,10 @@ module.exports.operationRenewable = f.pubsub
   // .schedule('5,35 * * * *')
   .timeZone('Asia/Tokyo') // Users can choose timezone - default is America/Los_Angeles
   .onRun(async () => {
-    const now = new Date();
-    const setting = await renewable_ask_setting.getLatest();
+    const settingRenewable = await renewable_ask_setting.getLatest();
     const type = proto.main.RenewableAskType.PRIMARY;
     const adminAccount = await admin_account.getByName('admin');
-    const price = !setting.price_ujpy || now.getDate() == 1 ? '22000000' : setting.price_ujpy;
+    const price = !settingRenewable.price_ujpy ? '25500000' : settingRenewable.price_ujpy;
 
     const dailyUsages = await daily_usage.listYesterday();
     const dailyUsageAmount = dailyUsages.reduce((previous, current) => previous + parseInt(current.amount_kwh_str), 0) * 1000000;
@@ -31,9 +30,9 @@ module.exports.operationRenewable = f.pubsub
     console.log('Payment Amount', paymentAmount);
     console.log('Daily Usage Amount', dailyUsageAmount);
 
-    const amount = !setting.amount_uspx
+    const amount = !settingRenewable.amount_uspx
       ? Math.floor((25000000 * paymentAmount) / dailyUsageAmount).toString()
-      : Math.floor((parseInt(setting.amount_uspx) * paymentAmount) / dailyUsageAmount).toString();
+      : Math.floor((parseInt(settingRenewable.amount_uspx) * paymentAmount) / dailyUsageAmount).toString();
 
     console.log('Isuue Amount', amount);
 
@@ -52,7 +51,7 @@ module.exports.operationRenewable = f.pubsub
     await renewable_ask_setting.create(
       new RenewableAskSetting({
         price_ujpy: price,
-        amount_uspx: !setting.amount_uspx ? '25000000' : setting.amount_uspx,
+        amount_uspx: !settingRenewable.amount_uspx ? '25000000' : settingRenewable.amount_uspx,
       }),
     );
   });
