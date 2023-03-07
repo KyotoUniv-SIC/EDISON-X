@@ -11,7 +11,7 @@ module.exports.backupFirestore = f.pubsub
     const client = new firestore.v1.FirestoreAdminClient();
     const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT || 'edison-dev-1c1b5';
     const databaseName = client.databasePath(projectId, '(default)');
-    const bucket = 'gs://auto-backup-edison-dev-us';
+    const bucket = 'gs://auto-backup-edison-dev-asia';
 
     return await client
       .exportDocuments({
