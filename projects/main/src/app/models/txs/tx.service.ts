@@ -21,9 +21,8 @@ import { RenewableAskHistoryApplicationService } from 'projects/shared/src/lib/s
 import { RenewableAskApplicationService } from 'projects/shared/src/lib/services/renewable-asks/renewable-ask.application.service';
 import { RenewableBidHistoryApplicationService } from 'projects/shared/src/lib/services/renewable-bid-histories/renewable-bid-history.application.service';
 import { RenewableBidApplicationService } from 'projects/shared/src/lib/services/renewable-bids/renewable-bid.application.service';
-import { StudentAccountApplicationService } from 'projects/shared/src/lib/services/student-accounts/student-account.application.service';
 import { Observable, combineLatest } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 export interface Order {
   id: string;
@@ -49,7 +48,6 @@ export interface OrderHistory {
 })
 export class TxService {
   constructor(
-    private readonly studentAccApp: StudentAccountApplicationService,
     private readonly primaryBidApp: PrimaryBidApplicationService,
     private readonly normalBidApp: NormalBidApplicationService,
     private readonly normalAskApp: NormalAskApplicationService,
