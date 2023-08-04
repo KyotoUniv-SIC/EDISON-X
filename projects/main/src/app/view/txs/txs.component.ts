@@ -1,6 +1,5 @@
-import { Order, History } from '../../page/txs/txs.component';
+import { Order, OrderHistory } from '../../models/txs/tx.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { NormalAskHistory, NormalBid, NormalBidHistory, proto, RenewableAskHistory, RenewableBidHistory } from '@local/common';
 
 @Component({
   selector: 'view-txs',
@@ -12,7 +11,7 @@ export class TxsComponent implements OnInit {
   orders?: Order[] | null;
 
   @Input()
-  histories?: History[] | null;
+  histories?: OrderHistory[] | null;
 
   constructor() {}
 
