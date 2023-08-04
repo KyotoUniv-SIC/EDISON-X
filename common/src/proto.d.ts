@@ -2517,9 +2517,6 @@ export namespace main {
 
         /** NormalBidHistory is_auto_order */
         is_auto_order?: (boolean|null);
-
-        /** NormalBidHistory auto_order_fee_ujpy */
-        auto_order_fee_ujpy?: (string|null);
     }
 
     /** Represents a NormalBidHistory. */
@@ -2551,9 +2548,6 @@ export namespace main {
 
         /** NormalBidHistory is_auto_order. */
         public is_auto_order: boolean;
-
-        /** NormalBidHistory auto_order_fee_ujpy. */
-        public auto_order_fee_ujpy: string;
 
         /**
          * Encodes the specified NormalBidHistory message. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
@@ -2652,9 +2646,6 @@ export namespace main {
 
         /** NormalAskHistory is_auto_order */
         is_auto_order?: (boolean|null);
-
-        /** NormalAskHistory auto_order_fee_ujpy */
-        auto_order_fee_ujpy?: (string|null);
     }
 
     /** Represents a NormalAskHistory. */
@@ -2689,9 +2680,6 @@ export namespace main {
 
         /** NormalAskHistory is_auto_order. */
         public is_auto_order: boolean;
-
-        /** NormalAskHistory auto_order_fee_ujpy. */
-        public auto_order_fee_ujpy: string;
 
         /**
          * Encodes the specified NormalAskHistory message. Does not implicitly {@link main.NormalAskHistory.verify|verify} messages.
@@ -3718,9 +3706,6 @@ export namespace main {
 
         /** RenewableAskHistory is_auto_order */
         is_auto_order?: (boolean|null);
-
-        /** RenewableAskHistory auto_order_fee_ujpy */
-        auto_order_fee_ujpy?: (string|null);
     }
 
     /** Represents a RenewableAskHistory. */
@@ -3755,9 +3740,6 @@ export namespace main {
 
         /** RenewableAskHistory is_auto_order. */
         public is_auto_order: boolean;
-
-        /** RenewableAskHistory auto_order_fee_ujpy. */
-        public auto_order_fee_ujpy: string;
 
         /**
          * Encodes the specified RenewableAskHistory message. Does not implicitly {@link main.RenewableAskHistory.verify|verify} messages.
@@ -4156,9 +4138,6 @@ export namespace main {
 
         /** RenewableBidHistory is_auto_order */
         is_auto_order?: (boolean|null);
-
-        /** RenewableBidHistory auto_order_fee_ujpy */
-        auto_order_fee_ujpy?: (string|null);
     }
 
     /** Represents a RenewableBidHistory. */
@@ -4190,9 +4169,6 @@ export namespace main {
 
         /** RenewableBidHistory is_auto_order. */
         public is_auto_order: boolean;
-
-        /** RenewableBidHistory auto_order_fee_ujpy. */
-        public auto_order_fee_ujpy: string;
 
         /**
          * Encodes the specified RenewableBidHistory message. Does not implicitly {@link main.RenewableBidHistory.verify|verify} messages.

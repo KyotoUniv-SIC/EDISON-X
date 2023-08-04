@@ -6141,7 +6141,6 @@
              * @property {boolean|null} [is_accepted] NormalBidHistory is_accepted
              * @property {string|null} [contract_price_ujpy] NormalBidHistory contract_price_ujpy
              * @property {boolean|null} [is_auto_order] NormalBidHistory is_auto_order
-             * @property {string|null} [auto_order_fee_ujpy] NormalBidHistory auto_order_fee_ujpy
              */
     
             /**
@@ -6216,14 +6215,6 @@
             NormalBidHistory.prototype.is_auto_order = false;
     
             /**
-             * NormalBidHistory auto_order_fee_ujpy.
-             * @member {string} auto_order_fee_ujpy
-             * @memberof main.NormalBidHistory
-             * @instance
-             */
-            NormalBidHistory.prototype.auto_order_fee_ujpy = "";
-    
-            /**
              * Encodes the specified NormalBidHistory message. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
              * @function encode
              * @memberof main.NormalBidHistory
@@ -6249,8 +6240,6 @@
                     writer.uint32(/* id 6, wireType 2 =*/50).string(message.contract_price_ujpy);
                 if (message.is_auto_order != null && Object.hasOwnProperty.call(message, "is_auto_order"))
                     writer.uint32(/* id 7, wireType 0 =*/56).bool(message.is_auto_order);
-                if (message.auto_order_fee_ujpy != null && Object.hasOwnProperty.call(message, "auto_order_fee_ujpy"))
-                    writer.uint32(/* id 8, wireType 2 =*/66).string(message.auto_order_fee_ujpy);
                 return writer;
             };
     
@@ -6305,9 +6294,6 @@
                         break;
                     case 7:
                         message.is_auto_order = reader.bool();
-                        break;
-                    case 8:
-                        message.auto_order_fee_ujpy = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -6365,9 +6351,6 @@
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     if (typeof message.is_auto_order !== "boolean")
                         return "is_auto_order: boolean expected";
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    if (!$util.isString(message.auto_order_fee_ujpy))
-                        return "auto_order_fee_ujpy: string expected";
                 return null;
             };
     
@@ -6397,8 +6380,6 @@
                     message.contract_price_ujpy = String(object.contract_price_ujpy);
                 if (object.is_auto_order != null)
                     message.is_auto_order = Boolean(object.is_auto_order);
-                if (object.auto_order_fee_ujpy != null)
-                    message.auto_order_fee_ujpy = String(object.auto_order_fee_ujpy);
                 return message;
             };
     
@@ -6423,7 +6404,6 @@
                     object.is_accepted = false;
                     object.contract_price_ujpy = "";
                     object.is_auto_order = false;
-                    object.auto_order_fee_ujpy = "";
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -6439,8 +6419,6 @@
                     object.contract_price_ujpy = message.contract_price_ujpy;
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     object.is_auto_order = message.is_auto_order;
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    object.auto_order_fee_ujpy = message.auto_order_fee_ujpy;
                 return object;
             };
     
@@ -6488,7 +6466,6 @@
              * @property {boolean|null} [is_accepted] NormalAskHistory is_accepted
              * @property {string|null} [contract_price_ujpy] NormalAskHistory contract_price_ujpy
              * @property {boolean|null} [is_auto_order] NormalAskHistory is_auto_order
-             * @property {string|null} [auto_order_fee_ujpy] NormalAskHistory auto_order_fee_ujpy
              */
     
             /**
@@ -6571,14 +6548,6 @@
             NormalAskHistory.prototype.is_auto_order = false;
     
             /**
-             * NormalAskHistory auto_order_fee_ujpy.
-             * @member {string} auto_order_fee_ujpy
-             * @memberof main.NormalAskHistory
-             * @instance
-             */
-            NormalAskHistory.prototype.auto_order_fee_ujpy = "";
-    
-            /**
              * Encodes the specified NormalAskHistory message. Does not implicitly {@link main.NormalAskHistory.verify|verify} messages.
              * @function encode
              * @memberof main.NormalAskHistory
@@ -6606,8 +6575,6 @@
                     writer.uint32(/* id 7, wireType 2 =*/58).string(message.contract_price_ujpy);
                 if (message.is_auto_order != null && Object.hasOwnProperty.call(message, "is_auto_order"))
                     writer.uint32(/* id 8, wireType 0 =*/64).bool(message.is_auto_order);
-                if (message.auto_order_fee_ujpy != null && Object.hasOwnProperty.call(message, "auto_order_fee_ujpy"))
-                    writer.uint32(/* id 9, wireType 2 =*/74).string(message.auto_order_fee_ujpy);
                 return writer;
             };
     
@@ -6665,9 +6632,6 @@
                         break;
                     case 8:
                         message.is_auto_order = reader.bool();
-                        break;
-                    case 9:
-                        message.auto_order_fee_ujpy = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -6734,9 +6698,6 @@
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     if (typeof message.is_auto_order !== "boolean")
                         return "is_auto_order: boolean expected";
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    if (!$util.isString(message.auto_order_fee_ujpy))
-                        return "auto_order_fee_ujpy: string expected";
                 return null;
             };
     
@@ -6780,8 +6741,6 @@
                     message.contract_price_ujpy = String(object.contract_price_ujpy);
                 if (object.is_auto_order != null)
                     message.is_auto_order = Boolean(object.is_auto_order);
-                if (object.auto_order_fee_ujpy != null)
-                    message.auto_order_fee_ujpy = String(object.auto_order_fee_ujpy);
                 return message;
             };
     
@@ -6807,7 +6766,6 @@
                     object.is_accepted = false;
                     object.contract_price_ujpy = "";
                     object.is_auto_order = false;
-                    object.auto_order_fee_ujpy = "";
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -6825,8 +6783,6 @@
                     object.contract_price_ujpy = message.contract_price_ujpy;
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     object.is_auto_order = message.is_auto_order;
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    object.auto_order_fee_ujpy = message.auto_order_fee_ujpy;
                 return object;
             };
     
@@ -9130,7 +9086,6 @@
              * @property {boolean|null} [is_accepted] RenewableAskHistory is_accepted
              * @property {string|null} [contract_price_ujpy] RenewableAskHistory contract_price_ujpy
              * @property {boolean|null} [is_auto_order] RenewableAskHistory is_auto_order
-             * @property {string|null} [auto_order_fee_ujpy] RenewableAskHistory auto_order_fee_ujpy
              */
     
             /**
@@ -9213,14 +9168,6 @@
             RenewableAskHistory.prototype.is_auto_order = false;
     
             /**
-             * RenewableAskHistory auto_order_fee_ujpy.
-             * @member {string} auto_order_fee_ujpy
-             * @memberof main.RenewableAskHistory
-             * @instance
-             */
-            RenewableAskHistory.prototype.auto_order_fee_ujpy = "";
-    
-            /**
              * Encodes the specified RenewableAskHistory message. Does not implicitly {@link main.RenewableAskHistory.verify|verify} messages.
              * @function encode
              * @memberof main.RenewableAskHistory
@@ -9248,8 +9195,6 @@
                     writer.uint32(/* id 7, wireType 2 =*/58).string(message.contract_price_ujpy);
                 if (message.is_auto_order != null && Object.hasOwnProperty.call(message, "is_auto_order"))
                     writer.uint32(/* id 8, wireType 0 =*/64).bool(message.is_auto_order);
-                if (message.auto_order_fee_ujpy != null && Object.hasOwnProperty.call(message, "auto_order_fee_ujpy"))
-                    writer.uint32(/* id 9, wireType 2 =*/74).string(message.auto_order_fee_ujpy);
                 return writer;
             };
     
@@ -9307,9 +9252,6 @@
                         break;
                     case 8:
                         message.is_auto_order = reader.bool();
-                        break;
-                    case 9:
-                        message.auto_order_fee_ujpy = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -9376,9 +9318,6 @@
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     if (typeof message.is_auto_order !== "boolean")
                         return "is_auto_order: boolean expected";
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    if (!$util.isString(message.auto_order_fee_ujpy))
-                        return "auto_order_fee_ujpy: string expected";
                 return null;
             };
     
@@ -9422,8 +9361,6 @@
                     message.contract_price_ujpy = String(object.contract_price_ujpy);
                 if (object.is_auto_order != null)
                     message.is_auto_order = Boolean(object.is_auto_order);
-                if (object.auto_order_fee_ujpy != null)
-                    message.auto_order_fee_ujpy = String(object.auto_order_fee_ujpy);
                 return message;
             };
     
@@ -9449,7 +9386,6 @@
                     object.is_accepted = false;
                     object.contract_price_ujpy = "";
                     object.is_auto_order = false;
-                    object.auto_order_fee_ujpy = "";
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -9467,8 +9403,6 @@
                     object.contract_price_ujpy = message.contract_price_ujpy;
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     object.is_auto_order = message.is_auto_order;
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    object.auto_order_fee_ujpy = message.auto_order_fee_ujpy;
                 return object;
             };
     
@@ -10259,7 +10193,6 @@
              * @property {boolean|null} [is_accepted] RenewableBidHistory is_accepted
              * @property {string|null} [contract_price_ujpy] RenewableBidHistory contract_price_ujpy
              * @property {boolean|null} [is_auto_order] RenewableBidHistory is_auto_order
-             * @property {string|null} [auto_order_fee_ujpy] RenewableBidHistory auto_order_fee_ujpy
              */
     
             /**
@@ -10334,14 +10267,6 @@
             RenewableBidHistory.prototype.is_auto_order = false;
     
             /**
-             * RenewableBidHistory auto_order_fee_ujpy.
-             * @member {string} auto_order_fee_ujpy
-             * @memberof main.RenewableBidHistory
-             * @instance
-             */
-            RenewableBidHistory.prototype.auto_order_fee_ujpy = "";
-    
-            /**
              * Encodes the specified RenewableBidHistory message. Does not implicitly {@link main.RenewableBidHistory.verify|verify} messages.
              * @function encode
              * @memberof main.RenewableBidHistory
@@ -10367,8 +10292,6 @@
                     writer.uint32(/* id 6, wireType 2 =*/50).string(message.contract_price_ujpy);
                 if (message.is_auto_order != null && Object.hasOwnProperty.call(message, "is_auto_order"))
                     writer.uint32(/* id 7, wireType 0 =*/56).bool(message.is_auto_order);
-                if (message.auto_order_fee_ujpy != null && Object.hasOwnProperty.call(message, "auto_order_fee_ujpy"))
-                    writer.uint32(/* id 8, wireType 2 =*/66).string(message.auto_order_fee_ujpy);
                 return writer;
             };
     
@@ -10423,9 +10346,6 @@
                         break;
                     case 7:
                         message.is_auto_order = reader.bool();
-                        break;
-                    case 8:
-                        message.auto_order_fee_ujpy = reader.string();
                         break;
                     default:
                         reader.skipType(tag & 7);
@@ -10483,9 +10403,6 @@
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     if (typeof message.is_auto_order !== "boolean")
                         return "is_auto_order: boolean expected";
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    if (!$util.isString(message.auto_order_fee_ujpy))
-                        return "auto_order_fee_ujpy: string expected";
                 return null;
             };
     
@@ -10515,8 +10432,6 @@
                     message.contract_price_ujpy = String(object.contract_price_ujpy);
                 if (object.is_auto_order != null)
                     message.is_auto_order = Boolean(object.is_auto_order);
-                if (object.auto_order_fee_ujpy != null)
-                    message.auto_order_fee_ujpy = String(object.auto_order_fee_ujpy);
                 return message;
             };
     
@@ -10541,7 +10456,6 @@
                     object.is_accepted = false;
                     object.contract_price_ujpy = "";
                     object.is_auto_order = false;
-                    object.auto_order_fee_ujpy = "";
                 }
                 if (message.id != null && message.hasOwnProperty("id"))
                     object.id = message.id;
@@ -10557,8 +10471,6 @@
                     object.contract_price_ujpy = message.contract_price_ujpy;
                 if (message.is_auto_order != null && message.hasOwnProperty("is_auto_order"))
                     object.is_auto_order = message.is_auto_order;
-                if (message.auto_order_fee_ujpy != null && message.hasOwnProperty("auto_order_fee_ujpy"))
-                    object.auto_order_fee_ujpy = message.auto_order_fee_ujpy;
                 return object;
             };
     
