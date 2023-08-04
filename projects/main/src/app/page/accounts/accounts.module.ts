@@ -1,5 +1,6 @@
 import { AccountModule } from '../../view/accounts/account/account.module';
 import { AccountsModule } from '../../view/accounts/accounts.module';
+import { AutoOrderModule } from '../../view/accounts/auto-order/auto-order.module';
 import { CreateModule } from '../../view/accounts/create/create.module';
 import { EmailModule } from '../../view/accounts/email/email.module';
 import { EnterModule } from '../../view/accounts/enter/enter.module';
@@ -11,6 +12,7 @@ import { XrplModule } from '../../view/accounts/xrpl/xrpl.module';
 import { AccountComponent } from './account/account.component';
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { AccountsComponent } from './accounts.component';
+import { AutoOrderComponent } from './auto-order/auto-order.component';
 import { CreateComponent } from './create/create.component';
 import { EmailComponent } from './email/email.component';
 import { EnterComponent } from './enter/enter.component';
@@ -22,7 +24,6 @@ import { XrplComponent } from './xrpl/xrpl.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'projects/shared/src/common';
-import { AutoOrderComponent } from './auto-order/auto-order.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AutoOrderComponent } from './auto-order/auto-order.component';
     PaymentsModule,
     PaymentModule,
     ResetModule,
+    AutoOrderModule,
   ],
 })
 export class AppAccountsModule {}

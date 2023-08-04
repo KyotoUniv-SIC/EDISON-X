@@ -1,6 +1,6 @@
-import { AuthGuard } from '../../guard/auth.guard';
 import { AccountComponent } from './account/account.component';
 import { AccountsComponent } from './accounts.component';
+import { AutoOrderComponent } from './auto-order/auto-order.component';
 import { CreateComponent } from './create/create.component';
 import { EmailComponent } from './email/email.component';
 import { EnterComponent } from './enter/enter.component';
@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'payments', component: PaymentsComponent },
   { path: 'payments/:payment_id', component: PaymentComponent },
   { path: 'reset', component: ResetComponent },
+  { path: 'auto-order', component: AutoOrderComponent },
 ];
 
 @NgModule({
