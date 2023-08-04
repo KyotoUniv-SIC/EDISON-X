@@ -22,6 +22,7 @@ import { XrplComponent } from './xrpl/xrpl.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'projects/shared/src/common';
+import { AutoOrderComponent } from './auto-order/auto-order.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SharedModule } from 'projects/shared/src/common';
     PaymentsComponent,
     PaymentComponent,
     ResetComponent,
+    AutoOrderComponent,
   ],
   imports: [
     CommonModule,
