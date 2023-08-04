@@ -11,4 +11,5 @@ message RenewableBid {
   string price_ujpy = 3;
   string amount_uspx = 4;
   bool is_deleted = 5;
+  bool is_auto_order = 6;
 }

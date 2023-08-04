@@ -12,4 +12,6 @@ message RenewableBidHistory {
   string amount_uspx = 4;
   bool is_accepted = 5;
   string contract_price_ujpy = 6;
+  bool is_auto_order = 7;
+  string auto_order_fee_ujpy = 8;
 }

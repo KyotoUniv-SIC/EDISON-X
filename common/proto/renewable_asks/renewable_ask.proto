@@ -18,4 +18,5 @@ message RenewableAsk {
   string price_ujpy = 4;
   string amount_uspx = 5;
   bool is_deleted = 6;
+  bool is_auto_order = 6;
 }
