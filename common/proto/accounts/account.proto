@@ -19,5 +19,4 @@ message Account {
   string name = 4;
   string image_url = 5;
   AccountType type = 6;
-  bool auto_order = 7;
 }
