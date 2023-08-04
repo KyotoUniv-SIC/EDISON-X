@@ -9,5 +9,6 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [AutoOrderComponent],
   imports: [CommonModule, MaterialModule, FormsModule, RouterModule, PipesModule],
+  exports: [AutoOrderComponent],
 })
 export class AutoOrderModule {}

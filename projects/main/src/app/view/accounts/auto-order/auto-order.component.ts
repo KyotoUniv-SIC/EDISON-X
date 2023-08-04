@@ -1,9 +1,9 @@
-import { Order, History } from '../../../page/txs/txs.component';
+import { Order, OrderHistory } from '../../../models/txs/tx.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { StudentAccount } from '@local/common';
 
 @Component({
-  selector: 'app-auto-order',
+  selector: 'view-auto-order',
   templateUrl: './auto-order.component.html',
   styleUrls: ['./auto-order.component.css'],
 })
@@ -15,7 +15,7 @@ export class AutoOrderComponent implements OnInit {
   @Input()
   orders?: Order[] | null;
   @Input()
-  histories?: History[] | null;
+  histories?: OrderHistory[] | null;
 
   constructor() {}
 
