@@ -77,7 +77,6 @@
             </ng-template>
           </span>
         </mat-list-item>
-        <mat-divider [inset]="true"></mat-divider>
       </ng-template>
     </mat-list>
   </mat-card>
@@ -104,6 +103,10 @@
         <span class="break-all text-purple-800">{{ studentAccount?.xrp_address }}</span>
       </mat-list-item>
     </mat-nav-list>
+    <mat-card-actions class="gap-2">
+      <button mat-stroked-button color="primary" routerLink="/accounts/auto-order">Machine Learning Auto Order</button>
+      <button mat-stroked-button color="accent" routerLink="/accounts/auto-order">XRP Ledger</button>
+    </mat-card-actions>
   </mat-card>
 
   <mat-card class="mb-8">

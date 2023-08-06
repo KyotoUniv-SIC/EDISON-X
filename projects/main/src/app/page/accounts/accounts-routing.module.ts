@@ -13,7 +13,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', component: AccountsComponent },
+  { path: '', redirectTo: 'accounts/account', pathMatch: 'full' },
   { path: 'create', component: CreateComponent },
   { path: 'enter', component: EnterComponent },
   { path: 'account', component: AccountComponent },
