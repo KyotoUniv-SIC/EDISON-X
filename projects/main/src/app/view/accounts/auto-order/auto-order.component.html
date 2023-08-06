@@ -1,5 +1,5 @@
 <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10">
-  <h2 class="m-10">Deep Learning Auto Order</h2>
+  <h2 class="m-10">Machine Learning Auto Order</h2>
   <mat-card class="mb-8">
     <mat-card-title>Auto Order Setting</mat-card-title>
     <ng-container *ngIf="studentAccount === null; then loading; else loadedStudent"></ng-container>
@@ -13,7 +13,7 @@
         </mat-slide-toggle>
       </section>
       <mat-card-content>
-        <p>Enable/disable automatic ordering by deep learning.</p>
+        <p>Enable/disable automatic ordering by machine learning.</p>
         <p>The current setting is {{ studentAccount?.id || 'unknown' }}</p>
       </mat-card-content>
     </ng-template>
