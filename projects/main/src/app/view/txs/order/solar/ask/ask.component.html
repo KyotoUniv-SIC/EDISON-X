@@ -39,6 +39,13 @@
           <span class="break-all">{{ createdAt?.toLocaleString() }}</span>
         </mat-list-item>
         <mat-divider [inset]="true"></mat-divider>
+
+        <mat-list-item class="flex flex-wrap">
+          <span class="break-all">Machine Learning Auto Order:</span>
+          <span class="flex-auto break-all"></span>
+          <span class="break-all">{{ renewableAsk?.is_auto_order || false }}</span>
+        </mat-list-item>
+        <mat-divider [inset]="true"></mat-divider>
       </ng-template>
       <ng-template #loading></ng-template>
     </mat-list>
