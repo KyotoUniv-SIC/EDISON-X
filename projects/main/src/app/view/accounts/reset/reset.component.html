@@ -15,17 +15,12 @@
           pattern="^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$"
         />
       </mat-form-field>
-      <br />
-      <div>
-        <div>
-          <br />
-          <button mat-flat-button class="w-full" color="primary" type="submit" [disabled]="formRef.invalid">Send Reset Request</button>
-          <br /><br />
-          <p class="text-right">
-            No account? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/create">Sign Up</a></strong>
-          </p>
-        </div>
-      </div>
+      <mat-card-actions align="end">
+        <button mat-raised-button class="px-8" color="primary" type="submit" [disabled]="formRef.invalid">Send Reset Request</button>
+      </mat-card-actions>
+      <p class="text-right">
+        No account? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/create">Sign Up</a></strong>
+      </p>
     </form>
   </mat-card>
 </div>

@@ -115,11 +115,9 @@
         </mat-select>
       </mat-form-field>
 
-      <div>
-        <span class="flex-auto"> </span>
-        <br />
-        <button mat-flat-button class="w-full" color="primary" type="submit" [disabled]="formRef.invalid">Sign Up</button>
-      </div>
+      <mat-card-actions align="end">
+        <button mat-raised-button class="px-8" color="primary" type="submit" [disabled]="formRef.invalid">Sign Up</button>
+      </mat-card-actions>
     </form>
   </mat-card>
 </div>
