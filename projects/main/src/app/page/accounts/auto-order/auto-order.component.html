@@ -3,4 +3,5 @@
   [autoOrder]="autoOrder$ | async"
   [orders]="orders$ | async"
   [histories]="histories$ | async"
+  (appSubmit)="onSubmit($event)"
 ></view-auto-order>

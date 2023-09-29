@@ -1,6 +1,11 @@
 import { Order, OrderHistory } from '../../../models/txs/tx.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StudentAccount } from '@local/common';
+
+export type AutoOrderOnSubmitEvent = {
+  studentAccountID: string;
+  autoOrder: boolean;
+};
 
 @Component({
   selector: 'view-auto-order',
@@ -16,12 +21,25 @@ export class AutoOrderComponent implements OnInit {
   orders?: Order[] | null;
   @Input()
   histories?: OrderHistory[] | null;
+  @Output()
+  appSubmit: EventEmitter<AutoOrderOnSubmitEvent>;
 
-  constructor() {}
+  constructor() {
+    this.appSubmit = new EventEmitter();
+  }
 
   ngOnInit(): void {}
 
-  onUpdateAutoOrder() {}
+  onUpdateAutoOrder() {
+    if (!this.studentAccount?.id) {
+      alert('Please login');
+      return;
+    }
+    this.appSubmit.emit({
+      studentAccountID: this.studentAccount?.id,
+      autoOrder: this.autoOrder || false,
+    });
+  }
 
   powerType(type: boolean) {
     if (!type) {
