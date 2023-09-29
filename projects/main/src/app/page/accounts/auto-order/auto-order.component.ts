@@ -2,7 +2,7 @@ import { Order, OrderHistory, TxService } from '../../../models/txs/tx.service';
 import { AutoOrderOnSubmitEvent } from '../../../view/accounts/auto-order/auto-order.component';
 import { Component, OnInit } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
-import { StudentAccount } from '@local/common';
+import { AutoOrderChange, StudentAccount } from '@local/common';
 import { User } from 'firebase/auth';
 import { AutoOrderChangeApplicationService } from 'projects/shared/src/lib/services/auto-order-changes/auto-order-change.application.service';
 import { StudentAccountApplicationService } from 'projects/shared/src/lib/services/student-accounts/student-account.application.service';
@@ -37,6 +37,6 @@ export class AutoOrderComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit($event: AutoOrderOnSubmitEvent) {
-    this.autoOrderChangeApp.create({ student_account_id: $event.studentAccountID, enabled: $event.autoOrder });
+    this.autoOrderChangeApp.create(new AutoOrderChange({ student_account_id: $event.studentAccountID, enabled: $event.autoOrder }));
   }
 }
