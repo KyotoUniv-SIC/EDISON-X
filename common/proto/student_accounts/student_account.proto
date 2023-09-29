@@ -13,4 +13,5 @@ message StudentAccount {
   string payment_method = 5;
   string xrp_address = 6;
   string xrp_public_key = 7;
+  bool auto_order = 8;
 }

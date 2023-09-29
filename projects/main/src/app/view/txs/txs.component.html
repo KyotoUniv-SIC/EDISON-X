@@ -1,6 +1,6 @@
 <div class="w-full lg:mx-auto lg:w-1/3 lg:mt-10">
   <h2>Transactions</h2>
-  <mat-card class="mb-20">
+  <mat-card class="mb-8">
     <mat-card-title>Transaction Menu</mat-card-title>
     <details>
       <summary>Read More</summary>
@@ -9,18 +9,14 @@
         <p>The auction will be held at 9:00 everyday in the form of a single-price auction.</p>
       </mat-card-content>
     </details>
-    <div class="flex mt-10">
-      <div class="flex-auto"></div>
-      <div class="flex-auto">
-        <button mat-flat-button style="background-color: #6c8fb6; color: white" routerLink="/txs/buy">Buy Electricity</button>
-      </div>
-      <div class="flex-auto">
-        <button mat-flat-button style="background-color: #b67cb6; color: white" routerLink="/txs/sell">Sell Electricity</button>
-      </div>
-    </div>
+    <mat-card-actions class="justify-end gap-2">
+      <button mat-button style="background-color: #6c8fb6; color: white" routerLink="/txs/buy">Buy Electricity</button>
+      <button mat-button style="background-color: #b67cb6; color: white" routerLink="/txs/sell">Sell Electricity</button>
+      <button mat-flat-button color="primary" routerLink="/accounts/auto-order">Machine Learning Order</button>
+    </mat-card-actions>
   </mat-card>
 
-  <mat-card class="mb-20">
+  <mat-card class="mb-8">
     <mat-card-title>Order (Next Auction 9:00 a.m.)</mat-card-title>
     <details>
       <summary>Read More</summary>

@@ -19,4 +19,5 @@ message RenewableAskHistory {
   string amount_uspx = 5;
   bool is_accepted = 6;
   string contract_price_ujpy = 7;
+  bool is_auto_order = 8;
 }

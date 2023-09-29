@@ -11,4 +11,5 @@ message NormalBid {
   string price_ujpy = 3;
   string amount_uupx = 4;
   bool is_deleted = 5;
+  bool is_auto_order = 6;
 }

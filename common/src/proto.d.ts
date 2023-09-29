@@ -2,101 +2,6 @@ import * as $protobuf from "protobufjs";
 /** Namespace main. */
 export namespace main {
 
-    /** Properties of an AccountantAccount. */
-    interface IAccountantAccount {
-
-        /** AccountantAccount id */
-        id?: (string|null);
-
-        /** AccountantAccount name */
-        name?: (string|null);
-
-        /** AccountantAccount xrp_address */
-        xrp_address?: (string|null);
-    }
-
-    /** Represents an AccountantAccount. */
-    class AccountantAccount implements IAccountantAccount {
-
-        /**
-         * Constructs a new AccountantAccount.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.IAccountantAccount);
-
-        /** AccountantAccount id. */
-        public id: string;
-
-        /** AccountantAccount name. */
-        public name: string;
-
-        /** AccountantAccount xrp_address. */
-        public xrp_address: string;
-
-        /**
-         * Encodes the specified AccountantAccount message. Does not implicitly {@link main.AccountantAccount.verify|verify} messages.
-         * @param message AccountantAccount message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.IAccountantAccount, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified AccountantAccount message, length delimited. Does not implicitly {@link main.AccountantAccount.verify|verify} messages.
-         * @param message AccountantAccount message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.IAccountantAccount, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes an AccountantAccount message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns AccountantAccount
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.AccountantAccount;
-
-        /**
-         * Decodes an AccountantAccount message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns AccountantAccount
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.AccountantAccount;
-
-        /**
-         * Verifies an AccountantAccount message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates an AccountantAccount message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns AccountantAccount
-         */
-        public static fromObject(object: { [k: string]: any }): main.AccountantAccount;
-
-        /**
-         * Creates a plain object from an AccountantAccount message. Also converts values to other types if specified.
-         * @param message AccountantAccount
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.AccountantAccount, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this AccountantAccount to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
     /** Properties of an AccountPrivate. */
     interface IAccountPrivate {
 
@@ -193,6 +98,101 @@ export namespace main {
 
         /**
          * Converts this AccountPrivate to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of an AccountantAccount. */
+    interface IAccountantAccount {
+
+        /** AccountantAccount id */
+        id?: (string|null);
+
+        /** AccountantAccount name */
+        name?: (string|null);
+
+        /** AccountantAccount xrp_address */
+        xrp_address?: (string|null);
+    }
+
+    /** Represents an AccountantAccount. */
+    class AccountantAccount implements IAccountantAccount {
+
+        /**
+         * Constructs a new AccountantAccount.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IAccountantAccount);
+
+        /** AccountantAccount id. */
+        public id: string;
+
+        /** AccountantAccount name. */
+        public name: string;
+
+        /** AccountantAccount xrp_address. */
+        public xrp_address: string;
+
+        /**
+         * Encodes the specified AccountantAccount message. Does not implicitly {@link main.AccountantAccount.verify|verify} messages.
+         * @param message AccountantAccount message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IAccountantAccount, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified AccountantAccount message, length delimited. Does not implicitly {@link main.AccountantAccount.verify|verify} messages.
+         * @param message AccountantAccount message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IAccountantAccount, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an AccountantAccount message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns AccountantAccount
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.AccountantAccount;
+
+        /**
+         * Decodes an AccountantAccount message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns AccountantAccount
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.AccountantAccount;
+
+        /**
+         * Verifies an AccountantAccount message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an AccountantAccount message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns AccountantAccount
+         */
+        public static fromObject(object: { [k: string]: any }): main.AccountantAccount;
+
+        /**
+         * Creates a plain object from an AccountantAccount message. Also converts values to other types if specified.
+         * @param message AccountantAccount
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.AccountantAccount, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this AccountantAccount to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -521,6 +521,101 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of an AutoOrderChange. */
+    interface IAutoOrderChange {
+
+        /** AutoOrderChange id */
+        id?: (string|null);
+
+        /** AutoOrderChange student_account_id */
+        student_account_id?: (string|null);
+
+        /** AutoOrderChange enabled */
+        enabled?: (boolean|null);
+    }
+
+    /** Represents an AutoOrderChange. */
+    class AutoOrderChange implements IAutoOrderChange {
+
+        /**
+         * Constructs a new AutoOrderChange.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IAutoOrderChange);
+
+        /** AutoOrderChange id. */
+        public id: string;
+
+        /** AutoOrderChange student_account_id. */
+        public student_account_id: string;
+
+        /** AutoOrderChange enabled. */
+        public enabled: boolean;
+
+        /**
+         * Encodes the specified AutoOrderChange message. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+         * @param message AutoOrderChange message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IAutoOrderChange, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified AutoOrderChange message, length delimited. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+         * @param message AutoOrderChange message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IAutoOrderChange, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an AutoOrderChange message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns AutoOrderChange
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.AutoOrderChange;
+
+        /**
+         * Decodes an AutoOrderChange message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns AutoOrderChange
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.AutoOrderChange;
+
+        /**
+         * Verifies an AutoOrderChange message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an AutoOrderChange message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns AutoOrderChange
+         */
+        public static fromObject(object: { [k: string]: any }): main.AutoOrderChange;
+
+        /**
+         * Creates a plain object from an AutoOrderChange message. Also converts values to other types if specified.
+         * @param message AutoOrderChange
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.AutoOrderChange, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this AutoOrderChange to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of an AvailableBalance. */
     interface IAvailableBalance {
 
@@ -622,107 +717,6 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a Balance. */
-    interface IBalance {
-
-        /** Balance id */
-        id?: (string|null);
-
-        /** Balance student_account_id */
-        student_account_id?: (string|null);
-
-        /** Balance amount_uupx */
-        amount_uupx?: (string|null);
-
-        /** Balance amount_uspx */
-        amount_uspx?: (string|null);
-    }
-
-    /** Represents a Balance. */
-    class Balance implements IBalance {
-
-        /**
-         * Constructs a new Balance.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.IBalance);
-
-        /** Balance id. */
-        public id: string;
-
-        /** Balance student_account_id. */
-        public student_account_id: string;
-
-        /** Balance amount_uupx. */
-        public amount_uupx: string;
-
-        /** Balance amount_uspx. */
-        public amount_uspx: string;
-
-        /**
-         * Encodes the specified Balance message. Does not implicitly {@link main.Balance.verify|verify} messages.
-         * @param message Balance message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.IBalance, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified Balance message, length delimited. Does not implicitly {@link main.Balance.verify|verify} messages.
-         * @param message Balance message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.IBalance, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Balance message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns Balance
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.Balance;
-
-        /**
-         * Decodes a Balance message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns Balance
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.Balance;
-
-        /**
-         * Verifies a Balance message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a Balance message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns Balance
-         */
-        public static fromObject(object: { [k: string]: any }): main.Balance;
-
-        /**
-         * Creates a plain object from a Balance message. Also converts values to other types if specified.
-         * @param message Balance
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.Balance, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this Balance to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
     /** Properties of a BalanceSnapshot. */
     interface IBalanceSnapshot {
 
@@ -819,6 +813,107 @@ export namespace main {
 
         /**
          * Converts this BalanceSnapshot to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Balance. */
+    interface IBalance {
+
+        /** Balance id */
+        id?: (string|null);
+
+        /** Balance student_account_id */
+        student_account_id?: (string|null);
+
+        /** Balance amount_uupx */
+        amount_uupx?: (string|null);
+
+        /** Balance amount_uspx */
+        amount_uspx?: (string|null);
+    }
+
+    /** Represents a Balance. */
+    class Balance implements IBalance {
+
+        /**
+         * Constructs a new Balance.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IBalance);
+
+        /** Balance id. */
+        public id: string;
+
+        /** Balance student_account_id. */
+        public student_account_id: string;
+
+        /** Balance amount_uupx. */
+        public amount_uupx: string;
+
+        /** Balance amount_uspx. */
+        public amount_uspx: string;
+
+        /**
+         * Encodes the specified Balance message. Does not implicitly {@link main.Balance.verify|verify} messages.
+         * @param message Balance message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IBalance, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Balance message, length delimited. Does not implicitly {@link main.Balance.verify|verify} messages.
+         * @param message Balance message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IBalance, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Balance message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Balance
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.Balance;
+
+        /**
+         * Decodes a Balance message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Balance
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.Balance;
+
+        /**
+         * Verifies a Balance message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Balance message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Balance
+         */
+        public static fromObject(object: { [k: string]: any }): main.Balance;
+
+        /**
+         * Creates a plain object from a Balance message. Also converts values to other types if specified.
+         * @param message Balance
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.Balance, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Balance to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -2494,6 +2589,125 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a NormalBidHistory. */
+    interface INormalBidHistory {
+
+        /** NormalBidHistory id */
+        id?: (string|null);
+
+        /** NormalBidHistory account_id */
+        account_id?: (string|null);
+
+        /** NormalBidHistory price_ujpy */
+        price_ujpy?: (string|null);
+
+        /** NormalBidHistory amount_uupx */
+        amount_uupx?: (string|null);
+
+        /** NormalBidHistory is_accepted */
+        is_accepted?: (boolean|null);
+
+        /** NormalBidHistory contract_price_ujpy */
+        contract_price_ujpy?: (string|null);
+
+        /** NormalBidHistory is_auto_order */
+        is_auto_order?: (boolean|null);
+    }
+
+    /** Represents a NormalBidHistory. */
+    class NormalBidHistory implements INormalBidHistory {
+
+        /**
+         * Constructs a new NormalBidHistory.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.INormalBidHistory);
+
+        /** NormalBidHistory id. */
+        public id: string;
+
+        /** NormalBidHistory account_id. */
+        public account_id: string;
+
+        /** NormalBidHistory price_ujpy. */
+        public price_ujpy: string;
+
+        /** NormalBidHistory amount_uupx. */
+        public amount_uupx: string;
+
+        /** NormalBidHistory is_accepted. */
+        public is_accepted: boolean;
+
+        /** NormalBidHistory contract_price_ujpy. */
+        public contract_price_ujpy: string;
+
+        /** NormalBidHistory is_auto_order. */
+        public is_auto_order: boolean;
+
+        /**
+         * Encodes the specified NormalBidHistory message. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
+         * @param message NormalBidHistory message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.INormalBidHistory, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NormalBidHistory message, length delimited. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
+         * @param message NormalBidHistory message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.INormalBidHistory, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NormalBidHistory message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NormalBidHistory
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.NormalBidHistory;
+
+        /**
+         * Decodes a NormalBidHistory message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NormalBidHistory
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.NormalBidHistory;
+
+        /**
+         * Verifies a NormalBidHistory message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NormalBidHistory message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NormalBidHistory
+         */
+        public static fromObject(object: { [k: string]: any }): main.NormalBidHistory;
+
+        /**
+         * Creates a plain object from a NormalBidHistory message. Also converts values to other types if specified.
+         * @param message NormalBidHistory
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.NormalBidHistory, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NormalBidHistory to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** NormalAskHistoryType enum. */
     enum NormalAskHistoryType {
         UNKNOWN = 0,
@@ -2524,6 +2738,9 @@ export namespace main {
 
         /** NormalAskHistory contract_price_ujpy */
         contract_price_ujpy?: (string|null);
+
+        /** NormalAskHistory is_auto_order */
+        is_auto_order?: (boolean|null);
     }
 
     /** Represents a NormalAskHistory. */
@@ -2555,6 +2772,9 @@ export namespace main {
 
         /** NormalAskHistory contract_price_ujpy. */
         public contract_price_ujpy: string;
+
+        /** NormalAskHistory is_auto_order. */
+        public is_auto_order: boolean;
 
         /**
          * Encodes the specified NormalAskHistory message. Does not implicitly {@link main.NormalAskHistory.verify|verify} messages.
@@ -2615,126 +2835,6 @@ export namespace main {
 
         /**
          * Converts this NormalAskHistory to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** NormalAskType enum. */
-    enum NormalAskType {
-        UNKNOWN = 0,
-        PRIMARYADDITIONAL = 1,
-        SECONDARY = 2
-    }
-
-    /** Properties of a NormalAsk. */
-    interface INormalAsk {
-
-        /** NormalAsk id */
-        id?: (string|null);
-
-        /** NormalAsk type */
-        type?: (main.NormalAskType|null);
-
-        /** NormalAsk account_id */
-        account_id?: (string|null);
-
-        /** NormalAsk price_ujpy */
-        price_ujpy?: (string|null);
-
-        /** NormalAsk amount_uupx */
-        amount_uupx?: (string|null);
-
-        /** NormalAsk is_deleted */
-        is_deleted?: (boolean|null);
-    }
-
-    /** Represents a NormalAsk. */
-    class NormalAsk implements INormalAsk {
-
-        /**
-         * Constructs a new NormalAsk.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.INormalAsk);
-
-        /** NormalAsk id. */
-        public id: string;
-
-        /** NormalAsk type. */
-        public type: main.NormalAskType;
-
-        /** NormalAsk account_id. */
-        public account_id: string;
-
-        /** NormalAsk price_ujpy. */
-        public price_ujpy: string;
-
-        /** NormalAsk amount_uupx. */
-        public amount_uupx: string;
-
-        /** NormalAsk is_deleted. */
-        public is_deleted: boolean;
-
-        /**
-         * Encodes the specified NormalAsk message. Does not implicitly {@link main.NormalAsk.verify|verify} messages.
-         * @param message NormalAsk message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.INormalAsk, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified NormalAsk message, length delimited. Does not implicitly {@link main.NormalAsk.verify|verify} messages.
-         * @param message NormalAsk message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.INormalAsk, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a NormalAsk message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns NormalAsk
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.NormalAsk;
-
-        /**
-         * Decodes a NormalAsk message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns NormalAsk
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.NormalAsk;
-
-        /**
-         * Verifies a NormalAsk message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a NormalAsk message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns NormalAsk
-         */
-        public static fromObject(object: { [k: string]: any }): main.NormalAsk;
-
-        /**
-         * Creates a plain object from a NormalAsk message. Also converts values to other types if specified.
-         * @param message NormalAsk
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.NormalAsk, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this NormalAsk to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -2847,6 +2947,132 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** NormalAskType enum. */
+    enum NormalAskType {
+        UNKNOWN = 0,
+        PRIMARYADDITIONAL = 1,
+        SECONDARY = 2
+    }
+
+    /** Properties of a NormalAsk. */
+    interface INormalAsk {
+
+        /** NormalAsk id */
+        id?: (string|null);
+
+        /** NormalAsk type */
+        type?: (main.NormalAskType|null);
+
+        /** NormalAsk account_id */
+        account_id?: (string|null);
+
+        /** NormalAsk price_ujpy */
+        price_ujpy?: (string|null);
+
+        /** NormalAsk amount_uupx */
+        amount_uupx?: (string|null);
+
+        /** NormalAsk is_deleted */
+        is_deleted?: (boolean|null);
+
+        /** NormalAsk is_auto_order */
+        is_auto_order?: (boolean|null);
+    }
+
+    /** Represents a NormalAsk. */
+    class NormalAsk implements INormalAsk {
+
+        /**
+         * Constructs a new NormalAsk.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.INormalAsk);
+
+        /** NormalAsk id. */
+        public id: string;
+
+        /** NormalAsk type. */
+        public type: main.NormalAskType;
+
+        /** NormalAsk account_id. */
+        public account_id: string;
+
+        /** NormalAsk price_ujpy. */
+        public price_ujpy: string;
+
+        /** NormalAsk amount_uupx. */
+        public amount_uupx: string;
+
+        /** NormalAsk is_deleted. */
+        public is_deleted: boolean;
+
+        /** NormalAsk is_auto_order. */
+        public is_auto_order: boolean;
+
+        /**
+         * Encodes the specified NormalAsk message. Does not implicitly {@link main.NormalAsk.verify|verify} messages.
+         * @param message NormalAsk message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.INormalAsk, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified NormalAsk message, length delimited. Does not implicitly {@link main.NormalAsk.verify|verify} messages.
+         * @param message NormalAsk message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.INormalAsk, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a NormalAsk message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns NormalAsk
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.NormalAsk;
+
+        /**
+         * Decodes a NormalAsk message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns NormalAsk
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.NormalAsk;
+
+        /**
+         * Verifies a NormalAsk message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a NormalAsk message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns NormalAsk
+         */
+        public static fromObject(object: { [k: string]: any }): main.NormalAsk;
+
+        /**
+         * Creates a plain object from a NormalAsk message. Also converts values to other types if specified.
+         * @param message NormalAsk
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.NormalAsk, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this NormalAsk to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a NormalBidDelete. */
     interface INormalBidDelete {
 
@@ -2936,119 +3162,6 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a NormalBidHistory. */
-    interface INormalBidHistory {
-
-        /** NormalBidHistory id */
-        id?: (string|null);
-
-        /** NormalBidHistory account_id */
-        account_id?: (string|null);
-
-        /** NormalBidHistory price_ujpy */
-        price_ujpy?: (string|null);
-
-        /** NormalBidHistory amount_uupx */
-        amount_uupx?: (string|null);
-
-        /** NormalBidHistory is_accepted */
-        is_accepted?: (boolean|null);
-
-        /** NormalBidHistory contract_price_ujpy */
-        contract_price_ujpy?: (string|null);
-    }
-
-    /** Represents a NormalBidHistory. */
-    class NormalBidHistory implements INormalBidHistory {
-
-        /**
-         * Constructs a new NormalBidHistory.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.INormalBidHistory);
-
-        /** NormalBidHistory id. */
-        public id: string;
-
-        /** NormalBidHistory account_id. */
-        public account_id: string;
-
-        /** NormalBidHistory price_ujpy. */
-        public price_ujpy: string;
-
-        /** NormalBidHistory amount_uupx. */
-        public amount_uupx: string;
-
-        /** NormalBidHistory is_accepted. */
-        public is_accepted: boolean;
-
-        /** NormalBidHistory contract_price_ujpy. */
-        public contract_price_ujpy: string;
-
-        /**
-         * Encodes the specified NormalBidHistory message. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
-         * @param message NormalBidHistory message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.INormalBidHistory, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified NormalBidHistory message, length delimited. Does not implicitly {@link main.NormalBidHistory.verify|verify} messages.
-         * @param message NormalBidHistory message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.INormalBidHistory, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a NormalBidHistory message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns NormalBidHistory
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.NormalBidHistory;
-
-        /**
-         * Decodes a NormalBidHistory message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns NormalBidHistory
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.NormalBidHistory;
-
-        /**
-         * Verifies a NormalBidHistory message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a NormalBidHistory message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns NormalBidHistory
-         */
-        public static fromObject(object: { [k: string]: any }): main.NormalBidHistory;
-
-        /**
-         * Creates a plain object from a NormalBidHistory message. Also converts values to other types if specified.
-         * @param message NormalBidHistory
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.NormalBidHistory, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this NormalBidHistory to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
     /** Properties of a NormalBid. */
     interface INormalBid {
 
@@ -3066,6 +3179,9 @@ export namespace main {
 
         /** NormalBid is_deleted */
         is_deleted?: (boolean|null);
+
+        /** NormalBid is_auto_order */
+        is_auto_order?: (boolean|null);
     }
 
     /** Represents a NormalBid. */
@@ -3091,6 +3207,9 @@ export namespace main {
 
         /** NormalBid is_deleted. */
         public is_deleted: boolean;
+
+        /** NormalBid is_auto_order. */
+        public is_auto_order: boolean;
 
         /**
          * Encodes the specified NormalBid message. Does not implicitly {@link main.NormalBid.verify|verify} messages.
@@ -3263,6 +3382,101 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a PrimaryAskSetting. */
+    interface IPrimaryAskSetting {
+
+        /** PrimaryAskSetting id */
+        id?: (string|null);
+
+        /** PrimaryAskSetting price_ujpy */
+        price_ujpy?: (string|null);
+
+        /** PrimaryAskSetting ratio_percentage */
+        ratio_percentage?: (string|null);
+    }
+
+    /** Represents a PrimaryAskSetting. */
+    class PrimaryAskSetting implements IPrimaryAskSetting {
+
+        /**
+         * Constructs a new PrimaryAskSetting.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IPrimaryAskSetting);
+
+        /** PrimaryAskSetting id. */
+        public id: string;
+
+        /** PrimaryAskSetting price_ujpy. */
+        public price_ujpy: string;
+
+        /** PrimaryAskSetting ratio_percentage. */
+        public ratio_percentage: string;
+
+        /**
+         * Encodes the specified PrimaryAskSetting message. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+         * @param message PrimaryAskSetting message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified PrimaryAskSetting message, length delimited. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
+         * @param message PrimaryAskSetting message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a PrimaryAskSetting message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns PrimaryAskSetting
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.PrimaryAskSetting;
+
+        /**
+         * Decodes a PrimaryAskSetting message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns PrimaryAskSetting
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.PrimaryAskSetting;
+
+        /**
+         * Verifies a PrimaryAskSetting message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a PrimaryAskSetting message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns PrimaryAskSetting
+         */
+        public static fromObject(object: { [k: string]: any }): main.PrimaryAskSetting;
+
+        /**
+         * Creates a plain object from a PrimaryAskSetting message. Also converts values to other types if specified.
+         * @param message PrimaryAskSetting
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.PrimaryAskSetting, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this PrimaryAskSetting to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a PrimaryAsk. */
     interface IPrimaryAsk {
 
@@ -3359,101 +3573,6 @@ export namespace main {
 
         /**
          * Converts this PrimaryAsk to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a PrimaryAskSetting. */
-    interface IPrimaryAskSetting {
-
-        /** PrimaryAskSetting id */
-        id?: (string|null);
-
-        /** PrimaryAskSetting price_ujpy */
-        price_ujpy?: (string|null);
-
-        /** PrimaryAskSetting ratio_percentage */
-        ratio_percentage?: (string|null);
-    }
-
-    /** Represents a PrimaryAskSetting. */
-    class PrimaryAskSetting implements IPrimaryAskSetting {
-
-        /**
-         * Constructs a new PrimaryAskSetting.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.IPrimaryAskSetting);
-
-        /** PrimaryAskSetting id. */
-        public id: string;
-
-        /** PrimaryAskSetting price_ujpy. */
-        public price_ujpy: string;
-
-        /** PrimaryAskSetting ratio_percentage. */
-        public ratio_percentage: string;
-
-        /**
-         * Encodes the specified PrimaryAskSetting message. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
-         * @param message PrimaryAskSetting message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified PrimaryAskSetting message, length delimited. Does not implicitly {@link main.PrimaryAskSetting.verify|verify} messages.
-         * @param message PrimaryAskSetting message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.IPrimaryAskSetting, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a PrimaryAskSetting message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns PrimaryAskSetting
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.PrimaryAskSetting;
-
-        /**
-         * Decodes a PrimaryAskSetting message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns PrimaryAskSetting
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.PrimaryAskSetting;
-
-        /**
-         * Verifies a PrimaryAskSetting message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a PrimaryAskSetting message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns PrimaryAskSetting
-         */
-        public static fromObject(object: { [k: string]: any }): main.PrimaryAskSetting;
-
-        /**
-         * Creates a plain object from a PrimaryAskSetting message. Also converts values to other types if specified.
-         * @param message PrimaryAskSetting
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.PrimaryAskSetting, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this PrimaryAskSetting to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3679,6 +3798,9 @@ export namespace main {
 
         /** RenewableAskHistory contract_price_ujpy */
         contract_price_ujpy?: (string|null);
+
+        /** RenewableAskHistory is_auto_order */
+        is_auto_order?: (boolean|null);
     }
 
     /** Represents a RenewableAskHistory. */
@@ -3710,6 +3832,9 @@ export namespace main {
 
         /** RenewableAskHistory contract_price_ujpy. */
         public contract_price_ujpy: string;
+
+        /** RenewableAskHistory is_auto_order. */
+        public is_auto_order: boolean;
 
         /**
          * Encodes the specified RenewableAskHistory message. Does not implicitly {@link main.RenewableAskHistory.verify|verify} messages.
@@ -3770,126 +3895,6 @@ export namespace main {
 
         /**
          * Converts this RenewableAskHistory to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** RenewableAskType enum. */
-    enum RenewableAskType {
-        UNKNOWN = 0,
-        PRIMARY = 1,
-        SECONDARY = 2
-    }
-
-    /** Properties of a RenewableAsk. */
-    interface IRenewableAsk {
-
-        /** RenewableAsk id */
-        id?: (string|null);
-
-        /** RenewableAsk type */
-        type?: (main.RenewableAskType|null);
-
-        /** RenewableAsk account_id */
-        account_id?: (string|null);
-
-        /** RenewableAsk price_ujpy */
-        price_ujpy?: (string|null);
-
-        /** RenewableAsk amount_uspx */
-        amount_uspx?: (string|null);
-
-        /** RenewableAsk is_deleted */
-        is_deleted?: (boolean|null);
-    }
-
-    /** Represents a RenewableAsk. */
-    class RenewableAsk implements IRenewableAsk {
-
-        /**
-         * Constructs a new RenewableAsk.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: main.IRenewableAsk);
-
-        /** RenewableAsk id. */
-        public id: string;
-
-        /** RenewableAsk type. */
-        public type: main.RenewableAskType;
-
-        /** RenewableAsk account_id. */
-        public account_id: string;
-
-        /** RenewableAsk price_ujpy. */
-        public price_ujpy: string;
-
-        /** RenewableAsk amount_uspx. */
-        public amount_uspx: string;
-
-        /** RenewableAsk is_deleted. */
-        public is_deleted: boolean;
-
-        /**
-         * Encodes the specified RenewableAsk message. Does not implicitly {@link main.RenewableAsk.verify|verify} messages.
-         * @param message RenewableAsk message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: main.IRenewableAsk, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified RenewableAsk message, length delimited. Does not implicitly {@link main.RenewableAsk.verify|verify} messages.
-         * @param message RenewableAsk message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: main.IRenewableAsk, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a RenewableAsk message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns RenewableAsk
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.RenewableAsk;
-
-        /**
-         * Decodes a RenewableAsk message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns RenewableAsk
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.RenewableAsk;
-
-        /**
-         * Verifies a RenewableAsk message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a RenewableAsk message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns RenewableAsk
-         */
-        public static fromObject(object: { [k: string]: any }): main.RenewableAsk;
-
-        /**
-         * Creates a plain object from a RenewableAsk message. Also converts values to other types if specified.
-         * @param message RenewableAsk
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: main.RenewableAsk, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this RenewableAsk to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3985,6 +3990,132 @@ export namespace main {
 
         /**
          * Converts this RenewableAskSetting to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** RenewableAskType enum. */
+    enum RenewableAskType {
+        UNKNOWN = 0,
+        PRIMARY = 1,
+        SECONDARY = 2
+    }
+
+    /** Properties of a RenewableAsk. */
+    interface IRenewableAsk {
+
+        /** RenewableAsk id */
+        id?: (string|null);
+
+        /** RenewableAsk type */
+        type?: (main.RenewableAskType|null);
+
+        /** RenewableAsk account_id */
+        account_id?: (string|null);
+
+        /** RenewableAsk price_ujpy */
+        price_ujpy?: (string|null);
+
+        /** RenewableAsk amount_uspx */
+        amount_uspx?: (string|null);
+
+        /** RenewableAsk is_deleted */
+        is_deleted?: (boolean|null);
+
+        /** RenewableAsk is_auto_order */
+        is_auto_order?: (boolean|null);
+    }
+
+    /** Represents a RenewableAsk. */
+    class RenewableAsk implements IRenewableAsk {
+
+        /**
+         * Constructs a new RenewableAsk.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IRenewableAsk);
+
+        /** RenewableAsk id. */
+        public id: string;
+
+        /** RenewableAsk type. */
+        public type: main.RenewableAskType;
+
+        /** RenewableAsk account_id. */
+        public account_id: string;
+
+        /** RenewableAsk price_ujpy. */
+        public price_ujpy: string;
+
+        /** RenewableAsk amount_uspx. */
+        public amount_uspx: string;
+
+        /** RenewableAsk is_deleted. */
+        public is_deleted: boolean;
+
+        /** RenewableAsk is_auto_order. */
+        public is_auto_order: boolean;
+
+        /**
+         * Encodes the specified RenewableAsk message. Does not implicitly {@link main.RenewableAsk.verify|verify} messages.
+         * @param message RenewableAsk message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IRenewableAsk, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified RenewableAsk message, length delimited. Does not implicitly {@link main.RenewableAsk.verify|verify} messages.
+         * @param message RenewableAsk message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IRenewableAsk, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a RenewableAsk message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns RenewableAsk
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.RenewableAsk;
+
+        /**
+         * Decodes a RenewableAsk message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns RenewableAsk
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.RenewableAsk;
+
+        /**
+         * Verifies a RenewableAsk message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a RenewableAsk message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns RenewableAsk
+         */
+        public static fromObject(object: { [k: string]: any }): main.RenewableAsk;
+
+        /**
+         * Creates a plain object from a RenewableAsk message. Also converts values to other types if specified.
+         * @param message RenewableAsk
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.RenewableAsk, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this RenewableAsk to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -4099,6 +4230,9 @@ export namespace main {
 
         /** RenewableBidHistory contract_price_ujpy */
         contract_price_ujpy?: (string|null);
+
+        /** RenewableBidHistory is_auto_order */
+        is_auto_order?: (boolean|null);
     }
 
     /** Represents a RenewableBidHistory. */
@@ -4127,6 +4261,9 @@ export namespace main {
 
         /** RenewableBidHistory contract_price_ujpy. */
         public contract_price_ujpy: string;
+
+        /** RenewableBidHistory is_auto_order. */
+        public is_auto_order: boolean;
 
         /**
          * Encodes the specified RenewableBidHistory message. Does not implicitly {@link main.RenewableBidHistory.verify|verify} messages.
@@ -4209,6 +4346,9 @@ export namespace main {
 
         /** RenewableBid is_deleted */
         is_deleted?: (boolean|null);
+
+        /** RenewableBid is_auto_order */
+        is_auto_order?: (boolean|null);
     }
 
     /** Represents a RenewableBid. */
@@ -4234,6 +4374,9 @@ export namespace main {
 
         /** RenewableBid is_deleted. */
         public is_deleted: boolean;
+
+        /** RenewableBid is_auto_order. */
+        public is_auto_order: boolean;
 
         /**
          * Encodes the specified RenewableBid message. Does not implicitly {@link main.RenewableBid.verify|verify} messages.
@@ -4922,6 +5065,9 @@ export namespace main {
 
         /** StudentAccount xrp_public_key */
         xrp_public_key?: (string|null);
+
+        /** StudentAccount auto_order */
+        auto_order?: (boolean|null);
     }
 
     /** Represents a StudentAccount. */
@@ -4953,6 +5099,9 @@ export namespace main {
 
         /** StudentAccount xrp_public_key. */
         public xrp_public_key: string;
+
+        /** StudentAccount auto_order. */
+        public auto_order: boolean;
 
         /**
          * Encodes the specified StudentAccount message. Does not implicitly {@link main.StudentAccount.verify|verify} messages.

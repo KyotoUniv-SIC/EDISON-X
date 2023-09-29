@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import './accounts/create-student-account';
+import './auto-order-changes/delete-renewable-ask';
 import './balance-snapshots/calc-monthly-usage';
 import './balances/update-available-balance';
 import './chat-deletes/delete-chat';
@@ -47,6 +48,7 @@ const files = {
   accounts: './accounts',
   admin_accounts: './admin-accounts',
   admin_privates: './admin-privates',
+  auto_order_changes: './auto-order-changes',
   available_balances: './available-balances',
   balance_snapshots: './balance-snapshots',
   balances: './balances',

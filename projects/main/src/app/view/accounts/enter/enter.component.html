@@ -43,19 +43,15 @@
           </mat-icon>
         </button>
       </mat-form-field>
-      <div>
-        <div>
-          <br />
-          <button mat-flat-button class="w-full" color="primary" type="submit" [disabled]="formRef.invalid">Sign In</button>
-          <br /><br />
-          <p class="text-right">
-            Forgot password? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/reset">Reset Password</a></strong>
-          </p>
-          <p class="text-right">
-            No account? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/create">Sign Up</a></strong>
-          </p>
-        </div>
-      </div>
+      <mat-card-actions align="end">
+        <button mat-raised-button class="px-8 mb-4" color="primary" type="submit" [disabled]="formRef.invalid">Sign In</button>
+      </mat-card-actions>
+      <p class="text-right">
+        Forgot password? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/reset">Reset Password</a></strong>
+      </p>
+      <p class="text-right">
+        No account? <strong class="underline 2px"><a class="text-blue-700" routerLink="/accounts/create">Sign Up</a></strong>
+      </p>
     </form>
   </mat-card>
 </div>
