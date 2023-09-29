@@ -521,6 +521,101 @@ export namespace main {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of an AutoOrderChange. */
+    interface IAutoOrderChange {
+
+        /** AutoOrderChange id */
+        id?: (string|null);
+
+        /** AutoOrderChange student_account_id */
+        student_account_id?: (string|null);
+
+        /** AutoOrderChange enabled */
+        enabled?: (boolean|null);
+    }
+
+    /** Represents an AutoOrderChange. */
+    class AutoOrderChange implements IAutoOrderChange {
+
+        /**
+         * Constructs a new AutoOrderChange.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: main.IAutoOrderChange);
+
+        /** AutoOrderChange id. */
+        public id: string;
+
+        /** AutoOrderChange student_account_id. */
+        public student_account_id: string;
+
+        /** AutoOrderChange enabled. */
+        public enabled: boolean;
+
+        /**
+         * Encodes the specified AutoOrderChange message. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+         * @param message AutoOrderChange message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: main.IAutoOrderChange, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified AutoOrderChange message, length delimited. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+         * @param message AutoOrderChange message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: main.IAutoOrderChange, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an AutoOrderChange message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns AutoOrderChange
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): main.AutoOrderChange;
+
+        /**
+         * Decodes an AutoOrderChange message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns AutoOrderChange
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): main.AutoOrderChange;
+
+        /**
+         * Verifies an AutoOrderChange message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an AutoOrderChange message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns AutoOrderChange
+         */
+        public static fromObject(object: { [k: string]: any }): main.AutoOrderChange;
+
+        /**
+         * Creates a plain object from an AutoOrderChange message. Also converts values to other types if specified.
+         * @param message AutoOrderChange
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: main.AutoOrderChange, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this AutoOrderChange to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of an AvailableBalance. */
     interface IAvailableBalance {
 

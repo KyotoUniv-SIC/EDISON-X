@@ -1332,6 +1332,226 @@
             return AdminPrivate;
         })();
     
+        main.AutoOrderChange = (function() {
+    
+            /**
+             * Properties of an AutoOrderChange.
+             * @memberof main
+             * @interface IAutoOrderChange
+             * @property {string|null} [id] AutoOrderChange id
+             * @property {string|null} [student_account_id] AutoOrderChange student_account_id
+             * @property {boolean|null} [enabled] AutoOrderChange enabled
+             */
+    
+            /**
+             * Constructs a new AutoOrderChange.
+             * @memberof main
+             * @classdesc Represents an AutoOrderChange.
+             * @implements IAutoOrderChange
+             * @constructor
+             * @param {main.IAutoOrderChange=} [properties] Properties to set
+             */
+            function AutoOrderChange(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+    
+            /**
+             * AutoOrderChange id.
+             * @member {string} id
+             * @memberof main.AutoOrderChange
+             * @instance
+             */
+            AutoOrderChange.prototype.id = "";
+    
+            /**
+             * AutoOrderChange student_account_id.
+             * @member {string} student_account_id
+             * @memberof main.AutoOrderChange
+             * @instance
+             */
+            AutoOrderChange.prototype.student_account_id = "";
+    
+            /**
+             * AutoOrderChange enabled.
+             * @member {boolean} enabled
+             * @memberof main.AutoOrderChange
+             * @instance
+             */
+            AutoOrderChange.prototype.enabled = false;
+    
+            /**
+             * Encodes the specified AutoOrderChange message. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+             * @function encode
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {main.IAutoOrderChange} message AutoOrderChange message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            AutoOrderChange.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+                if (message.student_account_id != null && Object.hasOwnProperty.call(message, "student_account_id"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.student_account_id);
+                if (message.enabled != null && Object.hasOwnProperty.call(message, "enabled"))
+                    writer.uint32(/* id 3, wireType 0 =*/24).bool(message.enabled);
+                return writer;
+            };
+    
+            /**
+             * Encodes the specified AutoOrderChange message, length delimited. Does not implicitly {@link main.AutoOrderChange.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {main.IAutoOrderChange} message AutoOrderChange message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            AutoOrderChange.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+    
+            /**
+             * Decodes an AutoOrderChange message from the specified reader or buffer.
+             * @function decode
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {main.AutoOrderChange} AutoOrderChange
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            AutoOrderChange.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.main.AutoOrderChange();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.id = reader.string();
+                        break;
+                    case 2:
+                        message.student_account_id = reader.string();
+                        break;
+                    case 3:
+                        message.enabled = reader.bool();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+    
+            /**
+             * Decodes an AutoOrderChange message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {main.AutoOrderChange} AutoOrderChange
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            AutoOrderChange.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+    
+            /**
+             * Verifies an AutoOrderChange message.
+             * @function verify
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            AutoOrderChange.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.id != null && message.hasOwnProperty("id"))
+                    if (!$util.isString(message.id))
+                        return "id: string expected";
+                if (message.student_account_id != null && message.hasOwnProperty("student_account_id"))
+                    if (!$util.isString(message.student_account_id))
+                        return "student_account_id: string expected";
+                if (message.enabled != null && message.hasOwnProperty("enabled"))
+                    if (typeof message.enabled !== "boolean")
+                        return "enabled: boolean expected";
+                return null;
+            };
+    
+            /**
+             * Creates an AutoOrderChange message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {main.AutoOrderChange} AutoOrderChange
+             */
+            AutoOrderChange.fromObject = function fromObject(object) {
+                if (object instanceof $root.main.AutoOrderChange)
+                    return object;
+                var message = new $root.main.AutoOrderChange();
+                if (object.id != null)
+                    message.id = String(object.id);
+                if (object.student_account_id != null)
+                    message.student_account_id = String(object.student_account_id);
+                if (object.enabled != null)
+                    message.enabled = Boolean(object.enabled);
+                return message;
+            };
+    
+            /**
+             * Creates a plain object from an AutoOrderChange message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof main.AutoOrderChange
+             * @static
+             * @param {main.AutoOrderChange} message AutoOrderChange
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            AutoOrderChange.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    object.id = "";
+                    object.student_account_id = "";
+                    object.enabled = false;
+                }
+                if (message.id != null && message.hasOwnProperty("id"))
+                    object.id = message.id;
+                if (message.student_account_id != null && message.hasOwnProperty("student_account_id"))
+                    object.student_account_id = message.student_account_id;
+                if (message.enabled != null && message.hasOwnProperty("enabled"))
+                    object.enabled = message.enabled;
+                return object;
+            };
+    
+            /**
+             * Converts this AutoOrderChange to JSON.
+             * @function toJSON
+             * @memberof main.AutoOrderChange
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            AutoOrderChange.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+    
+            return AutoOrderChange;
+        })();
+    
         main.AvailableBalance = (function() {
     
             /**
