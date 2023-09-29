@@ -89,24 +89,25 @@
         Click on "XRP Address" to get info on the XRP Ledger. However, it is not possible to connect to XRP via KUINS-Air. Please be
         careful.
       </p>
+
+      <mat-nav-list>
+        <mat-list-item class="flex flex-wrap" routerLink="/accounts/auto-order">
+          <span class="break-all">Auto Order:</span>
+          <span class="flex-auto break-all"></span>
+          <span class="break-all text-blue-500">{{ studentAccount?.auto_order }}</span>
+        </mat-list-item>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-list-item class="flex flex-wrap" routerLink="/accounts/xrpl">
+          <span class="break-all">XRP Address:</span>
+          <span class="flex-auto break-all"></span>
+          <span class="break-all text-purple-800">{{ studentAccount?.xrp_address }}</span>
+        </mat-list-item>
+      </mat-nav-list>
+      <mat-card-actions class="gap-2">
+        <button mat-stroked-button color="primary" routerLink="/accounts/auto-order">Machine Learning Auto Order</button>
+        <button mat-stroked-button color="accent" routerLink="/accounts/auto-order">XRP Ledger</button>
+      </mat-card-actions>
     </mat-card-content>
-    <mat-nav-list>
-      <mat-list-item class="flex flex-wrap" routerLink="/accounts/auto-order">
-        <span class="break-all">Auto Order:</span>
-        <span class="flex-auto break-all"></span>
-        <span class="break-all text-purple-800">{{ studentAccount?.auto_order }}</span>
-      </mat-list-item>
-      <mat-divider [inset]="true"></mat-divider>
-      <mat-list-item class="flex flex-wrap" routerLink="/accounts/xrpl">
-        <span class="break-all">XRP Address:</span>
-        <span class="flex-auto break-all"></span>
-        <span class="break-all text-purple-800">{{ studentAccount?.xrp_address }}</span>
-      </mat-list-item>
-    </mat-nav-list>
-    <mat-card-actions class="gap-2">
-      <button mat-stroked-button color="primary" routerLink="/accounts/auto-order">Machine Learning Auto Order</button>
-      <button mat-stroked-button color="accent" routerLink="/accounts/auto-order">XRP Ledger</button>
-    </mat-card-actions>
   </mat-card>
 
   <mat-card class="mb-8">
