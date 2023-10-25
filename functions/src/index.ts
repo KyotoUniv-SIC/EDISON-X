@@ -104,6 +104,7 @@ const files = {
   fix_monthly_payments: './schedules/fix-monthly-payment',
   fetch_balance: './schedules/fetch-balance',
   backup_firestore: './schedules/backup-firestore',
+  auto_order: './schedules/auto-order',
 };
 
 const loadFunctions = (filesObj: any) => {

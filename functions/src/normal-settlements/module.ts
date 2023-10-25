@@ -33,6 +33,12 @@ export async function get(id: string) {
     .then((snapshot) => snapshot.data() as NormalSettlement);
 }
 
+export async function listLatest() {
+  return await collection()
+    .orderBy('created_at', 'desc')
+    .get()
+    .then((snapshot) => snapshot.docs.map((doc) => doc.data() as NormalSettlement));
+}
 export async function list() {
   return await collection()
     .get()
